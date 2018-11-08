@@ -7,12 +7,12 @@
 
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%@include file="WEB-INF/jsp/styling.jsp"%>
+  <%@include file="styling.jsp"%>
 
 </head>
 
 <body>
-  <%@include file="WEB-INF/jsp/navbar.jsp"%>
+  <%@include file="navbar.jsp"%>
   <div class="container">
     <p> Hello world! </p>
     <p>Welcome ${firstname}</p>

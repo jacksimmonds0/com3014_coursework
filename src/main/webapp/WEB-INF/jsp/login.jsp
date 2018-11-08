@@ -36,7 +36,7 @@
         <tr></tr>
         <tr>
             <td></td>
-            <td><a href="index.jsp">Home</a>
+            <td><a href="/">Home</a>
             </td>
         </tr>
     </table>
