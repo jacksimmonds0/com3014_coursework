@@ -91,6 +91,11 @@
             <artifactId>jstl</artifactId>
             <version>${jstl-version}</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.5</version>
+        </dependency>
     </dependencies>
 
     <build>
