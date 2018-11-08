@@ -28,6 +28,6 @@ public class RegistrationController {
                                 @ModelAttribute("user") User user) {
 
         userService.register(user);
-        return new ModelAndView("welcome", "firstname", user.getFirstname());
+        return new ModelAndView("index", "firstname", user.getFirstname());
     }
 }

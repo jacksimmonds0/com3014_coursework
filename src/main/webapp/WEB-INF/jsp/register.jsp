@@ -1,12 +1,13 @@
-
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Registration</title>
+    <%@include file="styling.jsp"%>
 </head>
 <body>
+<%@include file="navbar.jsp"%>
 <form:form id="regForm" modelAttribute="user" action="registerProcess" method="post">
     <table align="center">
         <tr>
@@ -27,7 +28,7 @@
         </tr>
         <tr>
             <td>
-                <form:label path="firstname">FirstName</form:label>
+                <form:label path="firstname">First Name</form:label>
             </td>
             <td>
                 <form:input path="firstname" name="firstname" id="firstname" />
@@ -35,7 +36,7 @@
         </tr>
         <tr>
             <td>
-                <form:label path="lastname">LastName</form:label>
+                <form:label path="lastname">Last Name</form:label>
             </td>
             <td>
                 <form:input path="lastname" name="lastname" id="lastname" />
@@ -43,26 +44,10 @@
         </tr>
         <tr>
             <td>
-                <form:label path="email">Email</form:label>
+                <form:label path="email">Email Address</form:label>
             </td>
             <td>
                 <form:input path="email" name="email" id="email" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="address">Address</form:label>
-            </td>
-            <td>
-                <form:input path="address" name="address" id="address" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="phone">Phone</form:label>
-            </td>
-            <td>
-                <form:input path="phone" name="phone" id="phone" />
             </td>
         </tr>
         <tr>

@@ -5,9 +5,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Login</title>
+    <%@include file="styling.jsp"%>
 </head>
 <body>
-
+<%@include file="navbar.jsp"%>
 <form:form id="loginForm" modelAttribute="login" action="loginProcess" method="post">
     <table align="center">
         <tr>
