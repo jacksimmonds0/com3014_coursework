@@ -1,54 +1,68 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <html>
 <head>
-    <title>Register Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Registration</title>
     <%@include file="styling.jsp"%>
 </head>
 <body>
-<%@include file="navbar.jsp" %>
-<form class="form-horizontal">
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="username">Username:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="username" placeholder="Enter username">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="email">Email:</label>
-        <div class="col-sm-10">
-            <input type="email" class="form-control" id="email" placeholder="Enter email">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="firstname">First Name:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="firstname" placeholder="Enter first name">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="lastname">Last Name:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="lastname" placeholder="Enter email">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="pwd">Password:</label>
-        <div class="col-sm-10">
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-                <label><input type="checkbox"> I agree to the terms and conditions</label>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Register</button>
-        </div>
-    </div>
-</form>
+<%@include file="navbar.jsp"%>
+<form:form id="regForm" modelAttribute="user" action="registerProcess" method="post">
+    <table align="center">
+        <tr>
+            <td>
+                <form:label path="username">Username</form:label>
+            </td>
+            <td>
+                <form:input path="username" name="username" id="username" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="password">Password</form:label>
+            </td>
+            <td>
+                <form:password path="password" name="password" id="password" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="firstname">First Name</form:label>
+            </td>
+            <td>
+                <form:input path="firstname" name="firstname" id="firstname" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="lastname">Last Name</form:label>
+            </td>
+            <td>
+                <form:input path="lastname" name="lastname" id="lastname" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="email">Email Address</form:label>
+            </td>
+            <td>
+                <form:input path="email" name="email" id="email" />
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <form:button id="register" name="register">Register</form:button>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td></td>
+            <td><a href="index.jsp">Home</a>
+            </td>
+        </tr>
+    </table>
+</form:form>
 </body>
 </html>

@@ -1,36 +1,50 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>Login Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Login</title>
     <%@include file="styling.jsp"%>
 </head>
 <body>
-<%@include file="navbar.jsp" %>
-<form class="form-horizontal">
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="email">Email:</label>
-        <div class="col-sm-10">
-            <input type="email" class="form-control" id="email" placeholder="Enter email">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="pwd">Password:</label>
-        <div class="col-sm-10">
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-                <label><input type="checkbox"> Remember me</label>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Submit</button>
-        </div>
-    </div>
-</form>
+<%@include file="navbar.jsp"%>
+<form:form id="loginForm" modelAttribute="login" action="loginProcess" method="post">
+    <table align="center">
+        <tr>
+            <td>
+                <form:label path="username">Username: </form:label>
+            </td>
+            <td>
+                <form:input path="username" name="username" id="username"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="password">Password:</form:label>
+            </td>
+            <td>
+                <form:password path="password" name="password" id="password"/>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="left">
+                <form:button id="login" name="login">Login</form:button>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td></td>
+            <td><a href="index.jsp">Home</a>
+            </td>
+        </tr>
+    </table>
+</form:form>
+<table align="center">
+    <tr>
+        <td style="font-style: italic; color: red;">${message}</td>
+    </tr>
+</table>
 </body>
 </html>
