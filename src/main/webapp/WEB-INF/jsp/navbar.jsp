@@ -1,15 +1,14 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.jsp">Group 6 Movies</a>
+            <a class="navbar-brand" href="/">Group 6 Movies</a>
         </div>
-
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#">Movies</a></li>
             <li><a href="#">Nearest Cinema</a></li>
         </ul>
-
         <ul class="nav navbar-nav navbar-right">
             <form id="search-form" class="navbar-form navbar-left" method="get" action="/search">
                 <div class="form-group">
@@ -23,5 +22,4 @@
             <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ul>
     </div>
-
 </nav>

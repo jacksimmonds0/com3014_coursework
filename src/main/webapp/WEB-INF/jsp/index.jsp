@@ -1,5 +1,5 @@
-<!doctype html>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <html>
 <head>
   <meta charset="utf-8">
@@ -15,7 +15,7 @@
   <%@include file="WEB-INF/jsp/navbar.jsp"%>
   <div class="container">
     <p> Hello world! </p>
-    <p>Niall commit</p>
+    <p>Welcome ${firstname}</p>
   </div>
 </body>
 </html>
