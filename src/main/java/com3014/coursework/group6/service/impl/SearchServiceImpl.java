@@ -22,7 +22,7 @@ public class SearchServiceImpl implements SearchService {
         List<Movie> movies = movieDAO.getAllMovies();
 
         return movies.stream()
-                .filter(m -> m.getTitle().contains(search))
+                .filter(m -> m.search(search))
                 .collect(Collectors.toList());
     }
 }

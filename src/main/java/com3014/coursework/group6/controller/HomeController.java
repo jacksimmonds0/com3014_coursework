@@ -18,4 +18,5 @@ public class HomeController {
     public String navigateToRegister(ModelMap model) {
         return "register";
     }
+
 }

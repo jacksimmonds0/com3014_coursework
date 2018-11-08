@@ -18,7 +18,4 @@
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
 
-        <!--<mvc:resources mapping="/resources/js/**" location="/resources/js/"-->
-                       <!--cache-period="31556926"/>-->
-
 </beans>

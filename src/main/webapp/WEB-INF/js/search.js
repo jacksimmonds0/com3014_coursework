@@ -1,4 +1,4 @@
-search = function() {
+function search() {
     var searchInput = document.getElementById("search-box").value;
 
     alert(searchInput);
@@ -8,5 +8,5 @@ search = function() {
     // xhr.setRequestHeader("Content-type", "application/json");
     // xhr.send();
 
-    window.location.replace("localhost:8080/search/" + searchInput);
+    window.location.replace("localhost:8080/search?term=" + searchInput);
 }

@@ -11,9 +11,9 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <form id="search-form" class="navbar-form navbar-left" method="get" action="" onsubmit="search();">
+            <form id="search-form" class="navbar-form navbar-left" method="get" action="/search">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="search-box" placeholder="Search">
+                    <input type="text" class="form-control" id="search-box" name="term" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-search"></span>
@@ -23,4 +23,5 @@
             <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ul>
     </div>
+
 </nav>

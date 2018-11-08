@@ -7,17 +7,19 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/search")
 public class SearchController {
 
     @Autowired
     private SearchService searchService;
 
-    @RequestMapping("/{term}")
-    public String showSearchResults(@PathVariable("term") String term, ModelMap model) {
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String showSearchResults(@RequestParam("term") String term, ModelMap model) {
+
         model.addAttribute("term", term);
+        model.addAttribute("results", searchService.getSearchResults(term));
 
         return "search";
     }

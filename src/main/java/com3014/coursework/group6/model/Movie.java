@@ -20,6 +20,13 @@ public class Movie {
         // private constructor to prevent instantiation
     }
 
+    public boolean search(String searchTerm) {
+        String title = this.title.toLowerCase();
+        String term = searchTerm.toLowerCase();
+
+        return title.contains(term);
+    }
+
     public String getTitle() {
         return this.title;
     }
