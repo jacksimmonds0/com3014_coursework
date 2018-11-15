@@ -15,7 +15,7 @@
   <%@include file="navbar.jsp"%>
   <div class="container">
     <p> Hello world! </p>
-    <p>Welcome ${firstname}</p>
+    <p>Welcome ${firstName}</p>
   </div>
 </body>
 </html>

@@ -3,8 +3,9 @@ package com3014.coursework.group6.model;
 public class User {
     private String username;
     private String password;
-    private String firstname;
-    private String lastname;
+    private String confirmPassword;
+    private String firstName;
+    private String lastName;
     private String email;
 
     public String getUsername() {
@@ -23,20 +24,28 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
