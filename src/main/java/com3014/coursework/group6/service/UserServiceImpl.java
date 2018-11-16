@@ -4,12 +4,10 @@ package com3014.coursework.group6.service;
 
 import com3014.coursework.group6.dao.UserDao;
 import com3014.coursework.group6.model.Login;
-import com3014.coursework.group6.model.User;
+import com3014.coursework.group6.model.person.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.portlet.handler.UserRoleAuthorizationInterceptor;
 
-import java.net.PasswordAuthentication;
 import java.util.List;
 
 @Service

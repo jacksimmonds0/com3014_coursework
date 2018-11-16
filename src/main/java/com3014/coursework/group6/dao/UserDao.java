@@ -1,7 +1,7 @@
 package com3014.coursework.group6.dao;
 
 import com3014.coursework.group6.model.Login;
-import com3014.coursework.group6.model.User;
+import com3014.coursework.group6.model.person.User;
 
 import java.util.List;
 

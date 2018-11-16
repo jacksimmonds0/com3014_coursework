@@ -7,19 +7,80 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#">Movies</a></li>
-            <li><a href="#">Nearest Cinema</a></li>
+            <li><a href="/iplocation">Nearest Cinema</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <form id="search-form" class="navbar-form navbar-left" method="get" action="/search">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="search-box" name="term" placeholder="Search">
+
+                    <div class="dropdown">
+                        <input type="text" autocomplete="off" class="form-control" id="search-box" name="term" placeholder="Search">
+                        <ul id="search-dropdown" role="menu" class="dropdown-menu" style="display:none;" >
+                        </ul>
+                    </div>
+
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </form>
-            <li><a href="register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-            <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+            <c:choose>
+                <c:when test="${empty currentUser}">
+                    <li><a href="register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                    <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="account"><span class="glyphicon glyphicon-user"></span> ${currentUser.username}</a></li>
+                    <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </c:otherwise>
+            </c:choose>
+
         </ul>
     </div>
 </nav>
+
+<script>
+    $(document).ready(function () {
+
+        // type ahead search functionality
+        $('#search-box').on("input", function () {
+            $.ajax({
+                url:"searchbox",
+                type:"GET",
+                accept: "application/json",
+                data: {
+                    "term": $("#search-box").val()
+                },
+                success: function(data) {
+                    var result, itemInner, item, title,
+                        searchDropdown = $('#search-dropdown'),
+                        results = JSON.parse(data).response;
+
+                    searchDropdown.empty();
+                    if(results.length === 0) {
+                        searchDropdown.css('display', 'none');
+                        return;
+                    }
+
+                    searchDropdown.css('display', 'block');
+                    for(var i = 0; i < results.length; i++) {
+                        result = results[i];
+
+                        item = document.createElement("li");
+                        itemInner = document.createElement("a");
+
+                        itemInner.href = "/movie?id=" + result.id;
+                        title = document.createTextNode(result.title);
+                        itemInner.appendChild(title);
+
+                        item.appendChild(itemInner);
+                        searchDropdown.append(item);
+                    }
+
+                }
+            });
+        });
+    });
+
+</script>

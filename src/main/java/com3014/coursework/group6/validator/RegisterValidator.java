@@ -1,6 +1,6 @@
 package com3014.coursework.group6.validator;
 
-import com3014.coursework.group6.model.User;
+import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

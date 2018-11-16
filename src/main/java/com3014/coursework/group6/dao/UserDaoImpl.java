@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import com3014.coursework.group6.model.Login;
-import com3014.coursework.group6.model.User;
+import com3014.coursework.group6.model.person.User;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -43,7 +43,6 @@ public class UserDaoImpl implements UserDao {
                 .query(sql, namedParameter, new UserMapper());
 
         return (user.size() > 0);
-
     }
 
     public User validateUser(Login login) {

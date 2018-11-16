@@ -1,57 +1,74 @@
 package com3014.coursework.group6.model;
 
-import org.json.JSONObject;
+import com3014.coursework.group6.model.person.Actor;
+import com3014.coursework.group6.model.person.Director;
 
-import java.text.DecimalFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Movie {
 
-    private static final DecimalFormat RATING_FORMAT = new DecimalFormat("0.00");
     private int id;
     private int year;
     private String title;
     private String description;
+    private Director director;
+    private List<Actor> actors;
     private List<Genre> genres;
-    private List<String> comments;
-    private List<Double> ratings;
+    private List<Comment> comments;
+    private List<Rating> ratings;
 
     private Movie() {
         // private constructor to prevent instantiation
     }
 
-    public boolean search(String searchTerm) {
-        String title = this.title.toLowerCase();
-        String term = searchTerm.toLowerCase();
+    public int getId() {
+        return id;
+    }
 
-        return title.contains(term);
+    public int getYear() {
+        return year;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
-
-    public String getAverageRating() {
-        double total = 0.0;
-
-        for(Double rating : ratings) {
-            total += rating;
-        }
-
-        return RATING_FORMAT.format(total / ratings.size());
+    public String getDescription() {
+        return description;
     }
 
-    public JSONObject toJSONObject() {
-        JSONObject json = new JSONObject();
-
-        json.append("title", title);
-        json.append("year", year);
-        json.append("rating", this.getAverageRating());
-
-        return json;
+    public Director getDirector() {
+        return this.director;
     }
 
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public String getActorsForSearchResult() {
+        return actors.stream()
+                .map(Actor::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+    public String getGenresForSearchResults() {
+        return genres.stream()
+                .map(Genre::getGenre)
+                .collect(Collectors.joining(" | "));
+    }
 
     /**
      * Builder pattern used due to large amount of fields
@@ -61,9 +78,11 @@ public class Movie {
         private int year;
         private String title;
         private String description;
+        private Director director;
+        private List<Actor> actors;
         private List<Genre> genres;
-        private List<String> comments;
-        private List<Double> ratings;
+        private List<Comment> comments;
+        private List<Rating> ratings;
 
         public Builder(int id) {
             this.id = id;
@@ -87,19 +106,31 @@ public class Movie {
             return this;
         }
 
+        public Builder director(Director director) {
+            this.director = director;
+
+            return this;
+        }
+
+        public Builder actors(List<Actor> actors) {
+            this.actors = actors;
+
+            return this;
+        }
+
         public Builder genres(List<Genre> genres) {
             this.genres = genres;
 
             return this;
         }
 
-        public Builder comments(List<String> comments) {
+        public Builder comments(List<Comment> comments) {
             this.comments = comments;
 
             return this;
         }
 
-        public Builder ratings(List<Double> ratings) {
+        public Builder ratings(List<Rating> ratings) {
             this.ratings = ratings;
 
             return this;
@@ -112,6 +143,9 @@ public class Movie {
             movie.year = this.year;
             movie.title = this.title;
             movie.description = this.description;
+            movie.director = this.director;
+            movie.actors = this.actors;
+            movie.genres = this.genres;
             movie.comments = this.comments;
             movie.ratings = this.ratings;
 

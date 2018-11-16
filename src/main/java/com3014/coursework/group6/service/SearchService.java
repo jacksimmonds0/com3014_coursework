@@ -7,4 +7,6 @@ import java.util.List;
 public interface SearchService {
 
     public List<Movie> getSearchResults(String search);
+
+    public String getSearchboxResults(String search);
 }
