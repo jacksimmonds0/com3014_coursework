@@ -2,6 +2,7 @@ package com3014.coursework.group6.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class RegistrationController {
     private static final Logger LOG = Logger.getLogger(RegistrationController.class);
 
     @Autowired
-    public UserService userService;
+    UserService userService;
 
     @Autowired
     RegisterValidator registerValidator;
@@ -34,8 +35,9 @@ public class RegistrationController {
 
         return mav;
     }
+
     @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
-    public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response,
+    public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response, HttpSession session,
                                 @ModelAttribute("user") User user, BindingResult result) {
 
         try {
@@ -47,6 +49,8 @@ public class RegistrationController {
 
                 userService.register(user);
                 userService.assignUserRole(user.getUsername());
+
+                session.setAttribute("currentUser", user);
 
                 return new ModelAndView("index", "firstName", user.getFirstName());
             }

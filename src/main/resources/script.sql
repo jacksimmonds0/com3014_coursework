@@ -26,11 +26,11 @@ INSERT INTO `group6`.`users`
 `password`)
 VALUES
 (1,
-admin,
-admin,
-admin,
-admin@password.com,
-password1);
+'admin',
+'admin',
+'admin',
+'admin@password.com',
+'password1');
 
 INSERT INTO `group6`.`user_roles`
 (`id`,
@@ -38,5 +38,5 @@ INSERT INTO `group6`.`user_roles`
 `role`)
 VALUES
 (1,
-admin,
-ROLE_ADMIN);
+'admin',
+'ROLE_ADMIN');
