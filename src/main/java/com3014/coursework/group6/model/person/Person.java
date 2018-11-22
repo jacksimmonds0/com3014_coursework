@@ -2,6 +2,7 @@ package com3014.coursework.group6.model.person;
 
 public class Person {
 
+    private int id;
     private String firstName;
     private String lastName;
     private String dob;
@@ -13,6 +14,14 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

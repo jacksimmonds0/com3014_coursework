@@ -1,12 +1,10 @@
 package com3014.coursework.group6.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 
+import com3014.coursework.group6.dao.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import com3014.coursework.group6.model.Login;
 import com3014.coursework.group6.model.person.User;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -65,14 +63,3 @@ public class UserDaoImpl implements UserDao {
     }
 
 }
-    class UserMapper implements RowMapper<User> {
-        public User mapRow(ResultSet rs, int arg1) throws SQLException {
-            User user = new User();
-            user.setUsername(rs.getString("username"));
-            user.setPassword(rs.getString("password"));
-            user.setFirstName(rs.getString("first_name"));
-            user.setLastName(rs.getString("last_name"));
-            user.setEmail(rs.getString("email_address"));
-            return user;
-        }
-    }

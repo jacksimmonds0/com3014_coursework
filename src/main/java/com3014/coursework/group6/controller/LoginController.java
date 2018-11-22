@@ -1,4 +1,5 @@
 package com3014.coursework.group6.controller;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com3014.coursework.group6.model.Login;
 import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
-
 
 
 @Controller
@@ -78,9 +78,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/account")
-    public ModelAndView account(HttpSession sessions) {
+    public ModelAndView account(HttpSession session) {
         ModelAndView mav = new ModelAndView("account");
-        User currentUser = (User) sessions.getAttribute(CURRENT_USER);
+        User currentUser = (User) session.getAttribute(CURRENT_USER);
 
         mav.addObject("user", currentUser);
 

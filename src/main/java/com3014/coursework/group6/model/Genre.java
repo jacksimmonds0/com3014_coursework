@@ -1,19 +1,26 @@
 package com3014.coursework.group6.model;
 
-public enum Genre {
+public class Genre {
 
-    COMEDY("Comedy"), SCI_FI("Sci-Fi"), HORROR("Horror"), ROMANCE("Romance"), ACTION("Action"), THRILLER("Thriller"),
-        DRAMA("Drama"), MYSTERY("Mystery"), CRIME("Crime"), ANIMATION("Animation"), ADVENTURE("Adventure"),
-        FANTASY("Fantasy"), COMEDY_ROMANCE("Comedy Romance"), ACTION_COMEDY("Action-Comedy"), SUPERHERO("Superhero");
+    private int id;
+    private String name;
 
-    private String genre;
-
-    private Genre(String genre) {
-        this.genre = genre;
+    public Genre() {
     }
 
-    public String getGenre() {
-        return this.genre;
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

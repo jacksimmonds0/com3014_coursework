@@ -18,44 +18,79 @@ public class Movie {
     private List<Comment> comments;
     private List<Rating> ratings;
 
-    private Movie() {
-        // private constructor to prevent instantiation
+    public Movie() {
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getYear() {
         return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Director getDirector() {
-        return this.director;
+        return director;
+    }
+
+    public void setDirector(Director director) {
+        this.director = director;
     }
 
     public List<Actor> getActors() {
         return actors;
     }
 
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
+
     public List<Genre> getGenres() {
         return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     public List<Comment> getComments() {
         return comments;
     }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     public List<Rating> getRatings() {
         return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     public String getActorsForSearchResult() {
@@ -66,7 +101,7 @@ public class Movie {
 
     public String getGenresForSearchResults() {
         return genres.stream()
-                .map(Genre::getGenre)
+                .map(Genre::getName)
                 .collect(Collectors.joining(" | "));
     }
 

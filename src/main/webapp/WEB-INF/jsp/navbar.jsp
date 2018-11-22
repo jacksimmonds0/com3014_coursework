@@ -42,15 +42,16 @@
 
 <script>
     $(document).ready(function () {
+        var searchBox = $("#search-box");
 
         // type ahead search functionality
-        $('#search-box').on("input", function () {
+        searchBox.on("input", function () {
             $.ajax({
                 url:"searchbox",
                 type:"GET",
                 accept: "application/json",
                 data: {
-                    "term": $("#search-box").val()
+                    "term": searchBox.val()
                 },
                 success: function(data) {
                     var result, itemInner, item, title,

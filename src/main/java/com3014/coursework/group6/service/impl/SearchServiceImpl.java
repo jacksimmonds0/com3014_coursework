@@ -4,6 +4,8 @@ import com3014.coursework.group6.dao.MovieDAO;
 import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
 import com3014.coursework.group6.model.person.Actor;
+import com3014.coursework.group6.model.person.Director;
+import com3014.coursework.group6.service.MovieService;
 import com3014.coursework.group6.service.SearchService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,21 +19,22 @@ import java.util.stream.Collectors;
 public class SearchServiceImpl implements SearchService {
 
     @Autowired
-    private MovieDAO movieDAO;
+    private MovieService movieService;
 
     @Override
     public List<Movie> getSearchResults(String search) {
 
-        List<Movie> movies = movieDAO.getAllMovies();
+        List<Movie> movies = movieService.getAllMovies();
 
         return movies.stream()
-                .filter(m -> searchByTitle(m, search) || searchByGenre(m, search) || searchByYear(m, search) || searchByActors(m, search))
+                .filter(m -> searchByTitle(m, search) || searchbyDirector(m, search) || searchByActors(m, search) ||
+                        searchByGenre(m, search) || searchByYear(m, search) )
                 .collect(Collectors.toList());
     }
 
     @Override
     public String getSearchboxResults(String search) {
-        List<Movie> movies = movieDAO.getAllMovies();
+        List<Movie> movies = movieService.getAllMovies();
 
         // first 5 results from a search based on the title
         List<Movie> results = movies.stream()
@@ -53,7 +56,6 @@ public class SearchServiceImpl implements SearchService {
         return new JSONObject().put("response", jsonResults).toString();
     }
 
-
     private boolean searchByTitle(Movie movie, String search) {
         return movie.getTitle().toLowerCase().contains(search.toLowerCase());
     }
@@ -61,7 +63,7 @@ public class SearchServiceImpl implements SearchService {
     private boolean searchByGenre(Movie movie, String search) {
 
         for(Genre genre : movie.getGenres()) {
-            if(genre.getGenre().toLowerCase().contains(search.toLowerCase())) {
+            if(genre.getName().toLowerCase().contains(search.toLowerCase())) {
                 return true;
             }
         }
@@ -79,6 +81,12 @@ public class SearchServiceImpl implements SearchService {
         }
 
         return searchParsed == movie.getYear();
+    }
+
+    private boolean searchbyDirector(Movie movie, String search) {
+        String directorName = movie.getDirector().getName().toLowerCase();
+
+        return directorName.contains(search.toLowerCase());
     }
 
     private boolean searchByActors(Movie movie, String search) {
