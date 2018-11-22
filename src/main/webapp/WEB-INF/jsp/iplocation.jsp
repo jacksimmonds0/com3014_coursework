@@ -23,7 +23,11 @@
         <input type="submit" name="submit" value="submit" />
     </form>
 
-    <div id="map" style="height: 500px; width:100%; position:absolute"></div>
+    <div id="map" style="height: 500px; width:100%;"></div>
+
+    <div class="list-group">
+
+    </div>
 </div>
 </body>
 
@@ -76,18 +80,35 @@
             location: {
                 lat: Number(location.latitude),
                 lng: Number(location.longitude)},
-            radius: '500',
-            query: 'cinema'
+            radius: 500,
+            keyword: 'cinema',
+            type: 'cinema'
         };
         service = new google.maps.places.PlacesService(map);
-        service.textSearch(request, callback);
+        service.nearbySearch(request, callback);
     }
 
     function callback(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
+            $('.list-group').empty();
             for (var i = 0; i < results.length; i++) {
+
+                var request = {
+                    placeId: results[i].place_id
+                };
+                var service = new google.maps.places.PlacesService(map);
+                service.getDetails(request, function(place, status1) {
+                    if (status1 === google.maps.places.PlacesServiceStatus.OK) {
+                        var k = (place.website)?place.website:"#";
+                        $('.list-group').append("<a href=\""+k+"\" class=\"list-group-item list-group-item-action\">"+place.name+"</a>\n");
+
+                    }
+                });
+
                 createMarker(results[i]);
             }
+
+
         }
     }
 
