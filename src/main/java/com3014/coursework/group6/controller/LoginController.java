@@ -1,20 +1,28 @@
 package com3014.coursework.group6.controller;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com3014.coursework.group6.model.Login;
-import com3014.coursework.group6.model.User;
+import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
-
 
 
 @Controller
 public class LoginController {
+
+    private static final Logger LOG = Logger.getLogger(LoginController.class);
+
+    private static final String CURRENT_USER = "currentUser";
 
     @Autowired
     UserService userService;
@@ -28,18 +36,53 @@ public class LoginController {
 
     @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
     public ModelAndView loginProcess(HttpServletRequest request, HttpServletResponse response,
-                                     @ModelAttribute("login") Login login) {
+                                     HttpSession session, @ModelAttribute("login") Login login) {
         ModelAndView mav = null;
+        User user = new User();
 
-        User user = userService.validateUser(login);
+        try {
+            user = userService.validateUser(login);
+        }
+        catch(CannotGetJdbcConnectionException e) {
+            // log exception to server log and show error screen
+            LOG.error(e);
+
+            return new ModelAndView("error");
+        }
 
         if (null != user) {
             mav = new ModelAndView("index");
-            mav.addObject("firstname", user.getFirstname());
+            mav.addObject("firstName", user.getFirstName());
+
+            // add the user to the session (as a cookie)
+            session.setAttribute(CURRENT_USER, user);
         } else {
             mav = new ModelAndView("login");
             mav.addObject("message", "Username or Password is wrong!");
         }
+
+        return mav;
+    }
+
+    @RequestMapping(value = "/logout")
+    public ModelAndView logout(HttpSession session) {
+        ModelAndView mav = new ModelAndView("logout");
+        User currentUser = (User) session.getAttribute(CURRENT_USER);
+
+        mav.addObject("username", currentUser.getUsername());
+
+        // remove the session from the client-side
+        session.invalidate();
+
+        return mav;
+    }
+
+    @RequestMapping(value = "/account")
+    public ModelAndView account(HttpSession session) {
+        ModelAndView mav = new ModelAndView("account");
+        User currentUser = (User) session.getAttribute(CURRENT_USER);
+
+        mav.addObject("user", currentUser);
 
         return mav;
     }

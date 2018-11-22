@@ -11,14 +11,16 @@
     <context:component-scan base-package="com3014.coursework.group6"/>
     <context:annotation-config/>
 
-    <bean id="userService" class="com3014.coursework.group6.service.UserServiceImpl"/>
+    <bean id="userService" class="com3014.coursework.group6.service.impl.UserServiceImpl"/>
     <bean id="userDao" class="com3014.coursework.group6.dao.UserDaoImpl"/>
-
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="datasource"/>
+        <constructor-arg ref="dataSource"/>
+    </bean>
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="jdbcTemplate"/>
     </bean>
 
-    <bean id="datasource"
+    <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/group6"/>

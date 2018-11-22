@@ -1,39 +1,26 @@
 package com3014.coursework.group6.dao;
 
+import com3014.coursework.group6.dao.mapper.MovieMapper;
+import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
+import com3014.coursework.group6.model.person.Actor;
+import com3014.coursework.group6.model.person.Director;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
 public class MovieDAO {
 
-    public List<Movie> getAllMovies() {
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
-        Movie m1 = new Movie.Builder(1)
-                .title("The Film 1")
-                .build();
+    public List<Movie> getAllMoviesFromDB() {
+        String sql = "SELECT * FROM movies";
 
-
-        Movie m2 = new Movie.Builder(2)
-                .title("The Film 2")
-                .build();
-
-
-        Movie m3 = new Movie.Builder(3)
-                .title("The Film 3")
-                .build();
-
-
-        Movie m4 = new Movie.Builder(4)
-                .title("The Film 4")
-                .build();
-
-
-
-        return Arrays.asList(m1, m2, m3, m4);
+        return jdbcTemplate.query(sql, new MovieMapper());
     }
 
 }

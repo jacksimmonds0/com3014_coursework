@@ -28,18 +28,26 @@
         </tr>
         <tr>
             <td>
-                <form:label path="firstname">First Name</form:label>
+                <form:label path="confirmPassword">Confirm Password</form:label>
             </td>
             <td>
-                <form:input path="firstname" name="firstname" id="firstname" />
+                <form:password path="confirmPassword" name="confirmPassword" id="confirmPassword" />
             </td>
         </tr>
         <tr>
             <td>
-                <form:label path="lastname">Last Name</form:label>
+                <form:label path="firstName">First Name</form:label>
             </td>
             <td>
-                <form:input path="lastname" name="lastname" id="lastname" />
+                <form:input path="firstName" name="firstName" id="firstName" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="lastName">Last Name</form:label>
+            </td>
+            <td>
+                <form:input path="lastName" name="lastName" id="lastName" />
             </td>
         </tr>
         <tr>

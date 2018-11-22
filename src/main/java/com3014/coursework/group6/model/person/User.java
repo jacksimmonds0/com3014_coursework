@@ -1,10 +1,10 @@
-package com3014.coursework.group6.model;
+package com3014.coursework.group6.model.person;
 
-public class User {
+public class User extends Person {
+
     private String username;
     private String password;
-    private String firstname;
-    private String lastname;
+    private String confirmPassword;
     private String email;
 
     public String getUsername() {
@@ -23,20 +23,12 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getEmail() {
