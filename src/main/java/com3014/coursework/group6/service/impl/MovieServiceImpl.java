@@ -66,5 +66,20 @@ public class MovieServiceImpl implements MovieService {
         return movie;
     }
 
+    @Override
+    public int addRating(int movie_id, int user_id, double rating){
+        return movieDAO.addRating(movie_id,user_id, rating);
+    }
+
+    @Override
+    public double getAvgRating(int movie_id){
+        return movieDAO.getAvgRating(movie_id);
+    }
+
+    @Override
+    public double getIndivRating(int movie_id, int user_id){
+        return movieDAO.getIndivRating(movie_id, user_id);
+    }
+
 
 }

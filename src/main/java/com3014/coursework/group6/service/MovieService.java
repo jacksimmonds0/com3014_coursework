@@ -9,4 +9,10 @@ public interface MovieService {
     public List<Movie> getAllMovies();
 
     public Movie getMovie(int id);
+
+    public int addRating(int movie_id, int user_id, double rating);
+
+    public double getAvgRating(int movie_id);
+
+    public double getIndivRating(int movie_id, int user_id);
 }
