@@ -3,6 +3,8 @@
 <head>
     <title>Account - ${user.username}</title>
     <%@include file="styling.jsp"%>
+    <script src="<c:url value="/resources/js/account.js" />"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/account.css" />">
 </head>
 
 <body>
@@ -10,7 +12,7 @@
     <div class="container">
         <h2>Account</h2>
 
-        <ul class="nav flex-column nav-tabs" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="padding-top: 10px">
+        <ul class="nav flex-column nav-tabs" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <li role="presentation" class="active">
                 <a class="nav-link active" id="v-pills-details-tab" data-toggle="pill" href="#v-pills-details" role="tab" aria-controls="v-pills-details" aria-selected="true">Account details</a>
             </li>
@@ -21,7 +23,7 @@
 
         <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade active in" id="v-pills-details" role="tabpanel" aria-labelledby="v-pills-details-tab">
-                <form style="padding-top: 20px">
+                <form class="account-form">
                     <div class="form-group row">
                         <label for="account-username" class="col-md-2 col-form-label">Username</label>
                         <div class="col-md-4">
@@ -50,11 +52,11 @@
 
                 <button type="button" class="btn btn-default" id="update-details-btn">Update Details</button>
 
-                <p id="response-message-details" style="padding-top: 25px;"></p>
+                <p id="response-message-details" class="response-message"></p>
             </div>
 
             <div class="tab-pane fade" id="v-pills-change-password" role="tabpanel" aria-labelledby="v-pills-change-password-tab">
-                <form style="padding-top: 20px">
+                <form class="account-form">
                     <div class="form-group row">
                         <label for="old-password-input" class="col-md-2 col-form-label">Old Password</label>
                         <div class="col-md-4">
@@ -77,93 +79,12 @@
 
                 <button type="button" class="btn btn-default" id="change-password-btn">Change Password</button>
 
-                <p id="response-message-password" style="padding-top: 25px;"></p>
+                <p id="response-message-password" class="response-message"></p>
             </div>
         </div>
     </div>
     </body>
 
-<script>
-    var updateDetailsBtn = $("#update-details-btn"),
-        changePasswordBtn = $("#change-password-btn"),
-        oldPassword = $("#old-password-input"),
-        newPassword = $("#new-password-input"),
-        confirmPassword = $("#confirm-new-password-input");
-
-    updateDetailsBtn.click(function () {
-        $.ajax({
-            url: "account/" + ${user.id} + "/update/details",
-            type: "PUT",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            data:  JSON.stringify({
-                "first_name": $("#account-first-name").val(),
-                "last_name": $("#account-last-name").val(),
-                "email": $("#account-email").val()
-            }),
-            success: function(data) {
-                handleResponse(data, "details");
-            }
-        })
-    });
-
-    changePasswordBtn.click(function () {
-        $.ajax({
-            url: "account/" + ${user.id} + "/update/password",
-            type: "PUT",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            data: JSON.stringify({
-                "old_password": btoa(oldPassword.val()),
-                "new_password": btoa(newPassword.val()),
-                "confirm_password": btoa(confirmPassword.val())
-            }),
-            success: function(data) {
-               handleResponse(data, "password");
-            }
-        })
-    });
-
-    /**
-     * Handling the response from the server by adding the message to the screen in the correct place/format
-     *
-     * @param data
-     *          the JSON response from the server
-     * @param type
-     *          the type of response i.e. details or password update
-     */
-    function handleResponse(data, type) {
-        var responseMessage;
-
-        if(type === "password") {
-            responseMessage = $("#response-message-password");
-        }
-        else if(type === "details") {
-            responseMessage = $("#response-message-details");
-        }
-
-        //responseMessage.fadeIn('fast');
-        responseMessage.text(data.message);
-
-        if(data.error) {
-            responseMessage.css("color", "red");
-        }
-        else {
-            responseMessage.css("color", "black");
-
-            if(type === "password") {
-                oldPassword.val("");
-                newPassword.val("");
-                confirmPassword.val("");
-            }
-        }
-
-        //responseMessage.delay(10000).fadeOut('slow');
-    }
-</script>
+    <input type="hidden" id="user-id" value="${user.id}"/>
 
 </html>

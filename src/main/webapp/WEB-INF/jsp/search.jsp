@@ -3,6 +3,7 @@
 <head>
     <title>Search Results</title>
     <%@include file="styling.jsp"%>
+    <link rel="stylesheet" href="<c:url value="/resources/css/search.css" />">
 </head>
 
 <body>
@@ -25,8 +26,8 @@
                     <div class="col-12">
                         <p>
                             4.2 <span class="glyphicon glyphicon-star"> </span>
-                            <span style="padding-left: 15px;">${movie.genresForSearchResults}</span>
-                            <span style="padding-left: 15px;">Directed by: <b>${movie.director.firstName} ${movie.director.lastName}</b></span>
+                            <span class="movie-sub-info">${movie.genresForSearchResults}</span>
+                            <span class="movie-sub-info">Directed by: <b>${movie.director.firstName} ${movie.director.lastName}</b></span>
                         </p>
                     </div>
                     <div class="w-100"></div>
