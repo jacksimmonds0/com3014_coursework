@@ -132,14 +132,12 @@
      * Handling the response from the server by adding the message to the screen in the correct place/format
      *
      * @param data
-     *          the JSON resposne from the server
+     *          the JSON response from the server
      * @param type
      *          the type of response i.e. details or password update
      */
     function handleResponse(data, type) {
         var responseMessage;
-
-        // TODO if data.message = 'id not match' redirect to login page
 
         if(type === "password") {
             responseMessage = $("#response-message-password");

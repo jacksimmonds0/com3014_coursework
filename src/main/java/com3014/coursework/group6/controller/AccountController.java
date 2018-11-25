@@ -24,7 +24,7 @@ import javax.xml.bind.DatatypeConverter;
 
 /**
  * Controller for the account page for the user to update details and/or password
- * Contains API for PUT requests to update these fields in the database
+ * Contains REST API for PUT requests to update the respective details and password fields in the database
  */
 @Controller
 @RequestMapping("/account")
@@ -130,7 +130,7 @@ public class AccountController {
         // update the session to the new user
         session.setAttribute("currentUser", updatedUser);
 
-        return responseJSON(true, "Successfully updated user details");
+        return responseJSON(false, "Successfully updated user details");
     }
 
 
@@ -202,7 +202,7 @@ public class AccountController {
     private boolean requestDoesNotMatchSession(HttpSession session, int id) {
         User currentUser = (User) session.getAttribute("currentUser");
 
-        return !(currentUser.getId() == id);
+        return currentUser == null || !(currentUser.getId() == id);
     }
 
     /**
