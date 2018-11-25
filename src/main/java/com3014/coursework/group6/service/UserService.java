@@ -17,7 +17,7 @@ public interface UserService {
 
     boolean userExists(String username);
 
-    User updateDetails(int id, String firstName, String lastName, String email);
+    User updateDetails(User user);
 
     boolean correctPasswordForUser(int id, String password);
 

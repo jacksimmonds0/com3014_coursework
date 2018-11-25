@@ -1,6 +1,31 @@
 package com3014.coursework.group6.validator;
 
-public class DetailsUpdateValidator {
+import com3014.coursework.group6.model.person.User;
+import com3014.coursework.group6.validator.regex.ValidatorRegex;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
-    public static final String EMAIL_VERIFICATION = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$";
+@Component
+public class DetailsUpdateValidator implements Validator {
+
+    @Override
+    public boolean supports(Class clazz) {
+        return DetailsUpdateValidator.class.isAssignableFrom(clazz);
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        User user = (User) target;
+
+        ValidationUtils.rejectIfEmpty(errors, "firstName", "notEmpty.firstName");
+        ValidationUtils.rejectIfEmpty(errors, "lastName", "notEmpty.firstName");
+        ValidationUtils.rejectIfEmpty(errors, "email", "notEmpty.email");
+
+        if(!user.getEmail().matches(ValidatorRegex.EMAIL)) {
+            errors.rejectValue("email", "wrongFormat.email");
+        }
+
+    }
 }

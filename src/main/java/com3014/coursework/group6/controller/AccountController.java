@@ -3,6 +3,7 @@ package com3014.coursework.group6.controller;
 import com3014.coursework.group6.model.account.PasswordUpdate;
 import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
+import com3014.coursework.group6.validator.DetailsUpdateValidator;
 import com3014.coursework.group6.validator.PasswordUpdateValidator;
 
 import org.json.JSONObject;
@@ -15,26 +16,61 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 
+/**
+ * Controller for the account page for the user to update details and/or password
+ * Contains API for PUT requests to update these fields in the database
+ */
 @Controller
+@RequestMapping("/account")
 public class AccountController {
 
+    private static final String CURRENT_USER = "currentUser";
+
     private UserService userService;
+
+    private DetailsUpdateValidator detailsUpdateValidator;
 
     private PasswordUpdateValidator passwordUpdateValidator;
 
     @Autowired
-    public AccountController(UserService userService, PasswordUpdateValidator passwordUpdateValidator) {
+    public AccountController(UserService userService, DetailsUpdateValidator detailsUpdateValidator,
+                             PasswordUpdateValidator passwordUpdateValidator) {
         this.userService = userService;
+        this.detailsUpdateValidator = detailsUpdateValidator;
         this.passwordUpdateValidator = passwordUpdateValidator;
     }
 
     /**
-     * Controller for updating the details for the logged in user from the <code>/account</code> view
+     * On the /account endpoint for directing the user to the account jsp page if they are logged in,
+     * otherwise re-direct to the login page
+     *
+     * @param session
+     *          the current {@link HttpSession} for the logged in user
+     * @return the appropriate view depending on if a user is logged in or not
+     */
+    @RequestMapping(value = "")
+    public ModelAndView account(HttpSession session) {
+        ModelAndView mav = new ModelAndView("account");
+        User currentUser = (User) session.getAttribute(CURRENT_USER);
+
+        // if no user is logged in redirect to the login page
+        if(currentUser == null) {
+            return new ModelAndView("redirect:login");
+        }
+
+        mav.addObject("user", currentUser);
+
+        return mav;
+    }
+
+    /**
+     * Controller for updating the details for the logged in user from the /account view
      *
      * @param id
      *          the path variable taken from the url for the corresponding user id
@@ -46,6 +82,10 @@ public class AccountController {
      *              "last_name": "new last name",
      *              "email": "new email"
      *          }
+     * @param user
+     *          the model attribute for the result param to hold the JSON fields
+     * @param result
+     *          the {@link BindingResult} to hold any errors from validation of the inputs
      * @param session
      *          the {@link HttpSession} object to retrieve the current user session from
      * @return the response JSON if the request was successful or not i.e.
@@ -54,27 +94,38 @@ public class AccountController {
      *              "message": "Message associated with the response"
      *          }
      */
-    @RequestMapping(value = "/account/{id}/update/details",
+    @RequestMapping(value = "/{id}/update/details",
                     method = RequestMethod.PUT,
                     consumes = {"application/json"},
                     produces = {"application/json"})
     @ResponseBody
-    public String updateAccountDetails(@PathVariable("id") int id, @RequestBody String req, HttpSession session) {
+    public String updateAccountDetails(@PathVariable("id") int id, @RequestBody String req, HttpSession session,
+                                       @ModelAttribute("user") User user, BindingResult result) {
 
         JSONObject reqJson = new JSONObject(req);
 
         // ensure the request matches the current session from the client
         if(requestDoesNotMatchSession(session, id)) {
-            // TODO use HTTP 400 response instead?
             return responseJSON(true, "User details could not be updated");
         }
 
-        // TODO validate email
+        // get the fields from the JSON request and create user object for validation and updating the DB
+        String firstName = reqJson.optString("first_name");
+        String lastName = reqJson.optString("last_name");
+        String email = reqJson.optString("email");
 
-        User updatedUser = userService.updateDetails(id,
-                reqJson.optString("first_name"),
-                reqJson.optString("last_name"),
-                reqJson.optString("email"));
+        user.setId(id);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+
+        detailsUpdateValidator.validate(user, result);
+
+        if(result.getFieldError("email") != null) {
+            return responseJSON(true, "Email is not of the correct format, please try again");
+        }
+
+        User updatedUser = userService.updateDetails(user);
 
         // update the session to the new user
         session.setAttribute("currentUser", updatedUser);
@@ -84,7 +135,7 @@ public class AccountController {
 
 
     /**
-     * Controller for updating the password for the logged in user from the <code>/account</code> view
+     * Controller for updating the password for the logged in user from the /account view
      *
      * @param id
      *          the path variable taken from the url for the corresponding user id
@@ -98,8 +149,6 @@ public class AccountController {
      *          }
      * @param session
      *          the {@link HttpSession} object to retrieve the current user session from
-     * @param response
-     *          the {@link HttpServletResponse} object for the HTTP response to the PUT request
      * @param update
      *          the model attribute for the result param to hold the JSON fields
      * @param result
@@ -110,18 +159,17 @@ public class AccountController {
      *              "message": "Message associated with the response"
      *          }
      */
-    @RequestMapping(value = "/account/{id}/update/password",
+    @RequestMapping(value = "/{id}/update/password",
             method = RequestMethod.PUT,
             consumes = {"application/json"},
             produces = {"application/json"})
     @ResponseBody
-    public String updateAccountPassword(@PathVariable("id") int id, @RequestBody String req, HttpSession session, HttpServletResponse response,
+    public String updateAccountPassword(@PathVariable("id") int id, @RequestBody String req, HttpSession session,
                                         @ModelAttribute("update") PasswordUpdate update, BindingResult result) {
 
         JSONObject reqJson = new JSONObject(req);
 
         if(requestDoesNotMatchSession(session, id)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return responseJSON(true, "Password could not be updated");
         }
 
@@ -130,11 +178,16 @@ public class AccountController {
         update.setNewPassword(decodeBase64FromJSONField(reqJson, "new_password"));
         update.setConfirmPassword(decodeBase64FromJSONField(reqJson, "confirm_password"));
 
-        // TODO validate password against rules (e.g. at least 8 characters, number and letters, uppercase)
         passwordUpdateValidator.validate(update, result);
 
         if(result.hasErrors()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+            // ensure password matches the guidelines, notify the user otherwise
+            if(result.getFieldError("newPassword") != null) {
+                return responseJSON(true, "Password does not match our guidelines, must be alphanumeric " +
+                        "and contain at least 8 characters with 1 uppercase and 1 special character");
+            }
+
             return responseJSON(true, "Password could not be updated");
         }
 

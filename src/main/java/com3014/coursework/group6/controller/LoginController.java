@@ -77,13 +77,4 @@ public class LoginController {
         return mav;
     }
 
-    @RequestMapping(value = "/account")
-    public ModelAndView account(HttpSession session) {
-        ModelAndView mav = new ModelAndView("account");
-        User currentUser = (User) session.getAttribute(CURRENT_USER);
-
-        mav.addObject("user", currentUser);
-
-        return mav;
-    }
 }

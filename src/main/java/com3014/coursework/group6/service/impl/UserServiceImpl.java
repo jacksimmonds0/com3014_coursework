@@ -41,18 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateDetails(int id, String firstName, String lastName, String email) {
-        User updatedUser = new User();
+    public User updateDetails(User user) {
+        userDao.updateDetails(user);
 
-        updatedUser.setId(id);
-        updatedUser.setFirstName(firstName);
-        updatedUser.setLastName(lastName);
-        updatedUser.setEmail(email);
-
-        userDao.updateDetails(updatedUser);
-
-        // ensure data has been updated correctly
-        return userDao.getUserById(id);
+        // get new data from DAO
+        return userDao.getUserById(user.getId());
     }
 
     @Override
