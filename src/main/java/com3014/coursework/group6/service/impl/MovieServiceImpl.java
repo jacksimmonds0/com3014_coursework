@@ -48,4 +48,38 @@ public class MovieServiceImpl implements MovieService {
 
         return movies;
     }
+
+    @Override
+    public Movie getMovie(int id){
+        Movie movie = movieDAO.getMovieFromDB(id);
+        if(!movie.equals(null)){
+            Director d = directorDAO.getDirectorForMovie(movie.getDirector().getId());
+            movie.setDirector(d);
+
+            List<Actor> actors = actorDAO.getActorsForMovie(movie.getId());
+            movie.setActors(actors);
+
+            List<Genre> genres =  genreDAO.getGenresForMovie(movie.getId());
+            movie.setGenres(genres);
+        }
+
+        return movie;
+    }
+
+    @Override
+    public int addRating(int movie_id, int user_id, double rating){
+        return movieDAO.addRating(movie_id,user_id, rating);
+    }
+
+    @Override
+    public double getAvgRating(int movie_id){
+        return movieDAO.getAvgRating(movie_id);
+    }
+
+    @Override
+    public double getIndivRating(int movie_id, int user_id){
+        return movieDAO.getIndivRating(movie_id, user_id);
+    }
+
+
 }
