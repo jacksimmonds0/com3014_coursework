@@ -62,4 +62,50 @@ public class UserDaoImpl implements UserDao {
         return roles;
     }
 
+    @Override
+    public void updateDetails(User updatedUser) {
+        String sql = "UPDATE users SET first_name=:first_name, last_name=:last_name, email_address=:email WHERE id=:id;";
+
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", updatedUser.getId());
+        namedParameters.addValue("first_name", updatedUser.getFirstName());
+        namedParameters.addValue("last_name", updatedUser.getLastName());
+        namedParameters.addValue("email", updatedUser.getEmail());
+
+        jdbcTemplate.update(sql, namedParameters);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        String sql = "SELECT * FROM users WHERE id=:id";
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
+
+        return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
+    }
+
+    @Override
+    public boolean correctPasswordForUser(int id, String password) {
+        String sql = "SELECT * FROM users WHERE id=:id AND password=:password;";
+
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
+        namedParameters.addValue("password", password);
+
+        List result = jdbcTemplate.query(sql, namedParameters, new UserMapper());
+
+        return result.size() > 0;
+    }
+
+    @Override
+    public void updatePasswordForUser(int id, String password) {
+        String sql = "UPDATE users SET password=:password WHERE id=:id;";
+
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
+        namedParameters.addValue("password", password);
+
+        jdbcTemplate.update(sql, namedParameters);
+    }
+
 }

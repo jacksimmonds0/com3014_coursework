@@ -40,7 +40,7 @@
     </div>
 </nav>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         var searchBox = $("#search-box");
 

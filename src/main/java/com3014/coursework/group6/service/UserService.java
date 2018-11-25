@@ -16,4 +16,10 @@ public interface UserService {
     List getUserRoles(String username);
 
     boolean userExists(String username);
+
+    User updateDetails(int id, String firstName, String lastName, String email);
+
+    boolean correctPasswordForUser(int id, String password);
+
+    void updatePasswordForUser(int id, String password);
 }

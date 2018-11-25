@@ -40,4 +40,29 @@ public class UserServiceImpl implements UserService {
         return userDao.userExists(username);
     }
 
+    @Override
+    public User updateDetails(int id, String firstName, String lastName, String email) {
+        User updatedUser = new User();
+
+        updatedUser.setId(id);
+        updatedUser.setFirstName(firstName);
+        updatedUser.setLastName(lastName);
+        updatedUser.setEmail(email);
+
+        userDao.updateDetails(updatedUser);
+
+        // ensure data has been updated correctly
+        return userDao.getUserById(id);
+    }
+
+    @Override
+    public boolean correctPasswordForUser(int id, String password) {
+        return userDao.correctPasswordForUser(id, password);
+    }
+
+    @Override
+    public void updatePasswordForUser(int id, String password) {
+        userDao.updatePasswordForUser(id, password);
+    }
+
 }

@@ -16,4 +16,11 @@ public interface UserDao {
 
     List getUserRoles(String username);
 
+    void updateDetails(User updatedUser);
+
+    User getUserById(int id);
+
+    boolean correctPasswordForUser(int id, String password);
+
+    void updatePasswordForUser(int id, String password);
 }
