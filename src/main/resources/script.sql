@@ -1,5 +1,3 @@
-CREATE DATABASE `group6` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
@@ -106,5 +104,14 @@ INSERT INTO `group6`.`genre`
 ('Comedy Romance'),
 ('Action-Comedy'),
 ('Superhero');
+
+CREATE TABLE `ratings`(
+  `movie_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rating` FLOAT NOT NULL,
+  PRIMARY KEY (`movie_id`,`user_id`),
+  FOREIGN KEY (`movie_id`) REFERENCES `movies`(`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
