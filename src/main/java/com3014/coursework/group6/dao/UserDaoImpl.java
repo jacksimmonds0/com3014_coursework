@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public boolean userExists(String username) {
-        String sql = "SELECT * FROM users WHERE username=':username'";
+        String sql = "SELECT * FROM users WHERE username=:username";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("username", username);
 
@@ -60,6 +60,48 @@ public class UserDaoImpl implements UserDao {
                 .queryForList(sql, namedParameters, String.class);
 
         return roles;
+    }
+
+    @Override
+    public void updateDetails(User updatedUser) {
+        String sql = "UPDATE users SET first_name=:first_name, last_name=:last_name, email_address=:email WHERE id=:id;";
+
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", updatedUser.getId());
+        namedParameters.addValue("first_name", updatedUser.getFirstName());
+        namedParameters.addValue("last_name", updatedUser.getLastName());
+        namedParameters.addValue("email", updatedUser.getEmail());
+
+        jdbcTemplate.update(sql, namedParameters);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        String sql = "SELECT * FROM users WHERE id=:id";
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
+
+        return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
+    }
+
+    @Override
+    public void updatePasswordForUser(int id, String password) {
+        String sql = "UPDATE users SET password=:password WHERE id=:id;";
+
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
+        namedParameters.addValue("password", password);
+
+        jdbcTemplate.update(sql, namedParameters);
+    }
+
+    @Override
+    public User getUserByUsername(Login login) {
+        String sql = "SELECT * FROM users WHERE username=:username";
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("username", login.getUsername());
+
+        return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
     }
 
 }

@@ -18,7 +18,7 @@
           p:suffix=".jsp" />
 
     <mvc:resources mapping="/resources/**" location="/resources/"
-    cache-period="31556926"/>
+                   cache-period="31556926"/>
     <mvc:annotation-driven />
 
 </beans>

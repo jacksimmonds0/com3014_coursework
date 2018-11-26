@@ -41,24 +41,25 @@ public class LoginController {
         User user = new User();
 
         try {
-            user = userService.validateUser(login);
+            if(userService.validateUser(login)) {
+                user = userService.getUserByUsername(login);
+
+                // add the user to the session (as a cookie)
+                session.setAttribute(CURRENT_USER, user);
+
+                // return back to the home page
+                mav = new ModelAndView("index");
+            }
+            else {
+                mav = new ModelAndView("login");
+                mav.addObject("message", "Username or Password is wrong!");
+            }
         }
         catch(CannotGetJdbcConnectionException e) {
             // log exception to server log and show error screen
             LOG.error(e);
 
             return new ModelAndView("error");
-        }
-
-        if (null != user) {
-            mav = new ModelAndView("index");
-            mav.addObject("firstName", user.getFirstName());
-
-            // add the user to the session (as a cookie)
-            session.setAttribute(CURRENT_USER, user);
-        } else {
-            mav = new ModelAndView("login");
-            mav.addObject("message", "Username or Password is wrong!");
         }
 
         return mav;
@@ -77,13 +78,4 @@ public class LoginController {
         return mav;
     }
 
-    @RequestMapping(value = "/account")
-    public ModelAndView account(HttpSession session) {
-        ModelAndView mav = new ModelAndView("account");
-        User currentUser = (User) session.getAttribute(CURRENT_USER);
-
-        mav.addObject("user", currentUser);
-
-        return mav;
-    }
 }
