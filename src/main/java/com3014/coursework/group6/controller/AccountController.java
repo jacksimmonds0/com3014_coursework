@@ -200,7 +200,7 @@ public class AccountController {
      * @return true if the user from the {@link HttpSession} has a different id to the id parameter, false otherwise
      */
     private boolean requestDoesNotMatchSession(HttpSession session, int id) {
-        User currentUser = (User) session.getAttribute("currentUser");
+        User currentUser = (User) session.getAttribute(CURRENT_USER);
 
         return currentUser == null || !(currentUser.getId() == id);
     }

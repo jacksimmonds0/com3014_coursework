@@ -11,7 +11,7 @@ public interface UserService {
 
     void assignUserRole(String username);
 
-    User validateUser(Login login);
+    boolean validateUser(Login login);
 
     List getUserRoles(String username);
 
@@ -22,4 +22,6 @@ public interface UserService {
     boolean correctPasswordForUser(int id, String password);
 
     void updatePasswordForUser(int id, String password);
+
+    User getUserByUsername(Login login);
 }

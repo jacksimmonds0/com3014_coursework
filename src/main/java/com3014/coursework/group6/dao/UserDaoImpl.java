@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public boolean userExists(String username) {
-        String sql = "SELECT * FROM users WHERE username=':username'";
+        String sql = "SELECT * FROM users WHERE username=:username";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("username", username);
 
@@ -85,19 +85,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean correctPasswordForUser(int id, String password) {
-        String sql = "SELECT * FROM users WHERE id=:id AND password=:password;";
-
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        namedParameters.addValue("id", id);
-        namedParameters.addValue("password", password);
-
-        List result = jdbcTemplate.query(sql, namedParameters, new UserMapper());
-
-        return result.size() > 0;
-    }
-
-    @Override
     public void updatePasswordForUser(int id, String password) {
         String sql = "UPDATE users SET password=:password WHERE id=:id;";
 
@@ -106,6 +93,15 @@ public class UserDaoImpl implements UserDao {
         namedParameters.addValue("password", password);
 
         jdbcTemplate.update(sql, namedParameters);
+    }
+
+    @Override
+    public User getUserByUsername(Login login) {
+        String sql = "SELECT * FROM users WHERE username=:username";
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("username", login.getUsername());
+
+        return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
     }
 
 }

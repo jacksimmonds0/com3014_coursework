@@ -6,6 +6,7 @@ import com3014.coursework.group6.model.person.User;
 import java.util.List;
 
 public interface UserDao {
+
     void register(User user);
 
     void assignUserRole(String username);
@@ -20,7 +21,7 @@ public interface UserDao {
 
     User getUserById(int id);
 
-    boolean correctPasswordForUser(int id, String password);
-
     void updatePasswordForUser(int id, String password);
+
+    User getUserByUsername(Login login);
 }
