@@ -9,6 +9,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
+            <li><a href="/addmovie">Add a Movie</a></li>
             <li><a href="#">Movies</a></li>
             <li><a href="/iplocation">Nearest Cinema</a></li>
         </ul>
