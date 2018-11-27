@@ -1,27 +1,32 @@
-package com3014.coursework.group6.service;
+package com3014.coursework.group6.dao;
 
 import com3014.coursework.group6.model.Login;
 import com3014.coursework.group6.model.person.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserDao {
 
     void register(User user);
 
     void assignUserRole(String username);
 
-    boolean validateUser(Login login);
+    boolean userExists(String username);
+
+    User validateUser(Login login);
 
     List getUserRoles(String username);
 
-    boolean userExists(String username);
+<<<<<<< HEAD
+    User getUserByID(int id);
 
-    User updateDetails(User user);
+=======
+    void updateDetails(User updatedUser);
 
-    boolean correctPasswordForUser(int id, String password);
+    User getUserById(int id);
 
     void updatePasswordForUser(int id, String password);
 
     User getUserByUsername(Login login);
+>>>>>>> f54cc85aaf4275a511716a7f0d35ccc19351865c
 }

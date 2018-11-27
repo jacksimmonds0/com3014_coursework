@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,9 +44,16 @@ public class RegistrationController {
         try {
             registerValidator.validate(user, result);
 
-            if(result.hasErrors()){
+            if(result.hasErrors()) {
+
                 return new ModelAndView("register");
-            } else {
+            }
+            else {
+
+                // hash the password before being stored in the database
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String hashedPassword = passwordEncoder.encode(user.getPassword());
+                user.setPassword(hashedPassword);
 
                 userService.register(user);
                 userService.assignUserRole(user.getUsername());

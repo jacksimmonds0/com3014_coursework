@@ -1,4 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="<c:url value="/resources/js/navbar.js" />"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/navbar.css" />">
+
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -6,6 +9,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
+            <li><a href="/addmovie">Add a Movie</a></li>
             <li><a href="#">Movies</a></li>
             <li><a href="/iplocation">Nearest Cinema</a></li>
         </ul>
@@ -15,7 +19,7 @@
 
                     <div class="dropdown">
                         <input type="text" autocomplete="off" class="form-control" id="search-box" name="term" placeholder="Search">
-                        <ul id="search-dropdown" role="menu" class="dropdown-menu" style="display:none;" >
+                        <ul id="search-dropdown" role="menu" class="dropdown-menu" >
                         </ul>
                     </div>
 
@@ -39,49 +43,3 @@
         </ul>
     </div>
 </nav>
-
-<script>
-    $(document).ready(function () {
-        var searchBox = $("#search-box");
-
-        // type ahead search functionality
-        searchBox.on("input", function () {
-            $.ajax({
-                url:"searchbox",
-                type:"GET",
-                accept: "application/json",
-                data: {
-                    "term": searchBox.val()
-                },
-                success: function(data) {
-                    var result, itemInner, item, title,
-                        searchDropdown = $('#search-dropdown'),
-                        results = JSON.parse(data).response;
-
-                    searchDropdown.empty();
-                    if(results.length === 0) {
-                        searchDropdown.css('display', 'none');
-                        return;
-                    }
-
-                    searchDropdown.css('display', 'block');
-                    for(var i = 0; i < results.length; i++) {
-                        result = results[i];
-
-                        item = document.createElement("li");
-                        itemInner = document.createElement("a");
-
-                        itemInner.href = "/movie?id=" + result.id;
-                        title = document.createTextNode(result.title);
-                        itemInner.appendChild(title);
-
-                        item.appendChild(itemInner);
-                        searchDropdown.append(item);
-                    }
-
-                }
-            });
-        });
-    });
-
-</script>
