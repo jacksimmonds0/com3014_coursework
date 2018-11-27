@@ -9,7 +9,7 @@
 <body>
 <%@include file="navbar.jsp"%>
 <h3>Welcome, enter the movie details</h3>
-<form:form id="addmovieForm" method="POST" action="addmovie">
+<form:form id="addmovieForm" modelAttribute="movie" method="POST" action="addmovie">
     <table>
         <tr>
             <td><form:label path="year">Year</form:label></td>

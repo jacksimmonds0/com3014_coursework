@@ -5,12 +5,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@Controller
 public class AddMovieController {
     @RequestMapping(value = "/addmovie", method = RequestMethod.GET)
-    /*public ModelAndView showForm() {
-        return new ModelAndView("addmovie", "movie", new Movie());
-    }*/
-    public String root() {
-        return "addmovie";
+    public ModelAndView showRegister(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mv = new ModelAndView("addmovie");
+        mv.addObject("movie", new Movie());
+
+        return mv;
     }
 }
