@@ -16,4 +16,6 @@ public interface UserDao {
 
     List getUserRoles(String username);
 
+    User getUserByID(int id);
+
 }

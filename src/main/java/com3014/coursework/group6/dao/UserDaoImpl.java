@@ -10,6 +10,7 @@ import com3014.coursework.group6.model.person.User;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 public class UserDaoImpl implements UserDao {
 
@@ -49,6 +50,16 @@ public class UserDaoImpl implements UserDao {
         List<User> users = jdbcTemplate.query(sql, new UserMapper());
 
         return users.size() > 0 ? users.get(0) : null;
+    }
+
+    public User getUserByID(int id){
+        String sql = "SELECT * FROM users WHERE id = :id";
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
+
+        User user = jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
+
+        return user;
     }
 
     public List getUserRoles(String username) {

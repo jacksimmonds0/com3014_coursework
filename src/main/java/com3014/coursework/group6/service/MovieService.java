@@ -1,7 +1,9 @@
 package com3014.coursework.group6.service;
 
+import com3014.coursework.group6.model.Comment;
 import com3014.coursework.group6.model.Movie;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface MovieService {
@@ -12,7 +14,12 @@ public interface MovieService {
 
     public int addRating(int movie_id, int user_id, double rating);
 
+    public int addComment(int movie_id, int user_id, String title, String comment, Timestamp timestamp);
+
     public double getAvgRating(int movie_id);
 
     public double getIndivRating(int movie_id, int user_id);
+
+    public List<Comment> getComments(int movie_id);
+
 }

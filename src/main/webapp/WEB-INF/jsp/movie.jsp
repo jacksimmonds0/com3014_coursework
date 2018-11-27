@@ -27,6 +27,8 @@
             });
         }
 
+
+
         $(function() {
             <c:choose>
             <c:when test="${!empty currentUser}">
@@ -63,6 +65,45 @@
                 theme: 'fontawesome-stars',
                 readonly: true,
                 initialRating: getAvgRating()
+            });
+
+            $("#add-comment-form").on("submit",function(e){
+                e.preventDefault();
+                var data =  $("#add-comment-form").serialize();
+                $.ajax({
+                    url:"movie/${movie.id}/addcomment",
+                    type:"POST",
+                    data: data,
+                    success: function(data){
+                        console.log(data.username);
+                        $("#comments-container").append("<article class=\"row\">\n" +
+                            "                            <div class=\"col-md-2 col-sm-2 hidden-xs\">\n" +
+                            "                            <figure class=\"thumbnail\">\n" +
+                            "                            <img class=\"img-responsive\" src=\"http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png\">\n" +
+                            "                            <figcaption class=\"text-center\">"+data.username+"</figcaption>\n" +
+                            "                            </figure>\n" +
+                            "                            </div>\n" +
+                            "                            <div class=\"col-md-10 col-sm-10\">\n" +
+                            "                            <div class=\"panel panel-default arrow left\">\n" +
+                            "                            <div class=\"panel-body\">\n" +
+                            "                            <header class=\"text-left\">\n" +
+                            "                            <div class=\"comment-title\"><h5>"+data.title+"</h5></div>\n" +
+                            "                        <time class=\"comment-date\" datetime=\""+data.comment_time+"\"><i class=\"fa fa-clock-o\"></i>"+data.comment_time+"</time>\n" +
+                            "                        </header>\n" +
+                            "                        <div class=\"comment-post\">\n" +
+                            "                            <p>\n" +
+                            "                            "+data.comment+"\n" +
+                            "                        </p>\n" +
+                            "                        </div>\n" +
+                            "                        <%--<p class=\"text-right\"><a href=\"#\" class=\"btn btn-default btn-sm\"><i class=\"fa fa-reply\"></i> reply</a></p>--%>\n" +
+                            "                        </div>\n" +
+                            "                        </div>\n" +
+                            "                        </div>\n" +
+                            "                        </article><br>");
+
+                    }
+                });
+
             });
 
 
@@ -123,8 +164,70 @@
         <br>
 
 </div>
+<br>
 <div class="container">
+    <div class="col-12">
+    <c:choose>
+    <c:when test="${!empty currentUser}">
+        <form action="/movie/${movie.id}/addcomment" id="add-comment-form">
+            <div class="form-group">
+                <label for="title">Title: </label>
+                <input class="form-control" id="title" type="text" name="title"/>
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment: </label>
+                <textarea class="form-control" id="comment" name="comment"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post Comment</button>
 
+        </form>
+    </c:when>
+    </c:choose>
+
+    </div>
+    <div id="comments-container" class="col-12">
+        <%--<div class="panel panel-default arrow left">--%>
+            <%--<div class="panel-body">--%>
+                <%--<header class="text-left">--%>
+                    <%--<div class="comment-user"><i class="fa fa-user"></i> That Guy</div>--%>
+                    <%--<time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>--%>
+                <%--</header>--%>
+                <%--<div class="comment-post">--%>
+                    <%--<p>--%>
+                    <%--</p>--%>
+                <%--</div>--%>
+                <%--<p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+        <c:forEach items="${comments}" varStatus="i" var="comment">
+            <article class="row">
+                <div class="col-md-2 col-sm-2 hidden-xs">
+                    <figure class="thumbnail">
+                        <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png">
+                        <figcaption class="text-center">${comment.user.username}</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                    <div class="panel panel-default arrow left">
+                        <div class="panel-body">
+                            <header class="text-left">
+                                <div class="comment-title"><h5>${comment.title}</h5></div>
+                                <time class="comment-date" datetime="${comment.timestamp}"><i class="fa fa-clock-o"></i>${comment.timestamp}</time>
+                            </header>
+                            <div class="comment-post">
+                                <p>
+                                    ${comment.comment}
+                                </p>
+                            </div>
+                                <%--<p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>--%>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <br>
+        </c:forEach>
+    </div>
 </div>
 
 

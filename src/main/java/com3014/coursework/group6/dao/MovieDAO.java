@@ -1,6 +1,8 @@
 package com3014.coursework.group6.dao;
 
+import com3014.coursework.group6.dao.mapper.CommentMapper;
 import com3014.coursework.group6.dao.mapper.MovieMapper;
+import com3014.coursework.group6.model.Comment;
 import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
 import com3014.coursework.group6.model.person.Actor;
@@ -10,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -54,6 +57,18 @@ public class MovieDAO {
         return result;
     }
 
+    public int addComment(int movie_id, int user_id, String title, String comment, Timestamp timestamp) {
+            String sql = "INSERT INTO comments (movie_id, user_id, title, comment, comment_time) VALUES(:movie_id, :user_id, :title, :comment, :comment_time)";
+            MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+            namedParameter.addValue("movie_id",movie_id);
+            namedParameter.addValue("user_id",user_id);
+            namedParameter.addValue("title", title);
+            namedParameter.addValue("comment",comment);
+            namedParameter.addValue("comment_time",timestamp);
+            int result = jdbcTemplate.update(sql, namedParameter);
+        return result;
+    }
+
     public double getAvgRating(int movie_id){
         String sql = "SELECT rating FROM ratings WHERE movie_id = :movie_id";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
@@ -65,6 +80,8 @@ public class MovieDAO {
         }
         return (total/ratings.size());
     }
+
+
 
     public double getIndivRating(int movie_id, int user_id){
         double rating = 2.5;
@@ -83,6 +100,13 @@ public class MovieDAO {
 
 
         return rating;
+    }
+
+    public List<Comment> getComments(int movie_id){
+        String sql = "SELECT * FROM comments WHERE movie_id = :movie_id";
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("movie_id",movie_id);
+        return jdbcTemplate.query(sql,namedParameter, new CommentMapper());
     }
 
 }

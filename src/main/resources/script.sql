@@ -114,4 +114,15 @@ CREATE TABLE `ratings`(
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `comments`(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `movie_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(200) DEFAULT NULL,
+  `comment` TEXT NOT NULL,
+  `comment_time` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`movie_id`) REFERENCES `movies`(`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
