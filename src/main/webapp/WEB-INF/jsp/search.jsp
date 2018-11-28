@@ -12,7 +12,8 @@
         <h2>Search Results</h2>
         <p>There are ${fn: length(results)} results for search: <b>${term}</b></p>
 
-        <c:forEach items="${results}" varStatus="i" var="movie">
+        <c:forEach items="${results}" varStatus="m" var="movie">
+            <c:set var="i" value="${m.index}" />
             <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
                     <img src="https://via.placeholder.com/150x225"/>
@@ -25,7 +26,7 @@
                     <div class="w-100"></div>
                     <div class="col-12">
                         <p>
-                            4.2 <span class="glyphicon glyphicon-star"> </span>
+                            <c:out value="${ratings[i]}" /> <span class="glyphicon glyphicon-star"> </span>
                             <span class="movie-sub-info">${movie.genresForSearchResults}</span>
                             <span class="movie-sub-info">Directed by: <b>${movie.director.firstName} ${movie.director.lastName}</b></span>
                         </p>
