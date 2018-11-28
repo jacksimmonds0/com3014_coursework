@@ -22,4 +22,6 @@ public interface MovieService {
 
     public List<Comment> getComments(int movie_id);
 
+    public List<Double> getAllAvgRatingsForMovies(List<Movie> movies);
+
 }

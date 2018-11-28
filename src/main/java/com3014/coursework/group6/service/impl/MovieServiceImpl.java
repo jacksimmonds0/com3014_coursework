@@ -8,6 +8,7 @@ import com3014.coursework.group6.dao.UserDao;
 import com3014.coursework.group6.model.Comment;
 import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
+import com3014.coursework.group6.model.Rating;
 import com3014.coursework.group6.model.person.Actor;
 import com3014.coursework.group6.model.person.Director;
 import com3014.coursework.group6.model.person.User;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -41,15 +43,11 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = movieDAO.getAllMoviesFromDB();
 
         if(!movies.isEmpty()) {
-            for(Movie m : movies) {
-                Director d = directorDAO.getDirectorForMovie(m.getDirector().getId());
-                m.setDirector(d);
+            for(Movie movie : movies) {
+                setMovieFields(movie);
 
-                List<Actor> actors = actorDAO.getActorsForMovie(m.getId());
-                m.setActors(actors);
-
-                List<Genre> genres =  genreDAO.getGenresForMovie(m.getId());
-                m.setGenres(genres);
+                List<Comment> comments = movieDAO.getComments(movie.getId());
+                movie.setComments(comments);
             }
         }
 
@@ -59,15 +57,8 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie getMovie(int id){
         Movie movie = movieDAO.getMovieFromDB(id);
-        if(!movie.equals(null)){
-            Director d = directorDAO.getDirectorForMovie(movie.getDirector().getId());
-            movie.setDirector(d);
-
-            List<Actor> actors = actorDAO.getActorsForMovie(movie.getId());
-            movie.setActors(actors);
-
-            List<Genre> genres =  genreDAO.getGenresForMovie(movie.getId());
-            movie.setGenres(genres);
+        if(movie != null){
+            setMovieFields(movie);
         }
 
         return movie;
@@ -108,5 +99,23 @@ public class MovieServiceImpl implements MovieService {
         return comments;
     }
 
+    @Override
+    public List<Double> getAllAvgRatingsForMovies(List<Movie> movies) {
+
+        return movies.stream()
+                .map(m -> movieDAO.getAvgRating(m.getId()))
+                .collect(Collectors.toList());
+    }
+
+    private void setMovieFields(Movie movie) {
+        Director d = directorDAO.getDirectorForMovie(movie.getDirector().getId());
+        movie.setDirector(d);
+
+        List<Actor> actors = actorDAO.getActorsForMovie(movie.getId());
+        movie.setActors(actors);
+
+        List<Genre> genres = genreDAO.getGenresForMovie(movie.getId());
+        movie.setGenres(genres);
+    }
 
 }
