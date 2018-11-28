@@ -100,7 +100,7 @@ public class MovieServiceImpl implements MovieService {
 
         if(!comments.isEmpty()) {
             for(Comment c : comments) {
-                User u = userDAO.getUserByID(c.getUser().getId());
+                User u = userDAO.getUserById(c.getUser().getId());
                 c.setUser(u);
             }
         }
