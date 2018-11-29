@@ -14,6 +14,7 @@
 <body>
   <%@include file="navbar.jsp"%>
   <div class="container">
+    <b>${message}</b>
     <p> Hello world! </p>
     <p>Welcome ${firstName}</p>
     <p>${currentUser.firstName}</p>
