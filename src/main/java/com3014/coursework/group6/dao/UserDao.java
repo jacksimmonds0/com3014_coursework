@@ -15,7 +15,9 @@ public interface UserDao {
 
     User validateUser(Login login);
 
-    List getUserRoles(String username);
+    List<User> getUserList();
+
+    String getUserRole(String username);
 
     void updateDetails(User updatedUser);
 

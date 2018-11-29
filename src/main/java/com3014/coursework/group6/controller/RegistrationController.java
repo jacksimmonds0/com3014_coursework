@@ -59,6 +59,7 @@ public class RegistrationController {
                 userService.assignUserRole(user.getUsername());
 
                 session.setAttribute("currentUser", user);
+                session.setAttribute("userRole", userService.getUserRole(user.getUsername()));
 
                 return new ModelAndView("index", "firstName", user.getFirstName());
             }

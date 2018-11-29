@@ -46,6 +46,7 @@ public class LoginController {
 
                 // add the user to the session (as a cookie)
                 session.setAttribute(CURRENT_USER, user);
+                session.setAttribute("userRole", userService.getUserRole(user.getUsername()));
 
                 // return back to the home page
                 mav = new ModelAndView("index");

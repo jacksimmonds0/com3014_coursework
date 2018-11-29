@@ -13,7 +13,9 @@ public interface UserService {
 
     boolean validateUser(Login login);
 
-    List getUserRoles(String username);
+    List<User> getUserList();
+
+    String getUserRole(String username);
 
     boolean userExists(String username);
 
