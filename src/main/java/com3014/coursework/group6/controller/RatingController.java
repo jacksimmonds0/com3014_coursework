@@ -3,6 +3,7 @@ package com3014.coursework.group6.controller;
 import com3014.coursework.group6.model.Movie;
 import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.MovieService;
+import com3014.coursework.group6.service.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +16,17 @@ public class RatingController {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private RecommendationService recommendationService;
+
 
     @RequestMapping(value ="/addRating", method = RequestMethod.POST, produces={"application/json"})
     public @ResponseBody int addRating(@RequestParam(value="movieID",required = true) int movieID,@RequestParam(value="rating",required=true) double rating, HttpSession session, HttpServletRequest request){
         User currentUser = (User)session.getAttribute("currentUser");
         int dbResult = movieService.addRating(movieID, currentUser.getId(),rating);
+        if(rating>4){
+            List<Movie> similarMovies = recommendationService.getSimilarMovies(movieID);
+        }
         return dbResult;
     }
 

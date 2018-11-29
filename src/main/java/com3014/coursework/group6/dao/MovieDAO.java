@@ -121,4 +121,29 @@ public class MovieDAO {
         return jdbcTemplate.query(sql,namedParameter, new CommentMapper());
     }
 
+    public List<Movie> getSimilarMovies(int movie_id){
+        Movie m = getMovieFromDB(movie_id);
+        String sql = "SELECT * FROM movies WHERE director_id = :director_id";
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("director_id",m.getDirector().getId());
+        List<Movie> movies = jdbcTemplate.query(sql,namedParameter, new MovieMapper());
+        sql = "SELECT genre_id FROM movie_genre WHERE movie_id = :movie_id";
+        namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("movie_id",movie_id);
+        List<Integer> genres = jdbcTemplate.queryForList(sql,namedParameter, Integer.class);
+        sql = "SELECT movie_id FROM movie_genre WHERE genre_id IN (:genres) AND movie_id <> :movie_id";
+        namedParameter.addValue("genres",genres);
+        List<Integer> movie_ids1 = jdbcTemplate.queryForList(sql,namedParameter,Integer.class);
+        sql = "SELECT * FROM  WHERE movies IN (:movie_ids1)";
+        namedParameter.addValue("movie_ids1",movie_ids1);
+        movies.addAll(jdbcTemplate.query(sql,namedParameter, new MovieMapper()));
+        sql = "SELECT actor_id FROM movie_actor WHERE movie_id = :movie_id AND NOT movie_id IN :movie_ids1 AND movie_id <> :movie_id";
+        List<Integer> movie_ids2 = jdbcTemplate.queryForList(sql,namedParameter,Integer.class);
+        sql = "SELECT * FROM  WHERE movies IN (:movie_ids2)";
+        namedParameter.addValue("movie_ids2",movie_ids2);
+        movies.addAll(jdbcTemplate.query(sql,namedParameter, new MovieMapper()));
+
+        return movies;
+    }
+
 }
