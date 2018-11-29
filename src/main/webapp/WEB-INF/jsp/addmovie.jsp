@@ -9,7 +9,7 @@
 <body>
 <%@include file="navbar.jsp"%>
 <h3>Welcome, enter the movie details</h3>
-<form:form id="addmovieForm" modelAttribute="movie" method="POST" action="addmovie">
+<form:form id="addmovieForm" modelAttribute="movie" method="POST" action="addmovieProcess">
     <table>
         <tr>
             <td><form:label path="year">Year</form:label></td>
@@ -22,10 +22,6 @@
         <tr>
             <td><form:label path="description">Description</form:label></td>
             <td><form:input path="description"/></td>
-        </tr>
-        <tr>
-            <td><form:label path="director">Director</form:label></td>
-            <td><form:input path="director"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit"/></td>

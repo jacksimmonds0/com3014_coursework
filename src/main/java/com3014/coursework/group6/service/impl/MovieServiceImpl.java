@@ -107,6 +107,12 @@ public class MovieServiceImpl implements MovieService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public int addMovie(int year, String title, String description){
+        //String director_name = director.getFirstName() + " " + director.getLastName();
+        return movieDAO.addMovie(year, title, description);
+    }
+
     private void setMovieFields(Movie movie) {
         Director d = directorDAO.getDirectorForMovie(movie.getDirector().getId());
         movie.setDirector(d);

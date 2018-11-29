@@ -69,6 +69,18 @@ public class MovieDAO {
         return result;
     }
 
+    public int addMovie(int year, String title, String description) {
+        String sql = "INSERT INTO movies (id, year, title, description, director_id) VALUES(null, :year, :title, :description, 1)";
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("id",null);
+        namedParameter.addValue("year",year);
+        namedParameter.addValue("title", title);
+        namedParameter.addValue("description",description);
+        namedParameter.addValue("director_id",1);
+        int result = jdbcTemplate.update(sql, namedParameter);
+        return result;
+    }
+
     public double getAvgRating(int movie_id){
         String sql = "SELECT rating FROM ratings WHERE movie_id = :movie_id";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
