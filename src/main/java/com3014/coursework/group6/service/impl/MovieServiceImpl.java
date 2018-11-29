@@ -107,8 +107,15 @@ public class MovieServiceImpl implements MovieService {
                 .collect(Collectors.toList());
     }
 
+    public List<Integer> getNumberOfCommentsForMovies(List<Movie> movies) {
+
+        return movies.stream()
+                .map(m -> movieDAO.getComments(m.getId()).size())
+                .collect(Collectors.toList());
+    }
+
     @Override
-    public int addMovie(int year, String title, String description){
+    public int addMovie(int year, String title, String description) {
         //String director_name = director.getFirstName() + " " + director.getLastName();
         return movieDAO.addMovie(year, title, description);
     }
