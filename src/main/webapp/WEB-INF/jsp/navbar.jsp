@@ -12,6 +12,9 @@
             <li><a href="/addmovie">Add a Movie</a></li>
             <li><a href="#">Movies</a></li>
             <li><a href="/iplocation">Nearest Cinema</a></li>
+            <c:if test="${userRole == 'ROLE_ADMIN'}">
+                <li><a href="admin">Admin</a></li>
+            </c:if>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <form id="search-form" class="navbar-form navbar-left" method="get" action="/search">

@@ -52,6 +52,13 @@ public class UserDaoImpl implements UserDao {
         return users.size() > 0 ? users.get(0) : null;
     }
 
+    @Override
+    public List<User> getUserList() {
+        String sql = "SELECT * FROM users";
+        List<User> users = jdbcTemplate.query(sql, new UserMapper());
+        return users;
+    }
+
     public User getUserByID(int id){
         String sql = "SELECT * FROM users WHERE id = :id";
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -62,15 +69,15 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    public List getUserRoles(String username) {
+    public String getUserRole(String username) {
         String sql = "SELECT role FROM user_roles WHERE username = :username";
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("username", username);
 
-        List roles = jdbcTemplate
-                .queryForList(sql, namedParameters, String.class);
+        String role = jdbcTemplate
+                .queryForObject(sql, namedParameters, String.class);
 
-        return roles;
+        return role;
     }
 
     @Override
