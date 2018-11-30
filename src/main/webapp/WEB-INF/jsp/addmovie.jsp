@@ -24,9 +24,28 @@
             <td><form:input path="description"/></td>
         </tr>
         <tr>
+            <td><form:label path="genres">Genres</form:label></td>
+            <td><form:select multiple="true" path="genres">
+                <c:forEach items="${genreList}" var="genre">
+                    <form:option value="${genre.id}">${genre.name}</form:option>
+                </c:forEach>
+                    <form:option value="1" label="Comedy"/>
+                    <form:option value="2" label="Sci-Fi"/>
+                </form:select></td>
+        </tr>
+        <tr>
             <td><input type="submit" value="Submit"/></td>
         </tr>
     </table>
+
+    <select>
+        <c:forEach items="${genreList}" var="genre">
+            <option value="${genre.id}">${genre.name}</option>
+        </c:forEach>
+        <option value="horror">Horror</option>
+        <option value="comedy">Comedy</option>
+    </select>
 </form:form>
+
 </body>
 </html>

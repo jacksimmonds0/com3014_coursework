@@ -1,6 +1,7 @@
 package com3014.coursework.group6.service;
 
 import com3014.coursework.group6.model.Comment;
+import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
 import com3014.coursework.group6.model.person.Director;
 
@@ -25,6 +26,6 @@ public interface MovieService {
 
     public List<Double> getAllAvgRatingsForMovies(List<Movie> movies);
 
-    public int addMovie(int year, String title, String description);
+    public int addMovie(int year, String title, String description, List<Integer> genres);
 
 }

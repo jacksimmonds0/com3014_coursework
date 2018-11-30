@@ -69,7 +69,7 @@ public class MovieDAO {
         return result;
     }
 
-    public int addMovie(int year, String title, String description) {
+    public int addMovie(int year, String title, String description, List<Integer> genres) {
         String sql = "INSERT INTO movies (id, year, title, description, director_id) VALUES(null, :year, :title, :description, 1)";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("id",null);
@@ -77,8 +77,18 @@ public class MovieDAO {
         namedParameter.addValue("title", title);
         namedParameter.addValue("description",description);
         namedParameter.addValue("director_id",1);
-        int result = jdbcTemplate.update(sql, namedParameter);
-        return result;
+        jdbcTemplate.update(sql, namedParameter);
+        String sql2 = "SELECT MAX(id) FROM movies";
+        int result2 = jdbcTemplate.queryForObject(sql2,namedParameter,Integer.class);
+        for (int i = 0; i < genres.size(); i++) {
+            String sql4 = "INSERT INTO movie_genre (id, movie_id, genre_id) VALUES(null, " + result2 + ", " + genres.get(i) + ")";
+            MapSqlParameterSource namedParameter2 = new MapSqlParameterSource();
+            namedParameter2.addValue("id",null);
+            namedParameter2.addValue("movie_id",result2);
+            namedParameter2.addValue("genre_id", genres.get(i));
+            jdbcTemplate.update(sql4, namedParameter2);
+        }
+        return result2;
     }
 
     public double getAvgRating(int movie_id){
