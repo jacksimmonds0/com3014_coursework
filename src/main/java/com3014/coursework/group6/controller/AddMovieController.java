@@ -34,12 +34,10 @@ public class AddMovieController {
         ModelAndView mv = new ModelAndView("addmovie");
         mv.addObject("movie", new Movie());
 
-        return mv;
-    }
-    public String getGenreList(Model model) throws Exception {
         List<Genre> genreList = genreDAO.getAllGenres();
-        model.addAttribute("genreList", genreList);
-        return "addmovie";
+        mv.addObject("genreList", genreList);
+
+        return mv;
     }
 
     @RequestMapping(value ="/addmovieProcess", method = RequestMethod.POST, produces={"application/json"})
