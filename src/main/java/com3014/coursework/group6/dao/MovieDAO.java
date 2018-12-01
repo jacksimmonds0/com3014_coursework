@@ -69,7 +69,7 @@ public class MovieDAO {
         return result;
     }
 
-    public int addMovie(int year, String title, String description, List<Integer> genres) {
+    public int addMovie(int year, String title, String description, List<Integer> genres, String director, String actors) {
         String sql = "INSERT INTO movies (id, year, title, description, director_id) VALUES(null, :year, :title, :description, 1)";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("id",null);
@@ -87,6 +87,33 @@ public class MovieDAO {
             namedParameter2.addValue("movie_id",result2);
             namedParameter2.addValue("genre_id", genres.get(i));
             jdbcTemplate.update(sql4, namedParameter2);
+        }
+        String[] splitting = director.split(" ");
+        String sql5 = "INSERT INTO directors (id, first_name, last_name) VALUES(null, " + splitting[0] + ", " + splitting[1] + ")";
+        MapSqlParameterSource namedParameter3 = new MapSqlParameterSource();
+        namedParameter3.addValue("id",null);
+        namedParameter3.addValue("first_name",splitting[0]);
+        namedParameter3.addValue("last_name", splitting[1]);
+        jdbcTemplate.update(sql5, namedParameter3);
+
+        String sql6 = "SELECT MAX(id) FROM directors";
+        int result6 = jdbcTemplate.queryForObject(sql6,namedParameter,Integer.class);
+
+        String sql7 = "UPDATE movies SET director_id = " + result6 + " WHERE id = " + result2 + ")";
+        MapSqlParameterSource namedParameter4 = new MapSqlParameterSource();
+        namedParameter4.addValue("director_id",result6);
+        namedParameter4.addValue("id",result2);
+        jdbcTemplate.update(sql7, namedParameter4);
+
+        String[] splitting2 = actors.split(",");
+        for (int i = 0; i < splitting2.length; i++) {
+            String[] splitting3 = splitting2[i].split(" ");
+            String sql8 = "INSERT INTO actors (id, first_name, last_name) VALUES(null, " + splitting3[0] + ", " + splitting3[1] + ")";
+            MapSqlParameterSource namedParameter5 = new MapSqlParameterSource();
+            namedParameter5.addValue("id",null);
+            namedParameter5.addValue("movie_id",result2);
+            namedParameter5.addValue("genre_id", genres.get(i));
+            jdbcTemplate.update(sql8, namedParameter5);
         }
         return result2;
     }

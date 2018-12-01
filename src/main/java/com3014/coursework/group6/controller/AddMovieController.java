@@ -41,8 +41,8 @@ public class AddMovieController {
     }
 
     @RequestMapping(value ="/addmovieProcess", method = RequestMethod.POST, produces={"application/json"})
-    public @ResponseBody ModelAndView addMovie(@RequestParam(value="year",required = true) int year, @RequestParam(value="title",required=true) String title, @RequestParam(value="description",required=true) String description, @RequestParam(value="genres",required=true) List<Integer> genres, HttpSession session, HttpServletRequest request){
-        int dbResult = movieService.addMovie(year, title, description, genres);
+    public @ResponseBody ModelAndView addMovie(@RequestParam(value="year",required = true) int year, @RequestParam(value="title",required=true) String title, @RequestParam(value="description",required=true) String description, @RequestParam(value="genres",required=true) List<Integer> genres, @RequestParam(value="director",required=true) String director, @RequestParam(value="actors",required=true) String actors, HttpSession session, HttpServletRequest request){
+        int dbResult = movieService.addMovie(year, title, description, genres, director, actors);
         return new ModelAndView("redirect:movie?id=" + dbResult);
     }
 }

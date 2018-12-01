@@ -10,7 +10,7 @@
 <%@include file="navbar.jsp"%>
 <h3>Welcome, enter the movie details</h3>
 <form:form id="addmovieForm" modelAttribute="movie" method="POST" action="addmovieProcess">
-    <table>
+    <table align="center">
         <tr>
             <td><form:label path="year">Year</form:label></td>
             <td><form:input path="year"/></td>
@@ -30,6 +30,14 @@
                     <form:option value="${genre.id}">${genre.name}</form:option>
                 </c:forEach>
                 </form:select></td>
+        </tr>
+        <tr>
+            <td><form:label path="director">Director</form:label></td>
+            <td><form:input path="director"/></td>
+        </tr>
+        <tr>
+            <td><form:label path="actors">Actors</form:label></td>
+            <td><form:input path="actors"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit"/></td>

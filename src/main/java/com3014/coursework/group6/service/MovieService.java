@@ -26,6 +26,6 @@ public interface MovieService {
 
     public List<Double> getAllAvgRatingsForMovies(List<Movie> movies);
 
-    public int addMovie(int year, String title, String description, List<Integer> genres);
+    public int addMovie(int year, String title, String description, List<Integer> genres, String director, String actors);
 
 }
