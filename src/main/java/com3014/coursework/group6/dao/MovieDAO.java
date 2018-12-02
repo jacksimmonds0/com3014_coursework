@@ -89,33 +89,111 @@ public class MovieDAO {
             jdbcTemplate.update(sql4, namedParameter2);
         }
         String[] splitting = director.split(" ");
-        String sql5 = "INSERT INTO directors (id, first_name, last_name) VALUES(null, " + splitting[0] + ", " + splitting[1] + ")";
-        MapSqlParameterSource namedParameter3 = new MapSqlParameterSource();
-        namedParameter3.addValue("id",null);
-        namedParameter3.addValue("first_name",splitting[0]);
-        namedParameter3.addValue("last_name", splitting[1]);
-        jdbcTemplate.update(sql5, namedParameter3);
 
-        String sql6 = "SELECT MAX(id) FROM directors";
-        int result6 = jdbcTemplate.queryForObject(sql6,namedParameter,Integer.class);
+        int new_director_id = addDirector(splitting[0], splitting[1]);
 
-        String sql7 = "UPDATE movies SET director_id = " + result6 + " WHERE id = " + result2 + ")";
-        MapSqlParameterSource namedParameter4 = new MapSqlParameterSource();
-        namedParameter4.addValue("director_id",result6);
-        namedParameter4.addValue("id",result2);
-        jdbcTemplate.update(sql7, namedParameter4);
+        updateDirector(new_director_id, result2);
 
         String[] splitting2 = actors.split(",");
+
         for (int i = 0; i < splitting2.length; i++) {
             String[] splitting3 = splitting2[i].split(" ");
-            String sql8 = "INSERT INTO actors (id, first_name, last_name) VALUES(null, " + splitting3[0] + ", " + splitting3[1] + ")";
-            MapSqlParameterSource namedParameter5 = new MapSqlParameterSource();
-            namedParameter5.addValue("id",null);
-            namedParameter5.addValue("movie_id",result2);
-            namedParameter5.addValue("genre_id", genres.get(i));
-            jdbcTemplate.update(sql8, namedParameter5);
+
+            int new_actor_id = addActor(splitting3[0], splitting3[1]);
+
+            updateActor(result2, new_actor_id);
         }
+
         return result2;
+    }
+
+    public int addDirector(String first_name, String last_name){
+
+        String checksql = "SELECT COUNT(*) FROM directors WHERE first_name = :first_name AND last_name = :last_name";
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("first_name",first_name);
+        namedParameter.addValue("last_name",last_name);
+        int exists = jdbcTemplate.queryForObject(checksql,namedParameter,Integer.class);
+
+        int result = 0;
+
+        if(exists == 0){
+            String sql = "INSERT INTO directors (id, first_name, last_name) VALUES(null, :first_name, :last_name)";
+            MapSqlParameterSource namedParameter2 = new MapSqlParameterSource();
+            namedParameter2.addValue("id",null);
+            namedParameter2.addValue("first_name",first_name);
+            namedParameter2.addValue("last_name",last_name);
+            jdbcTemplate.update(sql, namedParameter2);
+
+            String sql2 = "SELECT MAX(id) FROM directors";
+            result = jdbcTemplate.queryForObject(sql2,namedParameter2,Integer.class);
+        }
+
+        else{
+            String sql = "SELECT MAX(id) FROM directors WHERE first_name = :first_name AND last_name = :last_name";
+            MapSqlParameterSource namedParameter2 = new MapSqlParameterSource();
+            namedParameter2.addValue("first_name",first_name);
+            namedParameter2.addValue("last_name",last_name);
+            result = jdbcTemplate.queryForObject(sql,namedParameter2,Integer.class);
+        }
+
+        return result;
+    }
+
+    public int updateDirector(int director_id, int id){
+
+        String sql = "UPDATE movies SET director_id = :director_id WHERE id = :id";
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("director_id",director_id);
+        namedParameter.addValue("id",id);
+        jdbcTemplate.update(sql, namedParameter);
+
+        return 1;
+    }
+
+    public int addActor(String first_name, String last_name){
+
+        String checksql = "SELECT COUNT(*) FROM actors WHERE first_name = :first_name AND last_name = :last_name";
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("first_name",first_name);
+        namedParameter.addValue("last_name",last_name);
+        int exists = jdbcTemplate.queryForObject(checksql,namedParameter,Integer.class);
+
+        int result = 0;
+
+        if(exists == 0) {
+            String sql = "INSERT INTO actors (id, first_name, last_name) VALUES(null, :first_name, :last_name)";
+            MapSqlParameterSource namedParameter2 = new MapSqlParameterSource();
+            namedParameter2.addValue("id", null);
+            namedParameter2.addValue("first_name", first_name);
+            namedParameter2.addValue("last_name", last_name);
+            jdbcTemplate.update(sql, namedParameter2);
+
+            String sql2 = "SELECT MAX(id) FROM actors";
+            result = jdbcTemplate.queryForObject(sql2, namedParameter2, Integer.class);
+        }
+
+        else{
+            String sql = "SELECT MAX(id) FROM actors WHERE first_name = :first_name AND last_name = :last_name";
+            MapSqlParameterSource namedParameter2 = new MapSqlParameterSource();
+            namedParameter2.addValue("first_name",first_name);
+            namedParameter2.addValue("last_name",last_name);
+            result = jdbcTemplate.queryForObject(sql,namedParameter2,Integer.class);
+        }
+
+        return result;
+    }
+
+    public int updateActor(int movie_id, int actor_id){
+
+        String sql = "INSERT INTO movie_actor (id, movie_id, actor_id) VALUES(null, :movie_id, :actor_id)";
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("id",null);
+        namedParameter.addValue("movie_id",movie_id);
+        namedParameter.addValue("actor_id", actor_id);
+        jdbcTemplate.update(sql, namedParameter);
+
+        return 1;
     }
 
     public double getAvgRating(int movie_id){
