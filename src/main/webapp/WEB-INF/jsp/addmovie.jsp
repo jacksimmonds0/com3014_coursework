@@ -13,61 +13,9 @@
 </script>
 <script src="<c:url value="/resources/js/selectize.min.js" />"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/selectize.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/addmovie.css" />">
 
-<script>
-    $(function() {
-        $('#input-tags').selectize({
-            delimiter: ',',
-            persist: false,
-            create: function(input) {
-                return {
-                    value: input,
-                    text: input
-                }
-            }
-        });
-    });
-
-</script>
-
-<script>
-    $(function() {
-        $('#select-genre').selectize({
-            maxItems: 15
-        });
-    });
-</script>
-
-<script>
-    $(function() {
-        $('#addmovieForm').on('submit', function(e) {
-            var fyear = $('#year').val();
-            var ftitle = $('#title').val();
-            var fdescription = $('#description').val();
-            var fgenre = $('#select-genre').val();
-            var fdirector = $('#director').val();
-            var factors = $('#input-tags').val();
-
-            if(isNaN(fyear) || fyear < 1900 || fyear > (new Date()).getFullYear()+2 ){
-                e.preventDefault();
-                alert("Please enter a valid year");
-            }
-        });
-    });
-</script>
-
-<style type="text/css">
-    td {
-        padding-top:5px;
-        padding-bottom:5px;
-        padding-right:5px;
-    }
-
-    td:first-child {
-        padding-left:20px;
-        padding-right:0;
-    }
-</style>
+<script type="text/javascript" src="/resources/js/addmovie.js"></script>
 
 <h3 align="center">Welcome, enter the movie details</h3>
 <form:form id="addmovieForm" modelAttribute="movie" method="POST" action="addmovieProcess">
