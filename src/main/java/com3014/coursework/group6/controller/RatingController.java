@@ -26,6 +26,7 @@ public class RatingController {
         int dbResult = movieService.addRating(movieID, currentUser.getId(),rating);
         if(rating>4){
             List<Movie> similarMovies = recommendationService.getSimilarMovies(movieID);
+            int debug = 1;
         }
         return dbResult;
     }

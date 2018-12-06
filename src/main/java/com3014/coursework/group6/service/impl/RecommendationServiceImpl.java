@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RecommendationServiceImpl implements RecommendationService {
@@ -19,7 +20,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public List<Movie> getRecommendedMovies(int user_id) {
-        return null;
+    public Map<Movie, List<Movie>> getRecommendedMovies(int user_id) {
+        return movieDAO.getRecommendedMovies(user_id);
     }
 }
