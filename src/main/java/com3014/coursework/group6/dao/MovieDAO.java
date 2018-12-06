@@ -201,11 +201,18 @@ public class MovieDAO {
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("movie_id",movie_id);
         List<Double> ratings = jdbcTemplate.queryForList(sql,namedParameter,Double.class);
+
         double total = 0.0;
         for (double r : ratings) {
             total+=r;
         }
-        return (total/ratings.size());
+
+        double avgRating = 0.0;
+        if(ratings.size() != 0) {
+            avgRating = total/ratings.size();
+        }
+
+        return avgRating;
     }
 
 
