@@ -8,6 +8,9 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate var="year" value="${now}" pattern="yyyy" />
 <script src
                 ="https://code.jquery.com/jquery-3.3.1.min.js">
 </script>
@@ -74,7 +77,7 @@
     <table align="center">
         <tr>
             <td><form:label path="year">Year</form:label></td>
-            <td><form:input path="year" id = "year"/></td>
+            <td><form:input path="year" id = "year" value="${year}"/></td>
         </tr>
         <tr>
             <td><form:label path="title">Name</form:label></td>
