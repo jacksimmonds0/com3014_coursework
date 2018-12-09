@@ -5,7 +5,7 @@ import com3014.coursework.group6.model.person.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDAO {
 
     void register(User user);
 
