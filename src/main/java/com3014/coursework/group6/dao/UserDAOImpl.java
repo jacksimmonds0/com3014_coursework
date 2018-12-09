@@ -7,12 +7,12 @@ import com3014.coursework.group6.dao.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import com3014.coursework.group6.model.Login;
 import com3014.coursework.group6.model.person.User;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
-public class UserDaoImpl implements UserDao {
+public class UserDAOImpl implements UserDAO {
 
     @Autowired
     DataSource dataSource;
@@ -95,11 +95,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(int id) {
-        String sql = "SELECT * FROM users WHERE id=:id";
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        namedParameters.addValue("id", id);
+        try {
+            String sql = "SELECT * FROM users WHERE id=:id";
+            MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+            namedParameters.addValue("id", id);
 
-        return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
+            return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
+        } catch (EmptyResultDataAccessException erdae) {
+            return new User();
+        }
     }
 
     @Override
@@ -115,11 +119,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByUsername(Login login) {
-        String sql = "SELECT * FROM users WHERE username=:username";
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        namedParameters.addValue("username", login.getUsername());
+        try {
+            String sql = "SELECT * FROM users WHERE username=:username";
+            MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+            namedParameters.addValue("username", login.getUsername());
 
-        return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
+            return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
+        } catch (EmptyResultDataAccessException erdae) {
+            return new User();
+        }
     }
-
 }

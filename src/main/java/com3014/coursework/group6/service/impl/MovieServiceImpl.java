@@ -4,11 +4,10 @@ import com3014.coursework.group6.dao.ActorDAO;
 import com3014.coursework.group6.dao.DirectorDAO;
 import com3014.coursework.group6.dao.MovieDAO;
 import com3014.coursework.group6.dao.GenreDAO;
-import com3014.coursework.group6.dao.UserDao;
+import com3014.coursework.group6.dao.UserDAO;
 import com3014.coursework.group6.model.Comment;
 import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
-import com3014.coursework.group6.model.Rating;
 import com3014.coursework.group6.model.person.Actor;
 import com3014.coursework.group6.model.person.Director;
 import com3014.coursework.group6.model.person.User;
@@ -36,7 +35,7 @@ public class MovieServiceImpl implements MovieService {
     private GenreDAO genreDAO;
 
     @Autowired
-    private UserDao userDAO;
+    private UserDAO userDAO;
 
     @Override
     public List<Movie> getAllMovies() {

@@ -12,7 +12,7 @@
     <context:annotation-config/>
 
     <bean id="userService" class="com3014.coursework.group6.service.impl.UserServiceImpl"/>
-    <bean id="userDao" class="com3014.coursework.group6.dao.UserDaoImpl"/>
+    <bean id="userDao" class="com3014.coursework.group6.dao.UserDAOImpl"/>
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
@@ -25,7 +25,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/group6"/>
         <property name="username" value="root"/>
-        <property name="password" value="password"/>
+        <property name="password" value="password1"/>
     </bean>
 
 </beans>

@@ -16,8 +16,9 @@
   <div class="container">
     <b>${message}</b>
     <p> Hello world! </p>
-    <p>Welcome ${firstName}</p>
-    <p>${currentUser.firstName}</p>
+    <c:if test="${not empty firstName}">
+      <div class="alert alert-success">Account successfully created. Welcome, ${firstName}!</div>
+    </c:if>
   </div>
 </body>
 </html>
