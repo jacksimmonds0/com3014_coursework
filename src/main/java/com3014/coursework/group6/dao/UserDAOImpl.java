@@ -54,19 +54,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getUserList() {
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT u.*, ur.role role FROM users u, user_roles ur WHERE u.username = ur.username";
         List<User> users = jdbcTemplate.query(sql, new UserMapper());
         return users;
-    }
-
-    public User getUserByID(int id){
-        String sql = "SELECT * FROM users WHERE id = :id";
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        namedParameters.addValue("id", id);
-
-        User user = jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
-
-        return user;
     }
 
     public String getUserRole(String username) {
@@ -96,7 +86,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserById(int id) {
         try {
-            String sql = "SELECT * FROM users WHERE id=:id";
+            String sql = "SELECT u.*, ur.role FROM users u, user_roles ur WHERE u.id = :id AND u.username = ur.username";
             MapSqlParameterSource namedParameters = new MapSqlParameterSource();
             namedParameters.addValue("id", id);
 
@@ -114,6 +104,14 @@ public class UserDAOImpl implements UserDAO {
         namedParameters.addValue("id", id);
         namedParameters.addValue("password", password);
 
+        jdbcTemplate.update(sql, namedParameters);
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        String sql = "DELETE FROM users WHERE id = :id";
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
         jdbcTemplate.update(sql, namedParameters);
     }
 

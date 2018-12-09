@@ -21,6 +21,7 @@
             <th scope="col">Username</th>
             <th scope="col">Full Name</th>
             <th scope="col">Email Address</th>
+            <th scope="col">User Role</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -30,7 +31,8 @@
                 <td>${u.username}</td>
                 <td>${u.name}</td>
                 <td>${u.email}</td>
-                <td>View, Edit, Delete</td>
+                <td>${u.role}</td>
+                <td><a href="admin/account/${u.id}">Edit</a>, <a href="admin/delete/${u.id}">Delete</a></td>
             </tr>
         </c:forEach>
         </tbody>

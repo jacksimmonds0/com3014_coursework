@@ -80,8 +80,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUser(int id) {
+        userDao.deleteUser(id);
+    }
+
+    @Override
     public User getUserByUsername(Login login) {
         return userDao.getUserByUsername(login);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userDao.getUserById(id);
     }
 
 }

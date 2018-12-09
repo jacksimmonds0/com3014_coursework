@@ -25,5 +25,7 @@ public interface UserDAO {
 
     void updatePasswordForUser(int id, String password);
 
+    void deleteUser(int id);
+
     User getUserByUsername(Login login);
 }

@@ -25,5 +25,9 @@ public interface UserService {
 
     void updatePasswordForUser(int id, String password);
 
+    void deleteUser(int id);
+
     User getUserByUsername(Login login);
+
+    User getUserById(int id);
 }
