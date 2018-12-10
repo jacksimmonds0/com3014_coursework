@@ -41,11 +41,7 @@
             <form:input path="email" name="email" id="email" cssClass="form-control"/>
             <form:errors path="email" cssClass="error"/>
         </div>
-                <button id="register" name="register" class="btn btn-primary">Register</button>
-            </td>
-        </tr>
-        <tr></tr>l
-    </table>
+        <button id="register" name="register" class="btn btn-primary">Register</button>
     </div>
 </form:form>
 </body>
