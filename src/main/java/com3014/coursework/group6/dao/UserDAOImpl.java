@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
 
     public void register(User user) {
 
-        String sql = "INSERT INTO users (username, password, first_name, last_name, email_address) VALUES(:username, :password, :firstName, :lastName, :email)";
+        String sql = "INSERT INTO users (username, password, first_name, last_name, email_address, status) VALUES(:username, :password, :firstName, :lastName, :email, 'ACTIVE')";
         jdbcTemplate.update(sql, new BeanPropertySqlParameterSource(user));
     }
 
@@ -42,14 +42,6 @@ public class UserDAOImpl implements UserDAO {
                 .query(sql, namedParameter, new UserMapper());
 
         return (user.size() > 0);
-    }
-
-    public User validateUser(Login login) {
-        String sql = "SELECT * FROM users WHERE username='" + login.getUsername() + "' AND password='" + login.getPassword()
-                + "'";
-        List<User> users = jdbcTemplate.query(sql, new UserMapper());
-
-        return users.size() > 0 ? users.get(0) : null;
     }
 
     @Override
@@ -109,7 +101,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUser(int id) {
-        String sql = "DELETE FROM users WHERE id = :id";
+        String sql = "UPDATE users u SET u.status = 'INACTIVE' WHERE id = :id";
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("id", id);
         jdbcTemplate.update(sql, namedParameters);
@@ -125,6 +117,28 @@ public class UserDAOImpl implements UserDAO {
             return jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
         } catch (EmptyResultDataAccessException erdae) {
             return new User();
+        }
+    }
+
+    @Override
+    public void changeUserStatus(int id, String status) {
+        String sql = "UPDATE users u SET u.status = :status WHERE id = :id";
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("id", id);
+        namedParameters.addValue("status", status);
+        jdbcTemplate.update(sql, namedParameters);
+    }
+
+    @Override
+    public boolean userAccountActive(Login login) {
+        try {
+            String sql = "SELECT * FROM users WHERE username=:username AND status = 'ACTIVE'";
+            MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+            namedParameters.addValue("username", login.getUsername());
+            jdbcTemplate.queryForObject(sql, namedParameters, new UserMapper());
+            return true;
+        } catch (EmptyResultDataAccessException erdae) {
+            return false;
         }
     }
 }

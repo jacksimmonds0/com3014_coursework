@@ -54,9 +54,17 @@ public class AdminController {
         return "editaccount";
     }
 
-    @RequestMapping(value = "admin/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteAccount(@PathVariable int id) {
-        userService.deleteUser(id);
+    @RequestMapping(value = "admin/inactive/{id}", method = RequestMethod.GET)
+    public ModelAndView makeAccountInactive(@PathVariable int id) {
+        userService.changeUserStatus(id, "INACTIVE");
+        ModelAndView mav = new ModelAndView("redirect:/admin");
+
+        return mav;
+    }
+
+    @RequestMapping(value = "admin/active/{id}", method = RequestMethod.GET)
+    public ModelAndView makeAccountActive(@PathVariable int id) {
+        userService.changeUserStatus(id, "ACTIVE");
         ModelAndView mav = new ModelAndView("redirect:/admin");
 
         return mav;
