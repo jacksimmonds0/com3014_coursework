@@ -17,6 +17,7 @@ public class MovieMapper implements RowMapper<Movie> {
         movie.setTitle(rs.getString("title"));
         movie.setDescription(rs.getString("description"));
         movie.setYear(rs.getInt("year"));
+        movie.setPosterUrl(rs.getString("poster_url"));
 
         Director director = new Director();
         director.setId(rs.getInt("director_id"));

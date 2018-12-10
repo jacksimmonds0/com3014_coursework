@@ -71,14 +71,19 @@ public class MovieDAO {
         return result;
     }
 
-    public int addMovie(int year, String title, String description, List<Integer> genres, String director, String actors) {
-        String sql = "INSERT INTO movies (id, year, title, description, director_id) VALUES(null, :year, :title, :description, 1)";
+    public int addMovie(int year, String title, String description, List<Integer> genres, String director, String actors, String posterUrl) {
+        String sql = "INSERT INTO movies (id, year, title, description, director_id, poster_url) VALUES(null, :year, :title, :description, 1, :poster_url)";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("id",null);
         namedParameter.addValue("year",year);
         namedParameter.addValue("title", title);
         namedParameter.addValue("description",description);
         namedParameter.addValue("director_id",1);
+
+        if(posterUrl != null) {
+            namedParameter.addValue("poster_url", posterUrl);
+        }
+
         jdbcTemplate.update(sql, namedParameter);
         String sql2 = "SELECT MAX(id) FROM movies";
         int result2 = jdbcTemplate.queryForObject(sql2,namedParameter,Integer.class);

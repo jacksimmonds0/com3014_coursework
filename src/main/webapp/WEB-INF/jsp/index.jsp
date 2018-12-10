@@ -8,7 +8,7 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%@include file="styling.jsp" %>
-
+    <link rel="stylesheet" href="<c:url value="/resources/css/index.css" />">
 </head>
 
 <body>
@@ -23,14 +23,24 @@
     </c:if>
 
     <c:forEach items="${recommendations}"  var="movie" varStatus="map" >
-        <p>Because you liked: ${movie.key.title}</p>
+        <h4>Because you liked: <b>${movie.key.title}</b></h4>
 
-        <div class="row" style="padding-top: 10px">
+        <div class="row" id="recommended-movie-row">
             <c:forEach items="${movie.value}" var="recommendedMovie">
                 <div class="col-md-2">
-                    <img src="https://via.placeholder.com/130x195?No+poster+provided"/>
-                    <p style="padding-top: 10px">
-                        <a href="/movie?id=${recommendedMovie.id}">${recommendedMovie.title} </a> (${recommendedMovie.year})</p>
+
+                    <c:choose>
+                        <c:when test="${!empty recommendedMovie.posterUrl}">
+                            <img class="poster" src="${recommendedMovie.posterUrl}" />
+                        </c:when>
+                        <c:otherwise>
+                            <img class="poster" src="https://via.placeholder.com/130x195?No+poster+provided"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <p id="recommended-movie">
+                        <a href="/movie?id=${recommendedMovie.id}">${recommendedMovie.title} </a> (${recommendedMovie.year})
+                    </p>
                 </div>
             </c:forEach>
         </div>
