@@ -4,6 +4,7 @@ import com3014.coursework.group6.dao.GenreDAO;
 import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
 import com3014.coursework.group6.service.MovieService;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,10 @@ public class AddMovieController {
                                                @RequestParam(value="actors",required=true) String actors,
                                                @RequestParam(value="posterUrl", required=false) String posterUrl,
                                                HttpSession session, HttpServletRequest request){
+
+        // prevent XSS attacks on the poster URL
+        posterUrl = StringEscapeUtils.escapeHtml(posterUrl);
+
         int dbResult = movieService.addMovie(year, title, description, genres, director, actors, posterUrl);
         return new ModelAndView("redirect:movie?id=" + dbResult);
     }
