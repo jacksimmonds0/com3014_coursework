@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -257,24 +258,32 @@ public class MovieDAO {
         namedParameter.addValue("movie_id",movie_id);
         namedParameter.addValue("director_id",m.getDirector().getId());
         List<Movie> movies = jdbcTemplate.query(sql,namedParameter, new MovieMapper());
+        List<Integer> movie_ids = new ArrayList<>();
+        movie_ids.add(movie_id);
+        for (Movie movie : movies) {
+            movie_ids.add(movie.getId());
+        }
+        namedParameter.addValue("movie_ids",movie_ids);
         sql = "SELECT genre_id FROM movie_genre WHERE movie_id = :movie_id";
         List<Integer> genres = jdbcTemplate.queryForList(sql,namedParameter, Integer.class);
-        sql = "SELECT movie_id FROM movie_genre WHERE genre_id IN (:genres) AND movie_id <> :movie_id";
+        sql = "SELECT movie_id FROM movie_genre WHERE genre_id IN (:genres) AND NOT movie_id IN (:movie_ids)";
         namedParameter.addValue("genres",genres);
         List<Integer> movie_ids1 = jdbcTemplate.queryForList(sql,namedParameter,Integer.class);
+        movie_ids.addAll(movie_ids1);
         if(movie_ids1.size()>=1){
             sql = "SELECT * FROM movies WHERE id IN (:movie_ids1)";
             namedParameter.addValue("movie_ids1",movie_ids1);
             movies.addAll(jdbcTemplate.query(sql,namedParameter, new MovieMapper()));
         }
+        namedParameter.addValue("movie_ids",movie_ids);
         sql = "SELECT actor_id FROM movie_actor WHERE movie_id = :movie_id";
         List<Integer> actors = jdbcTemplate.queryForList(sql,namedParameter,Integer.class);
         if(actors.size()==1){
-            sql = "SELECT movie_id FROM movie_actor WHERE actor_id = :actor AND movie_id <> :movie_id";
+            sql = "SELECT movie_id FROM movie_actor WHERE actor_id = :actor AND NOT movie_id IN (:movie_ids)";
             int actor = actors.get(0);
             namedParameter.addValue("actor",actor);
         }else{
-            sql = "SELECT movie_id FROM movie_actor WHERE actor_id IN (:actors) AND movie_id <> :movie_id";
+            sql = "SELECT movie_id FROM movie_actor WHERE actor_id IN (:actors) AND NOT movie_id IN (:movie_ids)";
             namedParameter.addValue("actors",actors);
         }
         List<Integer> movie_ids2 = jdbcTemplate.queryForList(sql,namedParameter,Integer.class);
