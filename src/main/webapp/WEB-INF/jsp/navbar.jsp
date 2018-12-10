@@ -9,13 +9,13 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="${pageContext.request.requestURI.endsWith('/index.jsp') ? 'active' : ''}">
-                <a href="">Home</a>
+                <a href="/">Home</a>
             </li>
             <li class="${pageContext.request.requestURI.endsWith('/addmovie.jsp') ? 'active' : ''}">
                 <a href="/addmovie">Add a Movie</a>
             </li>
-            <li class="${pageContext.request.requestURI.endsWith('/iplocation.jsp') ? 'active' : ''}">
-                <a href="/iplocation">Nearest Cinema</a>
+            <li class="${pageContext.request.requestURI.endsWith('/nearestcinema.jsp') ? 'active' : ''}">
+                <a href="/nearestcinema">Nearest Cinema</a>
             </li>
       
             <c:if test="${userRole == 'ROLE_ADMIN'}">
