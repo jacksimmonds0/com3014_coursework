@@ -114,8 +114,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public int addMovie(int year, String title, String description, List<Integer> genres, String director, String actors) {
-        return movieDAO.addMovie(year, title, description, genres, director, actors);
+    public int addMovie(int year, String title, String description, List<Integer> genres, String director, String actors, String posterUrl) {
+        return movieDAO.addMovie(year, title, description, genres, director, actors, posterUrl);
     }
 
     private void setMovieFields(Movie movie) {

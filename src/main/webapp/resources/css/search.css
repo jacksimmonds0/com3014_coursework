@@ -1,3 +1,10 @@
 .movie-sub-info {
     padding-left: 15px;
 }
+
+.poster {
+    height: auto;
+    width: auto;
+    max-width: 150px;
+    max-height: 225px;
+}

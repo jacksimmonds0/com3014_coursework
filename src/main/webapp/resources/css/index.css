@@ -1,0 +1,10 @@
+#recommended-movie {
+    padding-top: 10px;
+}
+
+.poster {
+    height: auto;
+    width: auto;
+    max-width: 130px;
+    max-height: 195px;
+}

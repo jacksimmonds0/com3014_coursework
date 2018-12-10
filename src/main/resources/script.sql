@@ -52,6 +52,7 @@ CREATE TABLE `movies` (
   `description` varchar(255) NOT NULL,
   `year` int(11) NOT NULL,
   `director_id` int(11) NOT NULL,
+  `poster_url` varchar(255),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`director_id`) REFERENCES `directors`(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

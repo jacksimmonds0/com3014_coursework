@@ -8,3 +8,7 @@ td:first-child {
     padding-left:20px;
     padding-right:0;
 }
+
+#note {
+    font-size: 14px;
+}
