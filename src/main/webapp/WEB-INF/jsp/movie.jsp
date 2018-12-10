@@ -85,15 +85,8 @@
         <h3>We see that you like ${movie.title}!</h3>
         <h4>Here are some similar films you may like...</h4>
     </div>
-        <div class="recommendation_div col-md-2">
-            <c:choose>
-                <c:when test="${!empty movie.posterUrl}">
-                    <img class="poster-recommended" src="${movie.posterUrl}" alt="${movie.title}" />
-                </c:when>
-                <c:otherwise>
+        <div class="recommendation_div col-md-2" style="display:none;">
                     <img class="poster-recommended" src="https://via.placeholder.com/130x195?No+poster+provided" alt="No poster provided"/>
-                </c:otherwise>
-            </c:choose>
             <p id="text">
                 <a></a></p>
         </div>

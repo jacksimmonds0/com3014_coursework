@@ -68,6 +68,10 @@
                             $(".recommendation_div").not(":hidden").remove();
                             for (var i = 0; i < movies.recommendations.length; i++) {
                                 var rec_div1 = rec_div.clone();
+                                var img_url = movies.recommendations[i].posterUrl;
+                                if(img_url) {
+                                    rec_div1.find('img').attr('src', movies.recommendations[i].posterUrl);
+                                }
                                 rec_div1.find('a').attr('href', "/movie?id=" + movies.recommendations[i].id);
                                 rec_div1.find('a').html(movies.recommendations[i].title);
                                 rec_div1.find('p').append(" (" + movies.recommendations[i].year + ")");
