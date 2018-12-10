@@ -51,13 +51,13 @@ public class LoginController {
                 // return back to the home page
                 mav = new ModelAndView("redirect:/");
             }
-            else if (!userService.userAccountActive(login)) {
+            else if (!userService.validateUser(login)) {
                 mav = new ModelAndView("login");
-                mav.addObject("message", "User account has been deactivated. Please contact an admin");
+                mav.addObject("message", "Invalid username or password");
             }
             else {
                 mav = new ModelAndView("login");
-                mav.addObject("message", "Invalid username or password");
+                mav.addObject("message", "User account has been deactivated. Please contact an admin");
             }
         }
         catch(CannotGetJdbcConnectionException e) {
