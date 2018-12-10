@@ -26,6 +26,6 @@ public interface MovieService {
 
     public int addMovie(int year, String title, String description, List<Integer> genres, String director, String actors, String posterUrl);
 
-    public List<Movie> get3MostRecentlyAddedMovies();
+    public List<Movie> getMostRecentlyAddedMovies();
 
 }

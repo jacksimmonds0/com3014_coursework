@@ -119,8 +119,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> get3MostRecentlyAddedMovies() {
-        return movieDAO.get3MostRecentlyAddedMovies();
+    public List<Movie> getMostRecentlyAddedMovies() {
+        return movieDAO.getMostRecentlyAddedMovies();
     }
 
     private void setMovieFields(Movie movie) {

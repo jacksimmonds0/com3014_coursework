@@ -31,7 +31,7 @@ public class HomeController {
             mav.addObject("recommendations", recommendationService.getRecommendedMovies(currentUser.getId()));
         }
 
-        mav.addObject("recentMovies", movieService.get3MostRecentlyAddedMovies());
+        mav.addObject("recentMovies", movieService.getMostRecentlyAddedMovies());
 
         return mav;
     }
