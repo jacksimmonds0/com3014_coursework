@@ -20,48 +20,42 @@
 
 <h3 align="center">Welcome, enter the movie details</h3>
 <form:form id="addmovieForm" modelAttribute="movie" method="POST" action="addmovieProcess">
-    <table align="center">
-        <tr>
-            <td><form:label path="year">Year</form:label></td>
-            <td><form:input path="year" id = "year" value="${year}"/></td>
-        </tr>
-        <tr>
-            <td><form:label path="title">Name</form:label></td>
-            <td><form:input path="title" id = "title"/></td>
-        </tr>
-        <tr>
-            <td><form:label path="description">Description</form:label></td>
-            <td><form:textarea path="description" rows="4" cols="23" id = "description"/></td>
-        </tr>
-        <tr>
-            <td><form:label path="genres">Genres</form:label></td>
-            <td><form:select multiple="true" path="genres" id="select-genre">
+    <div class="col-xs-6 col-xs-offset-3 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+        <div class="form-group">
+            <form:label path="year">Year</form:label>
+            <form:input path="year" id = "year" value="${year}" cssClass="form-control"/>
+        </div>
+        <div class="form-group">
+            <form:label path="title">Name</form:label>
+            <form:input path="title" id = "title" cssClass="form-control"/>
+        </div>
+        <div class="form-group">
+           <form:label path="description">Description</form:label>
+            <form:textarea path="description" rows="4" cols="23" id = "description" cssClass="form-control"/>
+        </div>
+        <div class="form-group">
+            <form:label path="genres">Genres</form:label>
+            <form:select multiple="true" path="genres" id="select-genre">
                 <c:forEach items="${genreList}" var="genre">
                     <form:option value="${genre.id}">${genre.name}</form:option>
                 </c:forEach>
-                </form:select></td>
-        </tr>
-        <tr>
-            <td><form:label path="director">Director</form:label></td>
-            <td><form:input path="director" id = "director"/></td>
-        </tr>
-        <tr>
-            <td><form:label path="actors">Actors</form:label></td>
-            <td><form:input type="text" path="actors" id="input-tags"/></td>
-        </tr>
-        <tr>
-            <td><form:label path="posterUrl">Image URL for Poster:</form:label></td>
-            <td><form:input type="text" path="posterUrl" id="poster-url" /></td>
-        </tr>
-        <tr>
-            <td>
-                <p id="note">(Note: image must be of <br> size at least 200x300px)</p>
-            </td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit"/></td>
-        </tr>
-    </table>
+            </form:select>
+        </div>
+        <div class="form-group">
+            <form:label path="director">Director</form:label>
+            <form:input path="director" id = "director" cssClass="form-control"/>
+        </div>
+        <div class="form-group">
+            <form:label path="actors">Actors</form:label>
+            <form:input type="text" path="actors" id="input-tags"/>
+        </div>
+        <div class="form-group">
+            <form:label path="posterUrl">Image URL for Poster:</form:label>
+            <form:input type="text" path="posterUrl" id="poster-url" cssClass="form-control"/>
+        </div>
+        <p id="note">(Note: image must be of <br> size at least 200x300px)</p>
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </div>
 </form:form>
 
 </body>

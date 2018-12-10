@@ -17,6 +17,7 @@
             <li class="${pageContext.request.requestURI.endsWith('/iplocation.jsp') ? 'active' : ''}">
                 <a href="/iplocation">Nearest Cinema</a>
             </li>
+      
             <c:if test="${userRole == 'ROLE_ADMIN'}">
                 <li class="${pageContext.request.requestURI.endsWith('/account.jsp') ? 'active' : ''}">
                     <a href="/admin">Admin</a>

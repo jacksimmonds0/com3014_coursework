@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com3014.coursework.group6.model.Login;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -57,8 +58,10 @@ public class RegistrationController {
 
                 userService.register(user);
                 userService.assignUserRole(user.getUsername());
-
-                session.setAttribute("currentUser", user);
+                Login login = new Login();
+                login.setUsername(user.getUsername());
+                User actualUser = userService.getUserByUsername(login);
+                session.setAttribute("currentUser", actualUser);
                 session.setAttribute("userRole", userService.getUserRole(user.getUsername()));
 
                 return new ModelAndView("index", "firstName", user.getFirstName());

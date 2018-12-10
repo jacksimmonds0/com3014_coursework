@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IPLocationController {
 
-    @RequestMapping(value = "/iplocation", method = RequestMethod.GET)
+    @RequestMapping(value = "/nearestcinema", method = RequestMethod.GET)
     public String root() {
-        return "iplocation";
+        return "nearestcinema";
     }
 }
