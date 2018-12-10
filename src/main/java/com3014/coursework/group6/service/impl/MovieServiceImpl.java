@@ -118,6 +118,11 @@ public class MovieServiceImpl implements MovieService {
         return movieDAO.addMovie(year, title, description, genres, director, actors, posterUrl);
     }
 
+    @Override
+    public List<Movie> getMostRecentlyAddedMovies() {
+        return movieDAO.getMostRecentlyAddedMovies();
+    }
+
     private void setMovieFields(Movie movie) {
         Director d = directorDAO.getDirectorForMovie(movie.getDirector().getId());
         movie.setDirector(d);

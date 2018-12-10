@@ -16,6 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="<c:url value="/resources/css/fontawesome-stars.css" />">
+    <link rel="stylesheet" href="<c:url value="/resources/css/movie.css" />">
     <script src="<c:url value="/resources/js/jquery.barrating.min.js" />"></script>
     <script src="<c:url value="/resources/js/movie.js" />"></script>
 </head>
@@ -24,10 +25,17 @@
 <div class="container">
     <h2>${movie.title} (${movie.year})</h2>
             <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
-                <img src="https://via.placeholder.com/150x225"/>
+                <c:choose>
+                    <c:when test="${!empty movie.posterUrl}">
+                        <img class="poster" src="${movie.posterUrl}" alt="${movie.title}" />
+                    </c:when>
+                    <c:otherwise>
+                        <img class="poster" src="https://via.placeholder.com/200x300?No+poster+provided" alt="No poster provided"/>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
-            <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+            <div id="movie-div" class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
                 <div class="w-100"></div>
                 <div class="col-12">
                     <c:choose>
@@ -56,7 +64,6 @@
                     </div>
 
                     <p>
-                        4.2 <span class="glyphicon glyphicon-star"> </span>
                         <span style="padding-left: 15px;">${movie.genresForSearchResults}</span>
                         <span style="padding-left: 15px;">Directed by: <b>${movie.director.firstName} ${movie.director.lastName}</b></span>
                     </p>
@@ -78,9 +85,16 @@
         <h3>We see that you like ${movie.title}!</h3>
         <h4>Here are some similar films you may like...</h4>
     </div>
-        <div class="recommendation_div col-md-2" style="display:none;">
-            <img src="https://via.placeholder.com/130x195?No+poster+provided"/>
-            <p style="padding-top: 10px">
+        <div class="recommendation_div col-md-2">
+            <c:choose>
+                <c:when test="${!empty movie.posterUrl}">
+                    <img class="poster-recommended" src="${movie.posterUrl}" alt="${movie.title}" />
+                </c:when>
+                <c:otherwise>
+                    <img class="poster-recommended" src="https://via.placeholder.com/130x195?No+poster+provided" alt="No poster provided"/>
+                </c:otherwise>
+            </c:choose>
+            <p id="text">
                 <a></a></p>
         </div>
 </div>
