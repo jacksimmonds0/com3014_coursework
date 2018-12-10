@@ -1,5 +1,9 @@
-#recommended-movie {
+.recommended-movie, .movies-row, #description {
     padding-top: 10px;
+}
+
+#description {
+    padding-bottom: 15px;
 }
 
 .poster {

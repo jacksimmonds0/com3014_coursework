@@ -17,15 +17,53 @@
     <c:if test="${not empty message}">
       <div class="alert alert-danger">${message}</div>
     </c:if>
-    <p> Hello world! </p>
+    <h1> Movie Recommendations </h1>
     <c:if test="${not empty firstName}">
       <div class="alert alert-success">Account successfully created. Welcome, ${firstName}!</div>
     </c:if>
 
+    <div class="col-md-12">
+        <p id="description">
+            Welcome to movie recommendations by group 6, where you can find movies, add movies to our site,
+            add your comments and ratings to them as well as find nearest cinemas.
+
+            <c:choose>
+                <c:when test="${empty currentUser}">
+                    Login to show your recommended movies based on what you have previously rated.
+                </c:when>
+                <c:otherwise>
+                    Here are the movies we have recommended for you:
+                </c:otherwise>
+            </c:choose>
+
+        </p>
+    </div>
+
+    <h4>Recently added movies: </h4>
+    <div class="row movies-row">
+        <c:forEach items="${recentMovies}" var="movie">
+            <div class="col-md-2">
+
+                <c:choose>
+                    <c:when test="${!empty movie.posterUrl}">
+                        <img class="poster" src="${movie.posterUrl}" alt="${movie.title}" />
+                    </c:when>
+                    <c:otherwise>
+                        <img class="poster" src="https://via.placeholder.com/130x195?No+poster+provided" alt="No poster provided"/>
+                    </c:otherwise>
+                </c:choose>
+
+                <p class="recommended-movie">
+                    <a href="/movie?id=${movie.id}">${movie.title} </a> (${movie.year})
+                </p>
+            </div>
+        </c:forEach>
+    </div>
+
     <c:forEach items="${recommendations}"  var="movie" varStatus="map" >
         <h4>Because you liked: <b>${movie.key.title}</b></h4>
 
-        <div class="row" class="recommended-movie-row">
+        <div class="row movies-row">
             <c:forEach items="${movie.value}" var="recommendedMovie">
                 <div class="col-md-2">
 
@@ -45,7 +83,6 @@
             </c:forEach>
         </div>
     </c:forEach>
-
 
 
 </div>

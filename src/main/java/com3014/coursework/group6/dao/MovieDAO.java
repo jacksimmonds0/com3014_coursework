@@ -314,4 +314,10 @@ public class MovieDAO {
         return movieRecs;
     }
 
+    public List<Movie> getMostRecentlyAddedMovies() {
+        String sql = "SELECT * FROM movies ORDER BY id DESC LIMIT 6";
+
+        return jdbcTemplate.query(sql, new MovieMapper());
+    }
+
 }
