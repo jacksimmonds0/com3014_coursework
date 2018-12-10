@@ -1,6 +1,7 @@
 package com3014.coursework.group6.controller;
 
 import com3014.coursework.group6.model.person.User;
+import com3014.coursework.group6.service.MovieService;
 import com3014.coursework.group6.service.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
 
     @Autowired
+    private MovieService movieService;
+
+    @Autowired
     private RecommendationService recommendationService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -26,6 +30,8 @@ public class HomeController {
             System.out.println(recommendationService.getRecommendedMovies(currentUser.getId()));
             mav.addObject("recommendations", recommendationService.getRecommendedMovies(currentUser.getId()));
         }
+
+        mav.addObject("recentMovies", movieService.get3MostRecentlyAddedMovies());
 
         return mav;
     }
