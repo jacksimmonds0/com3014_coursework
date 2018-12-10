@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="commentCount" value="0" scope="page"/>
 <html>
 <head>
     <title>${movie.title}</title>
@@ -91,11 +92,11 @@
         <form action="/movie/${movie.id}/addcomment" id="add-comment-form">
             <div class="form-group">
                 <label for="title">Title: </label>
-                <input class="form-control" id="title" type="text" name="title"/>
+                <input class="form-control" id="title" type="text" name="title" required/>
             </div>
             <div class="form-group">
                 <label for="comment">Comment: </label>
-                <textarea class="form-control" id="comment" name="comment"></textarea>
+                <textarea class="form-control" id="comment" name="comment" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Post Comment</button>
 
@@ -106,7 +107,7 @@
     </div>
     <div id="comments-container" class="col-12">
         <c:forEach items="${comments}" varStatus="i" var="comment">
-            <article class="row">
+            <article id="comment${commentCount}"class="row">
                 <div class="col-md-2 col-sm-2 hidden-xs">
                     <figure class="thumbnail">
                         <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png">
@@ -131,6 +132,7 @@
                 </div>
             </article>
             <br>
+            <c:set var="commentCount" value="${commentCount + 1}" scope="page"/>
         </c:forEach>
     </div>
 </div>

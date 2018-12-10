@@ -101,7 +101,7 @@
                 data: data,
                 success: function(data){
                     console.log(data.username);
-                    $("#comments-container").append("<article class=\"row\">\n" +
+                    $("#comments-container").prepend("<article id=\"comment${commentCount}\"style=\"display:none\" class=\"row\">\n" +
                         "                            <div class=\"col-md-2 col-sm-2 hidden-xs\">\n" +
                         "                            <figure class=\"thumbnail\">\n" +
                         "                            <img class=\"img-responsive\" src=\"http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png\">\n" +
@@ -125,7 +125,8 @@
                         "                        </div>\n" +
                         "                        </div>\n" +
                         "                        </article><br>");
-
+                    $("#comment${commentCount}").slideDown();
+                    <c:set var="commentCount" value="${commentCount + 1}" scope="page"/>
                 }
             });
 

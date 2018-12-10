@@ -39,7 +39,11 @@ public class MovieController {
             produces = {"application/json"})
     @ResponseBody
     public String addComment(@PathVariable("id") int movieID, @RequestParam("title") String title, @RequestParam("comment") String comment, HttpSession session) {
-
+        if(title==""){
+            return "No title";
+        }else if(comment==""){
+            return "No comment";
+        }
         User currentUser = (User)session.getAttribute("currentUser");
         Calendar calendar = Calendar.getInstance();
         java.util.Date now = calendar.getTime();
