@@ -50,8 +50,12 @@
                         type:"POST",
 
                         data: $.param({rating: value,movieID: ${movie.id}}),
-                        success: function(data){
-                            console.log(data);
+                        success: function(movies){
+                            console.log(movies);
+                            console.log(movies.recommendations.length);
+                            for(var i = 0; i<movies.recommendations.length; i++){
+                                console.log(movies.recommendations[i]);
+                            }
                             getAvgRating();
                         }
                     });
