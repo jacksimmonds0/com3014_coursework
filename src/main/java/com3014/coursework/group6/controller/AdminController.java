@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,11 +27,11 @@ public class AdminController {
     private DetailsUpdateValidator detailsUpdateValidator;
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public ModelAndView getUserList(HttpSession session) {
+    public ModelAndView getUserList(HttpSession session, RedirectAttributes redirectAttributes) {
 
         if (requestDoesNotMatchSession(session)) {
-            ModelAndView mav = new ModelAndView("index");
-            mav.addObject("message", "Error: Restricted access");
+            ModelAndView mav = new ModelAndView("redirect:/");
+            redirectAttributes.addFlashAttribute("message", "Error: Restricted access");
             return mav;
         } else {
             User user = (User) session.getAttribute("currentUser");
@@ -43,12 +44,14 @@ public class AdminController {
     }
 
     @RequestMapping(value = "admin/account/{id}", method = RequestMethod.GET)
-    public ModelAndView editAccount(@PathVariable("id") int id, HttpSession session) {
+    public ModelAndView editAccount(@PathVariable("id") int id, HttpSession session,
+                                    RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView("editaccount");
 
         if(requestDoesNotMatchSession(session)) {
-            mav = new ModelAndView("index");
-            mav.addObject("message", "Error: Restricted access");
+
+            mav = new ModelAndView("redirect:/");
+            redirectAttributes.addFlashAttribute("message", "Error: Restricted access");
             return mav;
         }
 
