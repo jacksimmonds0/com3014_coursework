@@ -8,7 +8,7 @@
 <body>
     <%@include file="navbar.jsp" %>
     <div class="container">
-        <p><b>${username}</b> has been successfully logged out!</p>
+        <div class="alert alert-success"><b>${username}</b> has been successfully logged out.</div>
     </div>
     </body>
 
