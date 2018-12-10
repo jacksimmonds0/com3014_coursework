@@ -25,20 +25,20 @@
     <c:forEach items="${recommendations}"  var="movie" varStatus="map" >
         <h4>Because you liked: <b>${movie.key.title}</b></h4>
 
-        <div class="row" id="recommended-movie-row">
+        <div class="row" class="recommended-movie-row">
             <c:forEach items="${movie.value}" var="recommendedMovie">
                 <div class="col-md-2">
 
                     <c:choose>
                         <c:when test="${!empty recommendedMovie.posterUrl}">
-                            <img class="poster" src="${recommendedMovie.posterUrl}" />
+                            <img class="poster" src="${recommendedMovie.posterUrl}" alt="${recommendedMovie.title}" />
                         </c:when>
                         <c:otherwise>
-                            <img class="poster" src="https://via.placeholder.com/130x195?No+poster+provided"/>
+                            <img class="poster" src="https://via.placeholder.com/130x195?No+poster+provided" alt="No poster provided"/>
                         </c:otherwise>
                     </c:choose>
 
-                    <p id="recommended-movie">
+                    <p class="recommended-movie">
                         <a href="/movie?id=${recommendedMovie.id}">${recommendedMovie.title} </a> (${recommendedMovie.year})
                     </p>
                 </div>
