@@ -42,7 +42,7 @@
     <h4>Recently added movies: </h4>
     <div class="row movies-row">
         <c:forEach items="${recentMovies}" var="movie">
-            <div class="col-md-2">
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
 
                 <c:choose>
                     <c:when test="${!empty movie.posterUrl}">
@@ -65,7 +65,7 @@
 
         <div class="row movies-row">
             <c:forEach items="${movie.value}" var="recommendedMovie">
-                <div class="col-md-2">
+                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
 
                     <c:choose>
                         <c:when test="${!empty recommendedMovie.posterUrl}">
