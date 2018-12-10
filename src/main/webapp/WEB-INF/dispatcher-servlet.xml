@@ -16,7 +16,9 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
-
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="WEB-INF/messages" />
+    </bean>
     <mvc:resources mapping="/resources/**" location="/resources/"
                    cache-period="31556926"/>
     <mvc:annotation-driven />

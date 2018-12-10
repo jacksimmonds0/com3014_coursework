@@ -18,11 +18,7 @@
 <body>
 <%@include file="navbar.jsp"%>
 <div class="container">
-    <form id="ipForm" action="GeoIPTest" method="POST">
-        <input type="text" name = "ipAddress" id = "ip"/>
-        <input type="submit" name="submit" value="submit" />
-    </form>
-
+    <div id="city"></div>
     <div id="map" style="height: 500px; width:100%;"></div>
 
     <div class="list-group">
@@ -40,21 +36,16 @@
     $(document).ready (function () {
         $.get("https://api.ipify.org?format=json",
             function (data) {
-                $("#ip").val(data.ip);
+                $.ajax({
+                    url:"GeoIPTest",
+                    type:"POST",
+                    data: $.param({ipAddress: data.ip}),
+                    success: function(data){
+                        $("#city").append("<h1>Cinemas around "+data.city+"</h1>");
+                        initMap(data);
+                    }
+                });
             });
-    });
-    $('#ipForm').submit(function(event){
-        event.preventDefault();
-        $.ajax({
-            url:"GeoIPTest",
-            type:"POST",
-            data: $.param({ipAddress: $("#ip").val()}),
-            success: function(data){
-                var obj = JSON.parse(data);
-                alert(obj.city);
-                initMap(obj);
-            }
-        });
     });
 
 

@@ -1,10 +1,11 @@
 package com3014.coursework.group6.service.impl;
 
-import com3014.coursework.group6.dao.UserDao;
+import com3014.coursework.group6.dao.UserDAO;
 import com3014.coursework.group6.model.Login;
 import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserDao userDao;
+    UserDAO userDao;
 
     @Override
     public void register(User user) {
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
         // if the user object is null then no user exists in the database for that username
         // then compare the login password (plaintext) against the password from the database (hashed)
         return user != null && passwordEncoder.matches(login.getPassword(), user.getPassword());
+
     }
 
     @Override
@@ -78,8 +80,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void changeUserStatus(int id, String status) {
+        userDao.changeUserStatus(id, status);
+    }
+
+
+    @Override
     public User getUserByUsername(Login login) {
         return userDao.getUserByUsername(login);
+    }
+
+    @Override
+    public boolean userAccountActive(Login login) {
+        return userDao.userAccountActive(login);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userDao.getUserById(id);
     }
 
 }

@@ -21,6 +21,8 @@
             <th scope="col">Username</th>
             <th scope="col">Full Name</th>
             <th scope="col">Email Address</th>
+            <th scope="col">User Role</th>
+            <th scope="col">Status</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -30,7 +32,13 @@
                 <td>${u.username}</td>
                 <td>${u.name}</td>
                 <td>${u.email}</td>
-                <td>View, Edit, Delete</td>
+                <td>${u.role}</td>
+                <td>${u.status}</td>
+                <td><a href="admin/account/${u.id}">Edit</a>,
+                    <c:choose>
+                        <c:when test="${u.status == 'ACTIVE'}"><a href="admin/inactive/${u.id}">Make Inactive</a></c:when>
+                        <c:when test="${u.status == 'INACTIVE'}"><a href="admin/active/${u.id}">Make Active</a></c:when>
+                    </c:choose></td>
             </tr>
         </c:forEach>
         </tbody>

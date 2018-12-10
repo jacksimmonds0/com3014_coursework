@@ -14,10 +14,13 @@
 <body>
 <%@include file="navbar.jsp" %>
 <div class="container">
-    <b>${message}</b>
+    <c:if test="${not empty message}">
+      <div class="alert alert-danger">${message}</div>
+    </c:if>
     <p> Hello world! </p>
-    <p>Welcome ${firstName}</p>
-    <p>${currentUser.firstName}</p>
+    <c:if test="${not empty firstName}">
+      <div class="alert alert-success">Account successfully created. Welcome, ${firstName}!</div>
+    </c:if>
 
     <c:forEach items="${recommendations}"  var="movie" varStatus="map" >
         <p>Because you liked: ${movie.key.title}</p>

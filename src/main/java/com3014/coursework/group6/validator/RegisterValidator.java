@@ -2,6 +2,7 @@ package com3014.coursework.group6.validator;
 
 import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
+import com3014.coursework.group6.validator.regex.ValidatorRegex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -18,19 +19,25 @@ public class RegisterValidator implements Validator {
         return User.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
         ValidationUtils.rejectIfEmpty(errors, "username", "notEmpty.username");
-        ValidationUtils.rejectIfEmpty(errors, "password", "notEmpty.password");
-        ValidationUtils.rejectIfEmpty(errors, "confirmPassword", "notEmpty.confirmPassword");
         ValidationUtils.rejectIfEmpty(errors, "firstName", "notEmpty.firstName");
         ValidationUtils.rejectIfEmpty(errors, "lastName", "notEmpty.lastName");
-        ValidationUtils.rejectIfEmpty(errors, "email", "notEmpty.emailAddress");
 
         if(user.getPassword() != null && user.getConfirmPassword() != null &&
                 !user.getPassword().equals(user.getConfirmPassword())){
-            errors.rejectValue("password", "notMatch.confirmPassword");
+            errors.rejectValue("confirmPassword", "notMatch.confirmPassword");
+        }
+
+        if(!user.getPassword().matches(ValidatorRegex.PASSWORD)) {
+            errors.rejectValue("password", "invalid.password");
+        }
+
+        if(!user.getEmail().matches(ValidatorRegex.EMAIL)) {
+            errors.rejectValue("email", "invalid.emailAddress");
         }
 
         if(userService.userExists(user.getUsername())){

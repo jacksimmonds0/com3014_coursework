@@ -25,5 +25,11 @@ public interface UserService {
 
     void updatePasswordForUser(int id, String password);
 
+    void changeUserStatus(int id, String status);
+
     User getUserByUsername(Login login);
+
+    boolean userAccountActive(Login login);
+
+    User getUserById(int id);
 }

@@ -9,42 +9,25 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
-<form:form id="loginForm" modelAttribute="login" action="loginProcess" method="post">
-    <table align="center">
-        <tr>
-            <td>
-                <form:label path="username">Username: </form:label>
-            </td>
-            <td>
-                <form:input path="username" name="username" id="username"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="password">Password:</form:label>
-            </td>
-            <td>
-                <form:password path="password" name="password" id="password"/>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td align="left">
-                <form:button id="login" name="login">Login</form:button>
-            </td>
-        </tr>
-        <tr></tr>
-        <tr>
-            <td></td>
-            <td><a href="/">Home</a>
-            </td>
-        </tr>
-    </table>
-</form:form>
-<table align="center">
-    <tr>
-        <td style="font-style: italic; color: red;">${message}</td>
-    </tr>
-</table>
+<div class="col-xs-6 col-xs-offset-3 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+    <form:form id="loginForm" modelAttribute="login" action="loginProcess" method="post">
+        <div class="form-group">
+            <form:label path="username">Username</form:label>
+            <input path="username" name="username" id="username" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <form:label path="password">Password</form:label>
+            <form:password path="password" name="password" id="password" cssClass="form-control"/>
+        </div>
+        <button id="login" name="login" class="btn btn-primary">Login</button>
+        <td><a href="/">Home</a>
+        </td>
+    </form:form>
+    <div>
+        <c:if test="${not empty message}">
+            <div class="alert alert-danger">${message}</div>
+        </c:if>
+    </div>
+</div>
 </body>
 </html>

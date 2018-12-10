@@ -5,15 +5,13 @@ import com3014.coursework.group6.model.person.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDAO {
 
     void register(User user);
 
     void assignUserRole(String username);
 
     boolean userExists(String username);
-
-    User validateUser(Login login);
 
     List<User> getUserList();
 
@@ -25,5 +23,12 @@ public interface UserDao {
 
     void updatePasswordForUser(int id, String password);
 
+    void deleteUser(int id);
+
     User getUserByUsername(Login login);
+
+    void changeUserStatus(int id, String status);
+
+    boolean userAccountActive(Login login);
+
 }

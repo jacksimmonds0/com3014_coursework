@@ -41,7 +41,7 @@ public class LoginController {
         User user = new User();
 
         try {
-            if(userService.validateUser(login)) {
+            if(userService.validateUser(login) && userService.userAccountActive(login)) {
                 user = userService.getUserByUsername(login);
 
                 // add the user to the session (as a cookie)
@@ -51,9 +51,13 @@ public class LoginController {
                 // return back to the home page
                 mav = new ModelAndView("index");
             }
+            else if (!userService.userAccountActive(login)) {
+                mav = new ModelAndView("login");
+                mav.addObject("message", "User account has been deactivated. Please contact an admin");
+            }
             else {
                 mav = new ModelAndView("login");
-                mav.addObject("message", "Username or Password is wrong!");
+                mav.addObject("message", "Invalid username or password");
             }
         }
         catch(CannotGetJdbcConnectionException e) {
