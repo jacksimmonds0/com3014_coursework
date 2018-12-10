@@ -15,8 +15,8 @@ public class RecommendationServiceImpl implements RecommendationService {
     private MovieDAO movieDAO;
 
     @Override
-    public List<Movie> getSimilarMovies(int movie_id) {
-        return movieDAO.getSimilarMovies(movie_id);
+    public List<Movie> getSimilarMovies(int movie_id, int user_id) {
+        return movieDAO.getSimilarMovies(movie_id, user_id);
     }
 
     @Override

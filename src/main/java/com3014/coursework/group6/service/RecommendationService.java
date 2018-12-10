@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface RecommendationService {
 
-    public List<Movie> getSimilarMovies(int movie_id);
+    public List<Movie> getSimilarMovies(int movie_id, int user_id);
 
     public Map<Movie, List<Movie>> getRecommendedMovies(int user_id);
 
