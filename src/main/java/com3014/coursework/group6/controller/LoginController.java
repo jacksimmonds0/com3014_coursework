@@ -49,7 +49,7 @@ public class LoginController {
                 session.setAttribute("userRole", userService.getUserRole(user.getUsername()));
 
                 // return back to the home page
-                mav = new ModelAndView("index");
+                mav = new ModelAndView("redirect:/");
             }
             else if (!userService.userAccountActive(login)) {
                 mav = new ModelAndView("login");
