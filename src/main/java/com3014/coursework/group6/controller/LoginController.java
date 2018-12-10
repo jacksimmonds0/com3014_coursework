@@ -75,6 +75,10 @@ public class LoginController {
         ModelAndView mav = new ModelAndView("logout");
         User currentUser = (User) session.getAttribute(CURRENT_USER);
 
+        if(currentUser == null) {
+            return new ModelAndView("index");
+        }
+
         mav.addObject("username", currentUser.getUsername());
 
         // remove the session from the client-side
