@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <%@ include file="movie.jsp" %>
     <%--
       Created by IntelliJ IDEA.
       User: niall
@@ -7,7 +6,8 @@
       Time: 19:13
       To change this template use File | Settings | File Templates.
     --%>
-<%@ page contentType="text/javascript;" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type="text/javascript">
     $(function(){
         $('#avg-rating').barrating({
             theme: 'fontawesome-stars',
@@ -133,3 +133,4 @@
 
 
     });
+</script>

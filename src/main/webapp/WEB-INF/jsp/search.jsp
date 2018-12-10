@@ -18,10 +18,10 @@
                 <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
                     <c:choose>
                         <c:when test="${!empty movie.posterUrl}">
-                            <img class="poster" src="${movie.posterUrl}" />
+                            <img class="poster" src="${movie.posterUrl}" alt="${movie.title}"/>
                         </c:when>
                         <c:otherwise>
-                            <img class="poster" src="https://via.placeholder.com/150x225?No+poster+provided"/>
+                            <img class="poster" src="https://via.placeholder.com/150x225?No+poster+provided" alt="No poster provided"/>
                         </c:otherwise>
                     </c:choose>
 

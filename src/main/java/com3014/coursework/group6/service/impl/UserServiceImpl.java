@@ -5,11 +5,11 @@ import com3014.coursework.group6.model.Login;
 import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,8 +39,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUserList() {
-        return userDao.getUserList();
+    public List<User> getUserList(int userID) {
+
+        // only return the users for the admin page that are not logged in currently
+        return userDao.getUserList().stream()
+                .filter(m -> m.getId() != userID)
+                .collect(Collectors.toList());
     }
 
     @Override
