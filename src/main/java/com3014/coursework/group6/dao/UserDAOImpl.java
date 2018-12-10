@@ -73,6 +73,23 @@ public class UserDAOImpl implements UserDAO {
         namedParameters.addValue("email", updatedUser.getEmail());
 
         jdbcTemplate.update(sql, namedParameters);
+
+        // update the role
+        if(updatedUser.getRole() != null) {
+            sql = "SELECT username FROM users WHERE id=:id";
+            try {
+                String username = jdbcTemplate.queryForObject(sql, namedParameters, String.class);
+                sql = "UPDATE user_roles SET role=:role WHERE username=:username";
+                namedParameters = new MapSqlParameterSource();
+                namedParameters.addValue("username", username);
+                namedParameters.addValue("role", updatedUser.getRole());
+
+                jdbcTemplate.update(sql, namedParameters);
+            }
+            catch(EmptyResultDataAccessException e) {
+
+            }
+        }
     }
 
     @Override
