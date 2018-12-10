@@ -3,8 +3,7 @@
 }
 
 .poster {
-    height: auto;
-    width: auto;
-    max-width: 130px;
-    max-height: 195px;
+    height: 195px;
+    width: 130px;
+    object-fit: cover;
 }
