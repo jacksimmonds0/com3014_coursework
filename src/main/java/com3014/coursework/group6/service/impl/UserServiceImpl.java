@@ -80,13 +80,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int id) {
-        userDao.deleteUser(id);
+    public void changeUserStatus(int id, String status) {
+        userDao.changeUserStatus(id, status);
     }
+
 
     @Override
     public User getUserByUsername(Login login) {
         return userDao.getUserByUsername(login);
+    }
+
+    @Override
+    public boolean userAccountActive(Login login) {
+        return userDao.userAccountActive(login);
     }
 
     @Override

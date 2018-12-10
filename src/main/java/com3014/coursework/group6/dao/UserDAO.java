@@ -13,8 +13,6 @@ public interface UserDAO {
 
     boolean userExists(String username);
 
-    User validateUser(Login login);
-
     List<User> getUserList();
 
     String getUserRole(String username);
@@ -28,4 +26,9 @@ public interface UserDAO {
     void deleteUser(int id);
 
     User getUserByUsername(Login login);
+
+    void changeUserStatus(int id, String status);
+
+    boolean userAccountActive(Login login);
+
 }
