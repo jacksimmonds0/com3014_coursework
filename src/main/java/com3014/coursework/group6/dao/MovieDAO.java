@@ -316,7 +316,9 @@ public class MovieDAO {
         for (int movie_id : movie_ids) {
             Movie m = getMovieFromDB(movie_id);
             List<Movie> recommendations = getSimilarMovies(movie_id, user_id);
-            movieRecs.put(m,recommendations);
+            if(recommendations.size()>0){
+                movieRecs.put(m,recommendations);
+            }
         }
         return movieRecs;
     }
