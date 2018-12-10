@@ -251,11 +251,18 @@ public class MovieDAO {
         return jdbcTemplate.query(sql,namedParameter, new CommentMapper());
     }
 
-    public List<Movie> getSimilarMovies(int movie_id){
+    public List<Movie> getSimilarMovies(int movie_id, int user_id){
         Movie m = getMovieFromDB(movie_id);
-        String sql = "SELECT * FROM movies WHERE director_id = :director_id AND id <> :movie_id";
+
+        String sql = "SELECT m.* \n" +
+                "                FROM movies m\n" +
+                "        LEFT JOIN ratings r ON r.movie_id = m.id AND r.user_id = :user_id\n" +
+                "        WHERE director_id = :director_id\n" +
+                "        AND m.id <> :movie_id\n" +
+                "        AND r.rating IS NULL";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("movie_id",movie_id);
+        namedParameter.addValue("user_id",user_id);
         namedParameter.addValue("director_id",m.getDirector().getId());
         List<Movie> movies = jdbcTemplate.query(sql,namedParameter, new MovieMapper());
         List<Integer> movie_ids = new ArrayList<>();
@@ -271,7 +278,7 @@ public class MovieDAO {
         List<Integer> movie_ids1 = jdbcTemplate.queryForList(sql,namedParameter,Integer.class);
         movie_ids.addAll(movie_ids1);
         if(movie_ids1.size()>=1){
-            sql = "SELECT * FROM movies WHERE id IN (:movie_ids1)";
+            sql = "SELECT m.* FROM movies m LEFT JOIN ratings r ON r.movie_id = m.id AND r.user_id = :user_id WHERE id IN (:movie_ids1) AND r.rating IS NULL";
             namedParameter.addValue("movie_ids1",movie_ids1);
             movies.addAll(jdbcTemplate.query(sql,namedParameter, new MovieMapper()));
         }
@@ -288,7 +295,7 @@ public class MovieDAO {
         }
         List<Integer> movie_ids2 = jdbcTemplate.queryForList(sql,namedParameter,Integer.class);
         if(movie_ids2.size()>=1) {
-            sql = "SELECT * FROM movies WHERE id IN (:movie_ids2)";
+            sql = "SELECT m.* FROM movies m LEFT JOIN ratings r ON r.movie_id = m.id AND r.user_id = :user_id WHERE id IN (:movie_ids2) AND r.rating IS NULL";
             namedParameter.addValue("movie_ids2", movie_ids2);
             movies.addAll(jdbcTemplate.query(sql, namedParameter, new MovieMapper()));
         }
@@ -308,8 +315,10 @@ public class MovieDAO {
         Map<Movie, List<Movie>> movieRecs = new HashMap<>();
         for (int movie_id : movie_ids) {
             Movie m = getMovieFromDB(movie_id);
-            List<Movie> recommendations = getSimilarMovies(movie_id);
-            movieRecs.put(m,recommendations);
+            List<Movie> recommendations = getSimilarMovies(movie_id, user_id);
+            if(recommendations.size()>0){
+                movieRecs.put(m,recommendations);
+            }
         }
         return movieRecs;
     }

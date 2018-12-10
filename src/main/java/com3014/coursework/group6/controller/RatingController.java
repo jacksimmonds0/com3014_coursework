@@ -27,9 +27,10 @@ public class RatingController {
     @RequestMapping(value ="/addRating", method = RequestMethod.POST, produces={"application/json"})
     public @ResponseBody String addRating(@RequestParam(value="movieID",required = true) int movieID,@RequestParam(value="rating",required=true) double rating, HttpSession session, HttpServletRequest request){
         User currentUser = (User)session.getAttribute("currentUser");
-        int dbResult = movieService.addRating(movieID, currentUser.getId(),rating);
+        int userID = currentUser.getId();
+        int dbResult = movieService.addRating(movieID, userID,rating);
         if(rating>=4){
-            List<Movie> similarMovies = recommendationService.getSimilarMovies(movieID);
+            List<Movie> similarMovies = recommendationService.getSimilarMovies(movieID,userID);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("recommendations",similarMovies);
             return jsonObject.toString();
