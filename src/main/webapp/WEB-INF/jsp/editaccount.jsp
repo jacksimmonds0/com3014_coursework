@@ -3,7 +3,7 @@
 <head>
     <title>Account - ${user.username}</title>
     <%@include file="styling.jsp"%>
-    <script src="<c:url value="/resources/js/account.js" />"></script>
+    <script src="<c:url value="/resources/js/edit_account_admin.js" />"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/account.css" />">
 </head>
 
@@ -39,7 +39,7 @@
                 <div class="form-group row">
                     <label for="account-role" class="col-md-2 col-form-label">User Role</label>
                     <div class="col-md-4">
-                        <select class="form-control" id="account-role">
+                        <select class="form-control" id="user-role">
                             <option value="ROLE_USER" >ROLE_USER</option>
                             <option value="ROLE_ADMIN" <c:if test="${user.role == 'ROLE_ADMIN'}">selected</c:if>>ROLE_ADMIN</option>
                         </select>
@@ -52,7 +52,4 @@
     </div>
 </div>
 </body>
-
-<input type="hidden" id="user-id" value="${user.id}"/>
-
 </html>

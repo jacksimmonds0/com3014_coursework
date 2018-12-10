@@ -22,13 +22,8 @@ public class AdminController {
     @Autowired
     UserService userService;
 
+    @Autowired
     private DetailsUpdateValidator detailsUpdateValidator;
-
-    private boolean requestDoesNotMatchSession(HttpSession session) {
-        String userRole = (String) session.getAttribute(USER_ROLE);
-
-        return userRole == null || !userRole.equals("ROLE_ADMIN");
-    }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView getUserList(HttpSession session) {
@@ -46,12 +41,58 @@ public class AdminController {
     }
 
     @RequestMapping(value = "admin/account/{id}", method = RequestMethod.GET)
-    public String editAccount(@PathVariable int id, ModelMap model) {
+    public ModelAndView editAccount(@PathVariable("id") int id, HttpSession session) {
+        ModelAndView mav = new ModelAndView("editaccount");
+
+        if(requestDoesNotMatchSession(session)) {
+            mav = new ModelAndView("index");
+            mav.addObject("message", "Error: Restricted access");
+            return mav;
+        }
+
         User user = userService.getUserById(id);
 
-        model.addAttribute("user", user);
+        mav.addObject("user", user);
 
-        return "editaccount";
+        return mav;
+    }
+
+
+    @RequestMapping(value = "admin/account/{id}/edit",
+                    method = RequestMethod.PUT,
+                    consumes = {"application/json"},
+                    produces = {"application/json"})
+    @ResponseBody
+    public String editAccountDetails(@PathVariable("id") int id, @RequestBody String req, HttpSession session,
+                              @ModelAttribute("user") User user, BindingResult result) {
+
+        if(requestDoesNotMatchSession(session)) {
+            return responseJSON(true, "An administrator is not signed in.");
+        }
+
+        JSONObject request = new JSONObject(req);
+        String firstName = request.optString("first_name");
+        String lastName = request.optString("last_name");
+        String email = request.optString("email");
+        String role = request.optString("user_role");
+
+       user.setFirstName(firstName);
+       user.setLastName(lastName);
+       user.setEmail(email);
+       user.setRole(role);
+
+       detailsUpdateValidator.validate(user, result);
+
+       if(result.getFieldError("email") != null) {
+           return responseJSON(true, "Email is not of the correct format, please try again");
+       }
+
+        User updatedUser = userService.updateDetails(user);
+
+        // update the session to the new user
+        session.setAttribute("currentUser", updatedUser);
+
+        return responseJSON(false, "Successfully updated user details");
     }
 
     @RequestMapping(value = "admin/inactive/{id}", method = RequestMethod.GET)
@@ -68,6 +109,21 @@ public class AdminController {
         ModelAndView mav = new ModelAndView("redirect:/admin");
 
         return mav;
+    }
+
+    private String responseJSON(boolean error, String message) {
+        JSONObject json = new JSONObject();
+
+        json.put("error", error);
+        json.put("message", message);
+
+        return json.toString();
+    }
+
+    private boolean requestDoesNotMatchSession(HttpSession session) {
+        String userRole = (String) session.getAttribute(USER_ROLE);
+
+        return userRole == null || !userRole.equals("ROLE_ADMIN");
     }
 
 
