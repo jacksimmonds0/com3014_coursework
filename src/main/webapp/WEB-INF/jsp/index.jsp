@@ -17,10 +17,11 @@
     <c:if test="${not empty message}">
       <div class="alert alert-danger">${message}</div>
     </c:if>
-    <h1> Movie Recommendations </h1>
     <c:if test="${not empty firstName}">
-      <div class="alert alert-success">Account successfully created. Welcome, ${firstName}!</div>
+        <div class="alert alert-success">Account successfully created. Welcome, ${firstName}!</div>
     </c:if>
+
+    <h1> Movie Recommendations </h1>
 
     <div class="col-md-12">
         <p id="description">
