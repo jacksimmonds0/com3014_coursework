@@ -9,17 +9,17 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="${pageContext.request.requestURI.endsWith('/index.jsp') ? 'active' : ''}">
-                <a href="">Home</a>
+                <a href="/">Home</a>
             </li>
             <li class="${pageContext.request.requestURI.endsWith('/addmovie.jsp') ? 'active' : ''}">
                 <a href="/addmovie">Add a Movie</a>
             </li>
-            <li class="${pageContext.request.requestURI.endsWith('/iplocation.jsp') ? 'active' : ''}">
-                <a href="/iplocation">Nearest Cinema</a>
+            <li class="${pageContext.request.requestURI.endsWith('/nearestcinema.jsp') ? 'active' : ''}">
+                <a href="/nearestcinema">Nearest Cinema</a>
             </li>
       
             <c:if test="${userRole == 'ROLE_ADMIN'}">
-                <li class="${pageContext.request.requestURI.endsWith('/account.jsp') ? 'active' : ''}">
+                <li class="${pageContext.request.requestURI.endsWith('/admin.jsp') ? 'active' : ''}">
                     <a href="/admin">Admin</a>
                 </li>
             </c:if>
@@ -50,8 +50,12 @@
                     </li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="/account"><span class="glyphicon glyphicon-user"></span> ${currentUser.username}</a></li>
-                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li class="${pageContext.request.requestURI.endsWith('/account.jsp') ? 'active' : ''}">
+                        <a href="/account"><span class="glyphicon glyphicon-user"></span> ${currentUser.username}</a>
+                    </li>
+                    <li>
+                        <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                    </li>
                 </c:otherwise>
             </c:choose>
         </ul>

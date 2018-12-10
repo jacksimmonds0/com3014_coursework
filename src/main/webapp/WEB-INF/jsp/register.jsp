@@ -44,12 +44,7 @@
                 <button id="register" name="register" class="btn btn-primary">Register</button>
             </td>
         </tr>
-        <tr></tr>
-        <tr>
-            <td></td>
-            <td><a href="index.jsp">Home</a>
-            </td>
-        </tr>
+        <tr></tr>l
     </table>
     </div>
 </form:form>

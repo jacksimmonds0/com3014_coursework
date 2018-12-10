@@ -53,7 +53,7 @@
             <form:label path="posterUrl">Image URL for Poster:</form:label>
             <form:input type="text" path="posterUrl" id="poster-url" cssClass="form-control"/>
         </div>
-        <p id="note">(Note: image must be of <br> size at least 200x300px)</p>
+        <p id="note">(Note: image must be of size at least 200x300px)</p>
         <input type="submit" class="btn btn-primary" value="Submit"/>
     </div>
 </form:form>
