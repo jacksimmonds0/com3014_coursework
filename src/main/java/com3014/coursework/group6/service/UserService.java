@@ -13,7 +13,7 @@ public interface UserService {
 
     boolean validateUser(Login login);
 
-    List<User> getUserList();
+    List<User> getUserList(int userID);
 
     String getUserRole(String username);
 

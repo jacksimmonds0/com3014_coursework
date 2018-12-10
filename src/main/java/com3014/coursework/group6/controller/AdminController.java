@@ -33,8 +33,10 @@ public class AdminController {
             mav.addObject("message", "Error: Restricted access");
             return mav;
         } else {
+            User user = (User) session.getAttribute("currentUser");
+
             ModelAndView mav = new ModelAndView("admin");
-            mav.addObject("userList", userService.getUserList());
+            mav.addObject("userList", userService.getUserList(user.getId()));
             return mav;
         }
 
