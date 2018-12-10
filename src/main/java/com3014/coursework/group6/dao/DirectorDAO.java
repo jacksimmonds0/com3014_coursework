@@ -25,4 +25,10 @@ public class DirectorDAO {
 
         return directors.size() == 1 ? directors.get(0) : null;
     }
+
+    public List<Director> getAllDirectors() {
+        String sql = "SELECT * FROM directors";
+
+        return jdbcTemplate.query(sql, new DirectorMapper());
+    }
 }

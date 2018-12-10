@@ -1,5 +1,11 @@
 $(function() {
-    $('#input-tags').selectize({
+    $('#select-genre').selectize({
+        maxItems: 15
+    });
+
+    $('#select-actors').selectize({
+        maxItems: 10,
+        maxOptions: 5,
         delimiter: ',',
         persist: false,
         create: function(input) {
@@ -9,11 +15,18 @@ $(function() {
             }
         }
     });
-});
 
-$(function() {
-    $('#select-genre').selectize({
-        maxItems: 15
+    $('#select-director').selectize({
+        maxItems: 1,
+        maxOptions: 5,
+        delimiter: ',',
+        persist: false,
+        create: function(input) {
+            return {
+                value: input,
+                text: input
+            }
+        }
     });
 });
 

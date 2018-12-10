@@ -1,8 +1,12 @@
 package com3014.coursework.group6.controller;
 import java.util.List;
+
+import com3014.coursework.group6.dao.ActorDAO;
+import com3014.coursework.group6.dao.DirectorDAO;
 import com3014.coursework.group6.dao.GenreDAO;
 import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
+import com3014.coursework.group6.service.MovieFieldsService;
 import com3014.coursework.group6.service.MovieService;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +28,7 @@ public class AddMovieController {
     private MovieService movieService;
 
     @Autowired
-    private GenreDAO genreDAO;
+    private MovieFieldsService movieFieldsService;
 
     @RequestMapping(value = "/addmovie", method = RequestMethod.GET)
 
@@ -32,8 +36,9 @@ public class AddMovieController {
         ModelAndView mv = new ModelAndView("addmovie");
         mv.addObject("movie", new Movie());
 
-        List<Genre> genreList = genreDAO.getAllGenres();
-        mv.addObject("genreList", genreList);
+        mv.addObject("genreList", movieFieldsService.getAllGenres());
+        mv.addObject("actorsList", movieFieldsService.getAllActors());
+        mv.addObject("directorsList", movieFieldsService.getAllDirectors());
 
         return mv;
     }

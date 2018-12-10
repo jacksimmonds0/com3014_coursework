@@ -43,11 +43,19 @@
         </div>
         <div class="form-group">
             <form:label path="director">Director</form:label>
-            <form:input path="director" id = "director" cssClass="form-control"/>
+            <form:select multiple="true" path="director" id="select-director">
+                <c:forEach items="${directorsList}" var="director">
+                    <form:option value="${director.name}">${director.name}</form:option>
+                </c:forEach>
+            </form:select>
         </div>
         <div class="form-group">
             <form:label path="actors">Actors</form:label>
-            <form:input type="text" path="actors" id="input-tags"/>
+            <form:select multiple="true" path="actors" id="select-actors">
+                <c:forEach items="${actorsList}" var="actor">
+                    <form:option value="${actor.name}">${actor.name}</form:option>
+                </c:forEach>
+            </form:select>
         </div>
         <div class="form-group">
             <form:label path="posterUrl">Image URL for Poster:</form:label>

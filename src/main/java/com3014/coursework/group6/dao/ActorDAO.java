@@ -24,4 +24,10 @@ public class ActorDAO {
         return jdbcTemplate.query(sql, namedParameter, new ActorMapper());
     }
 
+    public List<Actor> getAllActors() {
+        String sql = "SELECT * FROM actors";
+
+        return jdbcTemplate.query(sql, new ActorMapper());
+    }
+
 }
