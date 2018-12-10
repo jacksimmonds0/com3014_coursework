@@ -28,13 +28,13 @@ public class RatingController {
     public @ResponseBody String addRating(@RequestParam(value="movieID",required = true) int movieID,@RequestParam(value="rating",required=true) double rating, HttpSession session, HttpServletRequest request){
         User currentUser = (User)session.getAttribute("currentUser");
         int dbResult = movieService.addRating(movieID, currentUser.getId(),rating);
-        if(rating>4){
+        if(rating>=4){
             List<Movie> similarMovies = recommendationService.getSimilarMovies(movieID);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("recommendations",similarMovies);
             return jsonObject.toString();
         }
-        return "ok";
+        return "{}";
     }
 
     @RequestMapping(value ="/getAvgRating", method = RequestMethod.POST, produces={"application/json"})

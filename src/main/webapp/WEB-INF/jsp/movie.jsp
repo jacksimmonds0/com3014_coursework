@@ -45,18 +45,34 @@
                 </c:choose>
                 ,
                 onSelect: function(value, text) {
+                    if(value<=3){
+                        $('#recommendation_container').slideUp();
+                        $(".recommendation_div").not(":hidden").slideUp();
+                    }
                     $.ajax({
                         url:"addRating",
                         type:"POST",
 
                         data: $.param({rating: value,movieID: ${movie.id}}),
                         success: function(movies){
-                            console.log(movies);
-                            console.log(movies.recommendations.length);
-                            for(var i = 0; i<movies.recommendations.length; i++){
-                                console.log(movies.recommendations[i]);
-                            }
                             getAvgRating();
+                            if(movies.recommendations != null) {
+                                var rec_con = $('#recommendation_container');
+                                // rec_con.css("display","");
+
+                                var rec_div = $(".recommendation_div").first().clone();
+                                $(".recommendation_div").not(":hidden").remove();
+                                for (var i = 0; i < movies.recommendations.length; i++) {
+                                    var rec_div1 = rec_div.clone();
+                                    rec_div1.find('a').attr('href', "/movie?id=" + movies.recommendations[i].id);
+                                    rec_div1.find('a').html(movies.recommendations[i].title);
+                                    rec_div1.find('p').append(" (" + movies.recommendations[i].year + ")");
+                                    rec_div1.css("display","");
+                                    rec_con.append(rec_div1);
+                                    // rec_div1.slideDown();
+                                }
+                            }
+                            rec_con.slideDown();
                         }
                     });
                 }
@@ -168,6 +184,17 @@
         <br>
 
 </div>
+<div id="recommendation_container" class="container" style="display:none; padding-top: 10px">
+    <div>
+        <h3>We see that you like ${movie.title}!</h3>
+        <h4>Here are some similar films you may like...</h4>
+    </div>
+        <div class="recommendation_div col-md-2" style="display:none;">
+            <img src="https://via.placeholder.com/130x195?No+poster+provided"/>
+            <p style="padding-top: 10px">
+                <a></a></p>
+        </div>
+</div>
 <br>
 <div class="container">
     <div class="col-12">
@@ -190,20 +217,6 @@
 
     </div>
     <div id="comments-container" class="col-12">
-        <%--<div class="panel panel-default arrow left">--%>
-            <%--<div class="panel-body">--%>
-                <%--<header class="text-left">--%>
-                    <%--<div class="comment-user"><i class="fa fa-user"></i> That Guy</div>--%>
-                    <%--<time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>--%>
-                <%--</header>--%>
-                <%--<div class="comment-post">--%>
-                    <%--<p>--%>
-                    <%--</p>--%>
-                <%--</div>--%>
-                <%--<p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-
         <c:forEach items="${comments}" varStatus="i" var="comment">
             <article class="row">
                 <div class="col-md-2 col-sm-2 hidden-xs">
