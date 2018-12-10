@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    @Autowired
     private MovieService movieService;
+
+    @Autowired
+    public SearchServiceImpl(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @Override
     public List<Movie> getSearchResults(String search) {

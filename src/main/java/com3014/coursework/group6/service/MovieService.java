@@ -1,9 +1,7 @@
 package com3014.coursework.group6.service;
 
 import com3014.coursework.group6.model.Comment;
-import com3014.coursework.group6.model.Genre;
 import com3014.coursework.group6.model.Movie;
-import com3014.coursework.group6.model.person.Director;
 
 import java.sql.Timestamp;
 import java.util.List;
