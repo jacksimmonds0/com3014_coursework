@@ -20,8 +20,6 @@
             <form:password path="password" name="password" id="password" cssClass="form-control"/>
         </div>
         <button id="login" name="login" class="btn btn-primary">Login</button>
-        <td><a href="/">Home</a>
-        </td>
     </form:form>
     <div>
         <c:if test="${not empty message}">
