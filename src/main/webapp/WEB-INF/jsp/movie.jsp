@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="<c:url value="/resources/css/fontawesome-stars.css" />">
     <script src="<c:url value="/resources/js/jquery.barrating.min.js" />"></script>
+    <script src="<c:url value="/resources/js/movie.js" />"></script>
     <script type="text/javascript">
         function getAvgRating(){
             $.ajax({
@@ -71,8 +72,9 @@
                                     rec_con.append(rec_div1);
                                     // rec_div1.slideDown();
                                 }
+                                rec_con.slideDown();
                             }
-                            rec_con.slideDown();
+
                         }
                     });
                 }
@@ -81,11 +83,11 @@
             </c:choose>
 
 
-            $('#avg-rating').barrating({
-                theme: 'fontawesome-stars',
-                readonly: true,
-                initialRating: getAvgRating()
-            });
+            // $('#avg-rating').barrating({
+            //     theme: 'fontawesome-stars',
+            //     readonly: true,
+            //     initialRating: getAvgRating()
+            // });
 
             $("#add-comment-form").on("submit",function(e){
                 e.preventDefault();

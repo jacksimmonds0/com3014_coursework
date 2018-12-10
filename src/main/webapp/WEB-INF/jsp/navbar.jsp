@@ -11,7 +11,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="/addmovie">Add a Movie</a></li>
             <li><a href="#">Movies</a></li>
-            <li><a href="/iplocation">Nearest Cinema</a></li>
+            <li><a href="/nearestcinema">Nearest Cinema</a></li>
             <c:if test="${userRole == 'ROLE_ADMIN'}">
                 <li><a href="/admin">Admin</a></li>
             </c:if>
