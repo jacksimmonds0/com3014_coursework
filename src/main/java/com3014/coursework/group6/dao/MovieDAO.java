@@ -292,8 +292,12 @@ public class MovieDAO {
             namedParameter.addValue("movie_ids2", movie_ids2);
             movies.addAll(jdbcTemplate.query(sql, namedParameter, new MovieMapper()));
         }
+        if(movies.size()>6){
+            return movies.subList(0,5);
+        }else{
+            return movies;
+        }
 
-        return movies;
     }
 
     public Map<Movie, List<Movie>> getRecommendedMovies(int user_id){
