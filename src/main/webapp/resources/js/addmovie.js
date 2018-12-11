@@ -43,15 +43,15 @@ $(function() {
                     e.preventDefault();
                     alert("Please enter a valid year");
                 }
-        else if(ftitle === ""){
+        else if(ftitle === "" || ftitle.length >= 45){
             e.preventDefault();
-            alert("Please enter a film name");
+            alert("Please enter a valid film name");
         }
-        else if(fdescription === ""){
+        else if(fdescription === "" || fdescription.length >=255){
             e.preventDefault();
-            alert("Please enter a film description");
+            alert("Please enter a valid film description");
         }
-        else if(fdirector.length === 0){
+        else if(fdirector.length === 0 || fdirector.length>=45){
             e.preventDefault();
             alert("Please enter a director name");
         }

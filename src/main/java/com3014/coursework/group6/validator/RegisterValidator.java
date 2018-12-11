@@ -23,25 +23,32 @@ public class RegisterValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-        ValidationUtils.rejectIfEmpty(errors, "username", "notEmpty.username");
-        ValidationUtils.rejectIfEmpty(errors, "firstName", "notEmpty.firstName");
-        ValidationUtils.rejectIfEmpty(errors, "lastName", "notEmpty.lastName");
-
-        if(user.getPassword() != null && user.getConfirmPassword() != null &&
-                !user.getPassword().equals(user.getConfirmPassword())){
-            errors.rejectValue("confirmPassword", "notMatch.confirmPassword");
-        }
-
-        if(!user.getPassword().matches(ValidatorRegex.PASSWORD)) {
-            errors.rejectValue("password", "invalid.password");
-        }
-
-        if(!user.getEmail().matches(ValidatorRegex.EMAIL)) {
-            errors.rejectValue("email", "invalid.emailAddress");
+        if(user.getUsername().length()<=4 || user.getUsername().length()>20) {
+            errors.rejectValue("username", "invalid.username");
         }
 
         if(userService.userExists(user.getUsername())){
             errors.rejectValue("username", "exists.username");
+        }
+
+        if(!user.getPassword().matches(ValidatorRegex.PASSWORD) || user.getPassword().length()<8 || user.getPassword().length()>= 30) {
+            errors.rejectValue("password", "invalid.password");
+        }
+
+        if(user.getPassword() != null && user.getConfirmPassword() != null && !user.getPassword().equals(user.getConfirmPassword())){
+            errors.rejectValue("confirmPassword", "notMatch.confirmPassword");
+        }
+
+        if(user.getFirstName().length()<2 || user.getFirstName().length()<30) {
+            errors.rejectValue("firstName", "invalid.name");
+        }
+
+        if(user.getLastName().length()<2 || user.getLastName().length()<30) {
+            errors.rejectValue("lastName", "invalid.name");
+        }
+
+        if(!user.getEmail().matches(ValidatorRegex.EMAIL) || user.getEmail().length()<=4 || user.getEmail().length()>45) {
+            errors.rejectValue("email", "invalid.emailAddress");
         }
     }
 

@@ -30,7 +30,7 @@
             <form:input path="title" id = "title" cssClass="form-control"/>
         </div>
         <div class="form-group">
-           <form:label path="description">Description</form:label>
+            <form:label path="description">Description</form:label>
             <form:textarea path="description" rows="4" cols="23" id = "description" cssClass="form-control"/>
         </div>
         <div class="form-group">
