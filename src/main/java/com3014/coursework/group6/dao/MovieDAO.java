@@ -206,6 +206,8 @@ public class MovieDAO {
         double avgRating = 0.0;
         if(ratings.size() != 0) {
             avgRating = total/ratings.size();
+        }else{
+            avgRating = 3;
         }
 
         return avgRating;
@@ -214,7 +216,7 @@ public class MovieDAO {
 
 
     public double getIndivRating(int movie_id, int user_id){
-        double rating = 2.5;
+        double rating = 3;
         String sql = "SELECT COUNT(rating) FROM ratings WHERE movie_id = :movie_id AND user_id = :user_id";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("movie_id",movie_id);
