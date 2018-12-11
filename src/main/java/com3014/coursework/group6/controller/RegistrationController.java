@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
 import com3014.coursework.group6.validator.RegisterValidator;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * The controller for registering a user onto the system
@@ -56,7 +57,8 @@ public class RegistrationController {
      * @return the {@link ModelAndView} to redirect to the home page if registration is successful
      */
     @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
-    public ModelAndView addUser(HttpSession session, @ModelAttribute("user") User user, BindingResult result) {
+    public ModelAndView addUser(HttpSession session, @ModelAttribute("user") User user, BindingResult result,
+                                RedirectAttributes redirectAttributes) {
 
         try {
             registerValidator.validate(user, result);
@@ -82,7 +84,9 @@ public class RegistrationController {
                 session.setAttribute("currentUser", actualUser);
                 session.setAttribute("userRole", userService.getUserRole(user.getUsername()));
 
-                return new ModelAndView("redirect:/", "firstName", user.getFirstName());
+                redirectAttributes.addFlashAttribute("firstName", user.getFirstName());
+
+                return new ModelAndView("redirect:/");
             }
         }
         catch(CannotGetJdbcConnectionException e) {
