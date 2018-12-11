@@ -5,6 +5,9 @@ import com3014.coursework.group6.model.person.User;
 
 import java.sql.Timestamp;
 
+/**
+ * The is an object to store the comment fields for a movie
+ */
 public class Comment {
 
     private int id;

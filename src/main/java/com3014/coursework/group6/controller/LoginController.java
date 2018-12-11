@@ -16,7 +16,9 @@ import com3014.coursework.group6.model.Login;
 import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
 
-
+/**
+ * The login controller to allow users to login and logout of the system
+ */
 @Controller
 public class LoginController {
 
@@ -27,16 +29,27 @@ public class LoginController {
     @Autowired
     UserService userService;
 
+    /**
+     * @return the login page view on the /login endpoint
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView showLogin() {
         ModelAndView mav = new ModelAndView("login");
         mav.addObject("login", new Login());
         return mav;
     }
 
+    /**
+     * The login process POST method to login to the web application
+     *
+     * @param session
+     *          the {@link HttpSession} to add the user to the cookie if login is successful
+     * @param login
+     *          the {@link ModelAttribute} login for validation
+     * @return the {@link ModelAndView} depending on if login is successful or not
+     */
     @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-    public ModelAndView loginProcess(HttpServletRequest request, HttpServletResponse response,
-                                     HttpSession session, @ModelAttribute("login") Login login) {
+    public ModelAndView loginProcess(HttpSession session, @ModelAttribute("login") Login login) {
         ModelAndView mav = null;
         User user = new User();
 
@@ -70,6 +83,13 @@ public class LoginController {
         return mav;
     }
 
+    /**
+     * Method to allow the user to logout of the system
+     *
+     * @param session
+     *          the {@link HttpSession} to be invalidated so the user is logged out of the system
+     * @return the logout view if logout is successful, the home page otherwise
+     */
     @RequestMapping(value = "/logout")
     public ModelAndView logout(HttpSession session) {
         ModelAndView mav = new ModelAndView("logout");

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * The controller for the search results and the type-ahead search results
+ */
 @Controller
 public class SearchController {
 
@@ -24,6 +27,15 @@ public class SearchController {
     @Autowired
     private MovieService movieService;
 
+    /**
+     * The search results for the search page based on the term(s) entered in the search box
+     *
+     * @param term
+     *          the term entered in the navbar search box
+     * @param model
+     *          the {@link ModelMap} to add the results to
+     * @return the search view
+     */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String showSearchResults(@RequestParam("term") String term, ModelMap model) {
         List<Movie> results = searchService.getSearchResults(term);
@@ -35,6 +47,13 @@ public class SearchController {
         return "search";
     }
 
+    /**
+     * The search box REST endpoint to retrieve movie title and id for the type-ahead search dropdown
+     *
+     * @param term
+     *          the current input for the search box
+     * @return the JSON string for the list of id-title for the movies from the type-ahead search
+     */
     @RequestMapping(value = "/searchbox", method = RequestMethod.GET, produces = {"application/json"})
     @ResponseBody
     public String getSearchboxResults(@RequestParam("term") String term) {
