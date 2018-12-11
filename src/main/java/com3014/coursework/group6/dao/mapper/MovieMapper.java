@@ -9,6 +9,13 @@ import java.sql.SQLException;
 
 public class MovieMapper implements RowMapper<Movie> {
 
+    /**
+     * Maps an SQL query resultset row to an movie object
+     * @param rs
+     * @param rowNum
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Movie mapRow(ResultSet rs, int rowNum) throws SQLException {
         Movie movie = new Movie();

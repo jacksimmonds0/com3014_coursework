@@ -8,6 +8,13 @@ import java.sql.SQLException;
 
 public class DirectorMapper implements RowMapper<Director> {
 
+    /**
+     * Maps an SQL query resultset row to an director object
+     * @param rs
+     * @param rowNum
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Director mapRow(ResultSet rs, int rowNum) throws SQLException {
         Director director = new Director();

@@ -8,6 +8,13 @@ import java.sql.SQLException;
 
 public class UserMapper implements RowMapper<User> {
 
+    /**
+     * Maps an SQL query resultset row to an user object
+     * @param rs
+     * @param arg1
+     * @return
+     * @throws SQLException
+     */
     @Override
     public User mapRow(ResultSet rs, int arg1) throws SQLException {
         User user = new User();

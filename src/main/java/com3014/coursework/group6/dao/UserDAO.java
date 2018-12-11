@@ -12,6 +12,10 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+/**
+ * Data Access Object for the user objects.
+ * Contains database interactions for any queries relating to users.
+ */
 public class UserDAO {
 
     @Autowired
@@ -20,12 +24,20 @@ public class UserDAO {
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
 
+    /**
+     * registers the user into the database
+     * @param user
+     */
     public void register(User user) {
 
         String sql = "INSERT INTO users (username, password, first_name, last_name, email_address, status) VALUES(:username, :password, :firstName, :lastName, :email, 'ACTIVE')";
         jdbcTemplate.update(sql, new BeanPropertySqlParameterSource(user));
     }
 
+    /**
+     * Assigns the user the default role of "ROLE_USER"
+     * @param username
+     */
     public void assignUserRole(String username) {
         String sql = "INSERT INTO user_roles (username, role) VALUES(:username, 'ROLE_USER')";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
@@ -33,6 +45,11 @@ public class UserDAO {
         jdbcTemplate.update(sql, namedParameter);
     }
 
+    /**
+     *
+     * @param username
+     * @return true if a user exists with the parameterized username
+     */
     public boolean userExists(String username) {
         String sql = "SELECT * FROM users WHERE username=:username";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
@@ -44,12 +61,21 @@ public class UserDAO {
         return (user.size() > 0);
     }
 
+    /**
+     *
+     * @return a list of all user objects
+     */
     public List<User> getUserList() {
         String sql = "SELECT u.*, ur.role role FROM users u, user_roles ur WHERE u.username = ur.username";
         List<User> users = jdbcTemplate.query(sql, new UserMapper());
         return users;
     }
 
+    /**
+     *
+     * @param username
+     * @return the user role of the specified user
+     */
     public String getUserRole(String username) {
         String sql = "SELECT role FROM user_roles WHERE username = :username";
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -61,6 +87,11 @@ public class UserDAO {
         return role;
     }
 
+    /**
+     *
+     * @param updatedUser
+     * Update the user record in the database with the new user details
+     */
     public void updateDetails(User updatedUser) {
         String sql = "UPDATE users SET first_name=:first_name, last_name=:last_name, email_address=:email WHERE id=:id;";
 
@@ -90,6 +121,11 @@ public class UserDAO {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return user object corresponding to parameterized user id OR blank user if one doesn't exist
+     */
     public User getUserById(int id) {
         try {
             String sql = "SELECT u.*, ur.role FROM users u, user_roles ur WHERE u.id = :id AND u.username = ur.username";
@@ -102,6 +138,12 @@ public class UserDAO {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @param password
+     * Updates the password in the database for the given user
+     */
     public void updatePasswordForUser(int id, String password) {
         String sql = "UPDATE users SET password=:password WHERE id=:id;";
 
@@ -112,6 +154,10 @@ public class UserDAO {
         jdbcTemplate.update(sql, namedParameters);
     }
 
+    /**
+     * Sets the user as inactive (so that the comments are still valid)
+     * @param id
+     */
     public void deleteUser(int id) {
         String sql = "UPDATE users u SET u.status = 'INACTIVE' WHERE id = :id";
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -119,6 +165,11 @@ public class UserDAO {
         jdbcTemplate.update(sql, namedParameters);
     }
 
+    /**
+     * Gets user by username
+     * @param login - Comprised of username and password (from registration / logging in)
+     * @return user object
+     */
     public User getUserByUsername(Login login) {
         try {
             String sql = "SELECT * FROM users WHERE username=:username";
@@ -131,6 +182,11 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Changes status to ACTIVE or INACTIVE for user
+     * @param id
+     * @param status
+     */
     public void changeUserStatus(int id, String status) {
         String sql = "UPDATE users u SET u.status = :status WHERE id = :id";
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -139,6 +195,11 @@ public class UserDAO {
         jdbcTemplate.update(sql, namedParameters);
     }
 
+    /**
+     * Checks if the given user is active (true) or inactive (false)
+     * @param login
+     * @return
+     */
     public boolean userAccountActive(Login login) {
         try {
             String sql = "SELECT * FROM users WHERE username=:username AND status = 'ACTIVE'";

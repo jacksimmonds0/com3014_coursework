@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Data Access Object for the genre objects.
+ * Contains database interactions for any queries relating to genres.
+ */
 @Repository
 public class GenreDAO {
 

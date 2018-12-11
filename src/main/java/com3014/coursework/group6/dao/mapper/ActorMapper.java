@@ -8,6 +8,13 @@ import java.sql.SQLException;
 
 public class ActorMapper implements RowMapper<Actor> {
 
+    /**
+     * Maps an SQL query resultset row to an actor object
+     * @param rs
+     * @param numRow
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Actor mapRow(ResultSet rs, int numRow) throws SQLException {
         Actor actor = new Actor();

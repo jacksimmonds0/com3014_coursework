@@ -8,6 +8,13 @@ import java.sql.SQLException;
 
 public class GenreMapper implements RowMapper<Genre> {
 
+    /**
+     * Maps an SQL query resultset row to an genre object
+     * @param rs
+     * @param rowNum
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Genre mapRow(ResultSet rs, int rowNum) throws SQLException {
         Genre genre = new Genre();

@@ -10,6 +10,13 @@ import java.text.SimpleDateFormat;
 
 public class CommentMapper implements RowMapper<Comment> {
 
+    /**
+     * Maps an SQL query resultset row to an comment object
+     * @param rs
+     * @param rowNum
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
         Comment comment = new Comment();

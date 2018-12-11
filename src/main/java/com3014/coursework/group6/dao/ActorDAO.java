@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Data Access Object for the movie actors.
+ * Contains database interactions for any queries relating to actors.
+ */
 @Repository
 public class ActorDAO {
 

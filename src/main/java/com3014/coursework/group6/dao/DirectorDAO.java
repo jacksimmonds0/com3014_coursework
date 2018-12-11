@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Data Access Object for the director objects.
+ * Contains database interactions for any queries relating to directors.
+ */
 @Repository
 public class DirectorDAO {
 
