@@ -12,7 +12,7 @@
     <context:annotation-config/>
 
     <bean id="userService" class="com3014.coursework.group6.service.impl.UserServiceImpl"/>
-    <bean id="userDao" class="com3014.coursework.group6.dao.UserDAOImpl"/>
+    <bean id="userDao" class="com3014.coursework.group6.dao.UserDAO"/>
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
