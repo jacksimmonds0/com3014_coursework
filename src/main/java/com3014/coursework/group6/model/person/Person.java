@@ -1,5 +1,8 @@
 package com3014.coursework.group6.model.person;
 
+/**
+ * Model for a person, extended by multiple classes here
+ */
 public class Person {
 
     private int id;

@@ -7,6 +7,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/**
+ * Validator for when a details are being updated for a user account
+ */
 @Component
 public class DetailsUpdateValidator implements Validator {
 
@@ -15,6 +18,14 @@ public class DetailsUpdateValidator implements Validator {
         return DetailsUpdateValidator.class.isAssignableFrom(clazz);
     }
 
+    /**
+     * Validating the user against specific validation rules
+     *
+     * @param target
+     *          the target object in this case {@link User}
+     * @param errors
+     *          any errors as a result of the validation
+     */
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;

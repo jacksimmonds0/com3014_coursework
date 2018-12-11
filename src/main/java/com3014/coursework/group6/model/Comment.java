@@ -1,6 +1,5 @@
 package com3014.coursework.group6.model;
 
-
 import com3014.coursework.group6.model.person.User;
 
 import java.sql.Timestamp;

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * A service to retrieve all the genres, actors and directors for the add movie
+ */
 @Service
 public class MovieFieldsServiceImpl implements MovieFieldsService {
 
@@ -24,17 +27,25 @@ public class MovieFieldsServiceImpl implements MovieFieldsService {
     @Autowired
     private DirectorDAO directorDAO;
 
-
+    /**
+     * @return all the genres as a list from the database
+     */
     @Override
     public List<Genre> getAllGenres() {
         return genreDAO.getAllGenres();
     }
 
+    /**
+     * @return all the actors as a list from the database
+     */
     @Override
     public List<Actor> getAllActors() {
         return actorDAO.getAllActors();
     }
 
+    /**
+     * @return all the databases as a list from the database
+     */
     @Override
     public List<Director> getAllDirectors() {
         return directorDAO.getAllDirectors();

@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A service to provide searching of results for the search page and search box dropdown
+ */
 @Service
 public class SearchServiceImpl implements SearchService {
 
@@ -25,6 +28,13 @@ public class SearchServiceImpl implements SearchService {
         this.movieService = movieService;
     }
 
+    /**
+     * Gets search results for the search page - by actor, genre, director, year and title
+     *
+     * @param search
+     *          the search term entered by the user
+     * @return the list of movies as a result of the search
+     */
     @Override
     public List<Movie> getSearchResults(String search) {
 
@@ -36,6 +46,13 @@ public class SearchServiceImpl implements SearchService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get 5 search results for the type-ahead search only based on title
+     *
+     * @param search
+     *          the search term entered by the user in the UI currently
+     * @return the list of movies as a result of the search as a JSON
+     */
     @Override
     public String getSearchboxResults(String search) {
         List<Movie> movies = movieService.getAllMovies();
@@ -60,10 +77,29 @@ public class SearchServiceImpl implements SearchService {
         return new JSONObject().put("response", jsonResults).toString();
     }
 
+    /**
+     * Return if the search string matches the movie by title
+     *
+     * @param movie
+     *          the movie to be searched against
+     * @param search
+     *          the search string from the user
+     * @return if the search is a match or not (true/false)
+     */
     private boolean searchByTitle(Movie movie, String search) {
         return movie.getTitle().toLowerCase().contains(search.toLowerCase());
     }
 
+    /**
+     * Return if the search string matches the movie by genre,
+     * if any of the genres match then return true
+     *
+     * @param movie
+     *          the movie to be searched against
+     * @param search
+     *          the search string from the user
+     * @return if the search is a match or not (true/false)
+     */
     private boolean searchByGenre(Movie movie, String search) {
 
         for(Genre genre : movie.getGenres()) {
@@ -74,6 +110,15 @@ public class SearchServiceImpl implements SearchService {
         return false;
     }
 
+    /**
+     * Return if the search string matches the movie by title
+     *
+     * @param movie
+     *          the movie to be searched against
+     * @param search
+     *          the search string from the user
+     * @return if the search is a match or not (true/false)
+     */
     private boolean searchByYear(Movie movie, String search) {
         int searchParsed = 0;
 
@@ -81,18 +126,38 @@ public class SearchServiceImpl implements SearchService {
             searchParsed = Integer.parseInt(search.toLowerCase());
         }
         catch(NumberFormatException e) {
+            // i.e. this is not a number so must not be a search by year
             return false;
         }
 
         return searchParsed == movie.getYear();
     }
 
+    /**
+     * Return if the search string matches the movie by director
+     *
+     * @param movie
+     *          the movie to be searched against
+     * @param search
+     *          the search string from the user
+     * @return if the search is a match or not (true/false)
+     */
     private boolean searchbyDirector(Movie movie, String search) {
         String directorName = movie.getDirector().getName().toLowerCase();
 
         return directorName.contains(search.toLowerCase());
     }
 
+    /**
+     * Return if the search string matches the movie by actor,
+     * if any of the actors match then return true
+     *
+     * @param movie
+     *          the movie to be searched against
+     * @param search
+     *          the search string from the user
+     * @return if the search is a match or not (true/false)
+     */
     private boolean searchByActors(Movie movie, String search) {
 
         for(Actor actor : movie.getActors()) {

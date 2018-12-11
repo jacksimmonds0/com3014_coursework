@@ -1,5 +1,8 @@
 package com3014.coursework.group6.model.person;
 
+/**
+ * Model for a user of the application
+ */
 public class User extends Person {
 
     private String username;

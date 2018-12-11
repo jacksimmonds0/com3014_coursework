@@ -2,6 +2,9 @@ package com3014.coursework.group6.model;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Model for the login attributes when a user is logging in
+ */
 @Component
 public class Login {
     private String username;

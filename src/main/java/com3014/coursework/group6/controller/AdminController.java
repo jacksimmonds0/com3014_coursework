@@ -137,12 +137,10 @@ public class AdminController {
            return responseJSON(true, "Email is not of the correct format, please try again");
        }
 
-        User updatedUser = userService.updateDetails(user);
+       // update details without response as we dont need to update the session
+       userService.updateDetails(user);
 
-        // update the session to the new user
-        session.setAttribute("currentUser", updatedUser);
-
-        return responseJSON(false, "Successfully updated user details");
+       return responseJSON(false, "Successfully updated user details");
     }
 
     /**
