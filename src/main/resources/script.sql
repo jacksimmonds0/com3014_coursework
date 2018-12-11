@@ -5,6 +5,7 @@ CREATE TABLE `users` (
   `last_name` varchar(45) DEFAULT NULL,
   `email_address` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `status` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -48,11 +49,11 @@ CREATE TABLE `directors` (
 
 CREATE TABLE `movies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `year` int(11) NOT NULL,
   `director_id` int(11) NOT NULL,
-  `poster_url` varchar(255),
+  `poster_url` varchar(4000),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`director_id`) REFERENCES `directors`(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

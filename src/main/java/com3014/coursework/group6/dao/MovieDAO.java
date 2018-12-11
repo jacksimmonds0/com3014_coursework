@@ -73,13 +73,17 @@ public class MovieDAO {
     }
 
     public int addMovie(int year, String title, String description, List<Integer> genres, String director, String actors, String posterUrl) {
-        String sql = "INSERT INTO movies (id, year, title, description, director_id, poster_url) VALUES(null, :year, :title, :description, 1, :poster_url)";
+        String[] splitting = director.split(" ");
+
+        int new_director_id = addDirector(splitting[0], splitting[1]);
+
+        String sql = "INSERT INTO movies (id, year, title, description, director_id, poster_url) VALUES(null, :year, :title, :description, :director_id, :poster_url)";
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("id",null);
         namedParameter.addValue("year",year);
         namedParameter.addValue("title", title);
         namedParameter.addValue("description",description);
-        namedParameter.addValue("director_id",1);
+        namedParameter.addValue("director_id",new_director_id);
 
         if(posterUrl != null) {
             namedParameter.addValue("poster_url", posterUrl);
@@ -96,11 +100,6 @@ public class MovieDAO {
             namedParameter2.addValue("genre_id", genres.get(i));
             jdbcTemplate.update(sql4, namedParameter2);
         }
-        String[] splitting = director.split(" ");
-
-        int new_director_id = addDirector(splitting[0], splitting[1]);
-
-        updateDirector(new_director_id, result2);
 
         String[] splitting2 = actors.split(",");
 
@@ -146,17 +145,6 @@ public class MovieDAO {
         }
 
         return result;
-    }
-
-    public int updateDirector(int director_id, int id){
-
-        String sql = "UPDATE movies SET director_id = :director_id WHERE id = :id";
-        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
-        namedParameter.addValue("director_id",director_id);
-        namedParameter.addValue("id",id);
-        jdbcTemplate.update(sql, namedParameter);
-
-        return 1;
     }
 
     public int addActor(String first_name, String last_name){
