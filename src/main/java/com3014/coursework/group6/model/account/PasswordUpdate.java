@@ -1,5 +1,8 @@
 package com3014.coursework.group6.model.account;
 
+/**
+ * Model to hold the fields for a user updating their password
+ */
 public class PasswordUpdate {
 
     private int id;

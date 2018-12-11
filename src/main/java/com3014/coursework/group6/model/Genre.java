@@ -1,5 +1,8 @@
 package com3014.coursework.group6.model;
 
+/**
+ * Model for the genre of the movie
+ */
 public class Genre {
 
     private int id;

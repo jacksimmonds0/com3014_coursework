@@ -6,6 +6,10 @@ import com3014.coursework.group6.model.person.Director;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Model for a movie, encapsulating the one-to-many relationships within the database
+ * for the movies table
+ */
 public class Movie {
 
     private int id;

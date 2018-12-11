@@ -9,6 +9,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/**
+ * Validation for when a user registers with the site
+ */
 @Component
 public class RegisterValidator implements Validator {
 
@@ -19,6 +22,14 @@ public class RegisterValidator implements Validator {
         return User.class.isAssignableFrom(clazz);
     }
 
+    /**
+     * Validating the user against specific validation rules
+     *
+     * @param target
+     *          the target object in this case {@link User}
+     * @param errors
+     *          any errors as a result of the validation
+     */
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;

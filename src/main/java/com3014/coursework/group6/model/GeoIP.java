@@ -1,5 +1,8 @@
 package com3014.coursework.group6.model;
 
+/**
+ * Model for the location based on IP address for nearest cinema
+ */
 public class GeoIP {
     private String ipAddress;
     private String city;

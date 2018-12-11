@@ -11,8 +11,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 
+/**
+ * Service used for nearest cinema page
+ */
 @Service
 public class GeoIPLocationService {
+
     private DatabaseReader dbReader;
 
     public  GeoIPLocationService() throws IOException{
@@ -20,6 +24,13 @@ public class GeoIPLocationService {
         dbReader = new DatabaseReader.Builder(database).build();
     }
 
+    /**
+     * The location as a {@link GeoIP} based on the ip
+     *
+     * @param ip
+     *          the IP address to find the location
+     * @return the location
+     */
     public GeoIP getLocation(String ip) throws IOException, GeoIp2Exception{
         InetAddress ipAddress = InetAddress.getByName(ip);
         CityResponse response = dbReader.city(ipAddress);
