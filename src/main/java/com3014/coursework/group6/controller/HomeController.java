@@ -11,6 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * The controller for the home page of the movies web application
+ */
 @Controller
 @RequestMapping("/")
 public class HomeController {
@@ -21,6 +24,14 @@ public class HomeController {
     @Autowired
     private RecommendationService recommendationService;
 
+    /**
+     * The method to return the {@link ModelAndView} for the home page
+     *
+     * @param session
+     *          the {@link HttpSession} object for if a user is logged in
+     * @return the {@link ModelAndView} for the home page with model objects for the recommended movies
+     *          if a user is logged in
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView root(HttpSession session) {
         ModelAndView mav = new ModelAndView("index");

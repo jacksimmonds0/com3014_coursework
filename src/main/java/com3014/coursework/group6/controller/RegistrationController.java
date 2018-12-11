@@ -19,6 +19,9 @@ import com3014.coursework.group6.model.person.User;
 import com3014.coursework.group6.service.UserService;
 import com3014.coursework.group6.validator.RegisterValidator;
 
+/**
+ * The controller for registering a user onto the system
+ */
 @Controller
 public class RegistrationController {
 
@@ -30,17 +33,30 @@ public class RegistrationController {
     @Autowired
     RegisterValidator registerValidator;
 
+    /**
+     * @return the register view with the user as a model
+     */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView showRegister(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView showRegister() {
         ModelAndView mav = new ModelAndView("register");
         mav.addObject("user", new User());
 
         return mav;
     }
 
+    /**
+     * The add user POST method to complete the registration form with validation
+     *
+     * @param session
+     *          the {@link HttpSession} to add the user to the cookie if registration is successful
+     * @param user
+     *          the {@link ModelAttribute} user for validation
+     * @param result
+     *          the result of the validation
+     * @return the {@link ModelAndView} to redirect to the home page if registration is successful
+     */
     @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
-    public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                @ModelAttribute("user") User user, BindingResult result) {
+    public ModelAndView addUser(HttpSession session, @ModelAttribute("user") User user, BindingResult result) {
 
         try {
             registerValidator.validate(user, result);
@@ -61,10 +77,12 @@ public class RegistrationController {
                 Login login = new Login();
                 login.setUsername(user.getUsername());
                 User actualUser = userService.getUserByUsername(login);
+
+                // add the user to the session if registration is successful
                 session.setAttribute("currentUser", actualUser);
                 session.setAttribute("userRole", userService.getUserRole(user.getUsername()));
 
-                return new ModelAndView("index", "firstName", user.getFirstName());
+                return new ModelAndView("redirect:/", "firstName", user.getFirstName());
             }
         }
         catch(CannotGetJdbcConnectionException e) {

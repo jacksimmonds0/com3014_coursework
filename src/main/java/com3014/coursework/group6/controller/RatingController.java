@@ -15,17 +15,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The REST controller for adding a rating to the movie and retrieving average ratings
+ */
 @RestController
 public class RatingController {
+
     @Autowired
     private MovieService movieService;
 
     @Autowired
     private RecommendationService recommendationService;
 
-
+    /**
+     * The POST method to add a rating to the movie
+     *
+     * @param movieID
+     *          the id for the movie to add a rating to
+     * @param rating
+     *          the rating from the user to add for the movie
+     * @param session
+     *          the {@link HttpSession} object containing the currently logged in user
+     * @return the JSON response for the rating added
+     */
     @RequestMapping(value ="/addRating", method = RequestMethod.POST, produces={"application/json"})
-    public @ResponseBody String addRating(@RequestParam(value="movieID",required = true) int movieID,@RequestParam(value="rating",required=true) double rating, HttpSession session, HttpServletRequest request){
+    public @ResponseBody String addRating(@RequestParam(value="movieID",required = true) int movieID,@RequestParam(value="rating",required=true) double rating, HttpSession session){
         User currentUser = (User)session.getAttribute("currentUser");
         int userID = currentUser.getId();
         int dbResult = movieService.addRating(movieID, userID,rating);
@@ -38,8 +52,15 @@ public class RatingController {
         return "{}";
     }
 
+    /**
+     * Retrieving the average rating from the database
+     *
+     * @param movieID
+     *          the movie we need to get the average rating for, based on ID
+     * @return the average rating for the movie
+     */
     @RequestMapping(value ="/getAvgRating", method = RequestMethod.POST, produces={"application/json"})
-    public @ResponseBody double getAvgRating(@RequestParam(value="movieID",required = true) int movieID, HttpServletRequest request){
+    public @ResponseBody double getAvgRating(@RequestParam(value="movieID",required = true) int movieID){
         double avgRating = movieService.getAvgRating(movieID);
         return avgRating;
     }
