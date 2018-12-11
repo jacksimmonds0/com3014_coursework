@@ -39,11 +39,11 @@ public class RegisterValidator implements Validator {
             errors.rejectValue("confirmPassword", "notMatch.confirmPassword");
         }
 
-        if(user.getFirstName().length()<2 || user.getFirstName().length()<30) {
+        if(user.getFirstName().length()<2 || user.getFirstName().length()>30) {
             errors.rejectValue("firstName", "invalid.name");
         }
 
-        if(user.getLastName().length()<2 || user.getLastName().length()<30) {
+        if(user.getLastName().length()<2 || user.getLastName().length()>30) {
             errors.rejectValue("lastName", "invalid.name");
         }
 
