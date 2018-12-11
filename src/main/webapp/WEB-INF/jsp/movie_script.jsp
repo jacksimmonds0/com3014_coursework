@@ -9,6 +9,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
     $(function(){
+
+        /**
+         * Uses barrating plugin to convert select element to stars
+         *
+         */
         $('#avg-rating').barrating({
             theme: 'fontawesome-stars',
             readonly: true,
@@ -20,6 +25,11 @@
 
 
     });
+
+    /**
+     * AJAX call to retrieve average rating for film.
+     * Asynchronously update the stars ratings.
+     */
     function getAvgRating(){
         $.ajax({
             url:"getAvgRating",
@@ -32,7 +42,11 @@
     }
 
 
-
+    /**
+     * AJAX call to add ratings
+     * Update average rating after AJAX completion
+     * If recommendations returned in JSON, create appropriate elements.
+     */
     $(function() {
         <c:choose>
         <c:when test="${!empty currentUser}">
@@ -89,13 +103,10 @@
         </c:when>
         </c:choose>
 
-
-        // $('#avg-rating').barrating({
-        //     theme: 'fontawesome-stars',
-        //     readonly: true,
-        //     initialRating: getAvgRating()
-        // });
-
+        /**
+         * AJAX call for adding comments
+         * Create appropriate elements on comment addition
+         */
         $("#add-comment-form").on("submit",function(e){
             e.preventDefault();
             var data =  $("#add-comment-form").serialize();

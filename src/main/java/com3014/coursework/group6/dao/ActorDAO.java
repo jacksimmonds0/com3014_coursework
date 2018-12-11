@@ -15,6 +15,11 @@ public class ActorDAO {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+    /**
+     *
+     * @param movieId
+     * @return list of actors corresponding to parameterized movie id.
+     */
     public List<Actor> getActorsForMovie(int movieId) {
         String sql = "SELECT * FROM actors LEFT JOIN movie_actor a on actors.id = a.actor_id WHERE movie_id=:id";
 
@@ -24,6 +29,10 @@ public class ActorDAO {
         return jdbcTemplate.query(sql, namedParameter, new ActorMapper());
     }
 
+    /**
+     *
+     * @return list of all actors
+     */
     public List<Actor> getAllActors() {
         String sql = "SELECT * FROM actors";
 

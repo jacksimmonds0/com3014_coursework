@@ -15,6 +15,11 @@ public class DirectorDAO {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+    /**
+     *
+     * @param id
+     * @return director associated with parameterized movie id
+     */
     public Director getDirectorForMovie(int id) {
         String sql = "SELECT * FROM directors WHERE id=:id";
 
@@ -26,6 +31,10 @@ public class DirectorDAO {
         return directors.size() == 1 ? directors.get(0) : null;
     }
 
+    /**
+     *
+     * @return list of all directors
+     */
     public List<Director> getAllDirectors() {
         String sql = "SELECT * FROM directors";
 

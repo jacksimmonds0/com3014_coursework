@@ -15,6 +15,11 @@ public class GenreDAO {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+    /**
+     *
+     * @param movieId
+     * @return list of genres associated with specific movie
+     */
     public List<Genre> getGenresForMovie(int movieId) {
         String sql = "SELECT * FROM genre LEFT JOIN movie_genre g on genre.id = g.genre_id WHERE movie_id=:id";
 
@@ -24,6 +29,10 @@ public class GenreDAO {
         return jdbcTemplate.query(sql, namedParameter, new GenreMapper());
     }
 
+    /**
+     *
+     * @return list of all genres
+     */
     public List<Genre> getAllGenres() {
         String sql = "SELECT * From genre";
 
