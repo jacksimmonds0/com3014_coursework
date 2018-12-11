@@ -44,7 +44,7 @@
     <div class="row movies-row">
         <c:forEach items="${recentMovies}" var="movie">
             <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-
+                <a href="/movie?id=${movie.id}">
                 <c:choose>
                     <c:when test="${!empty movie.posterUrl}">
                         <img class="poster" src="${movie.posterUrl}" alt="${movie.title}" />
@@ -53,7 +53,7 @@
                         <img class="poster" src="https://via.placeholder.com/130x195?No+poster+provided" alt="No poster provided"/>
                     </c:otherwise>
                 </c:choose>
-
+                </a>
                 <p class="recommended-movie">
                     <a href="/movie?id=${movie.id}">${movie.title} </a> (${movie.year})
                 </p>
@@ -67,7 +67,7 @@
         <div class="row movies-row">
             <c:forEach items="${movie.value}" var="recommendedMovie">
                 <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-
+                    <a href="/movie?id=${movie.id}">
                     <c:choose>
                         <c:when test="${!empty recommendedMovie.posterUrl}">
                             <img class="poster" src="${recommendedMovie.posterUrl}" alt="${recommendedMovie.title}" />
@@ -76,7 +76,7 @@
                             <img class="poster" src="https://via.placeholder.com/130x195?No+poster+provided" alt="No poster provided"/>
                         </c:otherwise>
                     </c:choose>
-
+                    </a>
                     <p class="recommended-movie">
                         <a href="/movie?id=${recommendedMovie.id}">${recommendedMovie.title} </a> (${recommendedMovie.year})
                     </p>

@@ -16,6 +16,7 @@
             <c:set var="i" value="${m.index}" />
             <div class="row">
                 <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                    <a href="/movie?id=${movie.id}">
                     <c:choose>
                         <c:when test="${!empty movie.posterUrl}">
                             <img class="poster" src="${movie.posterUrl}" alt="${movie.title}"/>
@@ -24,7 +25,7 @@
                             <img class="poster" src="https://via.placeholder.com/150x225?No+poster+provided" alt="No poster provided"/>
                         </c:otherwise>
                     </c:choose>
-
+                    </a>
                 </div>
 
                 <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
