@@ -86,9 +86,11 @@
         <h4>Here are some similar films you may like...</h4>
     </div>
         <div class="recommendation_div col-md-2" style="display:none;">
+            <a>
                     <img class="poster-recommended" src="https://via.placeholder.com/130x195?No+poster+provided" alt="No poster provided"/>
-            <p id="text">
-                <a></a></p>
+            </a>
+                <p id="text">
+                <a id="title-link"></a></p>
         </div>
 </div>
 <br>

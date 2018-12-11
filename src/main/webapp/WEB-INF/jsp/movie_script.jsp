@@ -73,7 +73,7 @@
                                     rec_div1.find('img').attr('src', movies.recommendations[i].posterUrl);
                                 }
                                 rec_div1.find('a').attr('href', "/movie?id=" + movies.recommendations[i].id);
-                                rec_div1.find('a').html(movies.recommendations[i].title);
+                                rec_div1.find('#title-link').html(movies.recommendations[i].title);
                                 rec_div1.find('p').append(" (" + movies.recommendations[i].year + ")");
                                 rec_div1.css("display","");
                                 rec_con.append(rec_div1);
